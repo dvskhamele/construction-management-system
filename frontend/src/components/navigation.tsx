@@ -8,8 +8,12 @@ export default function Navigation() {
 
   const navigation = [
     { name: 'Dashboard', href: '/' },
-    { name: 'Rooms', href: '/rooms' },
-    { name: 'Requests', href: '/requests' },
+    { name: 'Sites', href: '/projects' },
+    { name: 'Projects', href: '/areas' }, // Keeping same route since areas page likely contains project data in construction context
+    { name: 'Tasks', href: '/requests' },  // Changed to Tasks as it's more appropriate for construction
+    { name: 'Teams', href: '/staff' },
+    { name: 'Analytics', href: '/analytics' },
+    { name: 'Departments', href: '/departments' },
   ]
 
   return (
@@ -18,7 +22,7 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <span className="font-bold text-xl text-blue-600">HotelOps</span>
+              <span className="font-bold text-xl text-blue-600">BuildMate</span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {navigation.map((item) => (

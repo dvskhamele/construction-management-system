@@ -9,21 +9,21 @@ export default function DemoPage() {
 
   const features = [
     {
-      title: "Guest Request Management",
-      description: "Centralized system for logging, tracking, and resolving guest requests with automatic department routing.",
+      title: "Client Request Management",
+      description: "Centralized system for logging, tracking, and resolving client requests with automatic department routing.",
       benefits: [
         "30% reduction in response times",
-        "95% guest satisfaction with request handling",
+        "95% client satisfaction with request handling",
         "Automatic escalation for urgent requests"
       ]
     },
     {
-      title: "Housekeeping & Room Status",
-      description: "Real-time room status tracking with mobile-friendly interfaces for staff to update statuses instantly.",
+      title: "Housekeeping & Area Status",
+      description: "Real-time area status tracking with mobile-friendly interfaces for staff to update statuses instantly.",
       benefits: [
         "40% improvement in housekeeping efficiency",
-        "Real-time visibility into room availability",
-        "Reduced room turnaround time by 25%"
+        "Real-time visibility into area availability",
+        "Reduced area turnaround time by 25%"
       ]
     },
     {
@@ -37,7 +37,7 @@ export default function DemoPage() {
     },
     {
       title: "Inventory Control",
-      description: "Track and manage all hotel inventory with automated alerts for low stock and reorder recommendations.",
+      description: "Track and manage all construction materials with automated alerts for low stock and reorder recommendations.",
       benefits: [
         "50% reduction in inventory costs",
         "Elimination of stockouts",
@@ -50,7 +50,7 @@ export default function DemoPage() {
       benefits: [
         "Predictive demand forecasting",
         "Revenue optimization recommendations",
-        "Guest behavior pattern analysis"
+        "Client behavior pattern analysis"
       ]
     },
     {
@@ -66,9 +66,9 @@ export default function DemoPage() {
 
   const testimonials = [
     {
-      quote: "HotelOps transformed our guest service delivery. Response times dropped by 60% and guest satisfaction scores increased to 96%.",
+      quote: "BuildMate transformed our project management. Response times dropped by 60% and project completion scores increased to 96%.",
       author: "Sarah Johnson",
-      position: "General Manager, Grand Palazzo Hotel",
+      position: "Project Manager, BuildCo Construction",
       rating: 5
     },
     {
@@ -78,9 +78,9 @@ export default function DemoPage() {
       rating: 5
     },
     {
-      quote: "Implementing HotelOps was seamless. Our housekeeping efficiency improved by 40% in the first month.",
+      quote: "Implementing BuildMate was seamless. Our construction efficiency improved by 40% in the first month.",
       author: "Robert Williams",
-      position: "Executive Housekeeper, Metropolitan Suites",
+      position: "Construction Manager, BuildCo Construction",
       rating: 5
     }
   ]
@@ -94,7 +94,7 @@ export default function DemoPage() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-teal-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
-            HotelOps
+            BuildMate
           </Link>
           <div className="flex items-center space-x-4">
             <Link href="/login" className="text-slate-600 hover:text-teal-600 font-medium">
@@ -115,10 +115,10 @@ export default function DemoPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white">
-              See HotelOps in Action
+              See BuildMate in Action
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-xl text-teal-100">
-              Experience how our platform transforms hotel operations with intelligent automation and real-time insights
+              Experience how our platform transforms construction projects with intelligent automation and real-time insights
             </p>
             
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
@@ -161,7 +161,7 @@ export default function DemoPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-xl">HotelOps Demo Video</p>
+                  <p className="text-xl">BuildMate Demo Video</p>
                   <p className="mt-2 text-slate-400">Interactive demo showing key features in action</p>
                 </div>
               </div>
@@ -199,24 +199,24 @@ export default function DemoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold text-slate-800 mb-6">
-                  Experience HotelOps in Action
+                  Experience BuildMate in Action
                 </h2>
                 <p className="text-lg text-slate-600 mb-6">
-                  Our 15-minute interactive demo walks you through the complete HotelOps experience, 
-                  showing how our platform transforms hotel operations from reactive to proactive.
+                  Our 15-minute interactive demo walks you through the complete BuildMate experience, 
+                  showing how our platform transforms construction projects from reactive to proactive.
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500 mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-slate-700">See how guest requests are automatically routed and resolved</span>
+                    <span className="text-slate-700">See how project tasks are automatically routed and resolved</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500 mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-slate-700">Watch real-time room status updates from housekeeping staff</span>
+                    <span className="text-slate-700">Watch real-time area status updates from housekeeping staff</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500 mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -325,7 +325,7 @@ export default function DemoPage() {
                 </div>
                 <div className="bg-white rounded-xl shadow-md p-6 text-center border border-slate-200">
                   <div className="text-4xl font-bold text-amber-600 mb-2">95%</div>
-                  <p className="text-slate-700">Guest satisfaction rate</p>
+                  <p className="text-slate-700">Client satisfaction rate</p>
                 </div>
                 <div className="bg-white rounded-xl shadow-md p-6 text-center border border-slate-200">
                   <div className="text-4xl font-bold text-blue-600 mb-2">35%</div>
@@ -334,18 +334,18 @@ export default function DemoPage() {
               </div>
               
               <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl p-8 border border-teal-200">
-                <h3 className="text-2xl font-bold text-slate-800 mb-4">Case Study: Grand Palazzo Hotel</h3>
+                <h3 className="text-2xl font-bold text-slate-800 mb-4">Case Study: BuildCo Construction</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <p className="text-slate-700 mb-4">
-                      After implementing HotelOps, the Grand Palazzo Hotel saw remarkable improvements in their operations:
+                      After implementing BuildMatee, BuildCo Construction saw remarkable improvements in their projects:
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>Response times to guest requests decreased by 60%</span>
+                        <span>Response times to client requests decreased by 60%</span>
                       </li>
                       <li className="flex items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -357,7 +357,7 @@ export default function DemoPage() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>Guest satisfaction scores rose to 96%</span>
+                        <span>Client satisfaction scores rose to 96%</span>
                       </li>
                       <li className="flex items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -374,7 +374,7 @@ export default function DemoPage() {
                     <div className="space-y-4">
                       <div>
                         <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium text-slate-700">Guest Request Response Time</span>
+                          <span className="text-sm font-medium text-slate-700">Client Request Response Time</span>
                           <span className="text-sm font-medium text-slate-700">60% ↓</span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-2.5">
@@ -392,7 +392,7 @@ export default function DemoPage() {
                       </div>
                       <div>
                         <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium text-slate-700">Guest Satisfaction</span>
+                          <span className="text-sm font-medium text-slate-700">Client Satisfaction</span>
                           <span className="text-sm font-medium text-slate-700">96%</span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-2.5">
@@ -421,10 +421,10 @@ export default function DemoPage() {
       <div className="py-16 bg-gradient-to-r from-teal-600 to-emerald-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Transform Your Guest Experience?
+            Ready to Transform Your Client Experience?
           </h2>
           <p className="text-xl text-teal-100 mb-8 max-w-3xl mx-auto">
-            Join thousands of hotels worldwide using HotelOps to deliver exceptional guest experiences with zero human management required.
+            Join thousands of construction companies worldwide using BuildMate to deliver exceptional project management with zero human management required.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 

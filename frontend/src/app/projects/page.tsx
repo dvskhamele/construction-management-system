@@ -1,0 +1,491 @@
+'use client'
+
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import { useRouter } from 'next/navigation'
+
+export default function Projects() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [user, setUser] = useState<any>({ name: 'Project Manager', role: 'ADMIN' })
+  const [projects, setProjects] = useState<any[]>([])
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUser(null)
+    router.push('/login')
+  }
+
+  useEffect(() => {
+    // Mock data for prototype - Projects
+    const mockProjects = [
+      { 
+        id: 1, 
+        name: 'Downtown Office Complex', 
+        client: 'Meridian Properties', 
+        value: 8500000, 
+        status: 'ACTIVE', 
+        progress: 75, 
+        startDate: '2025-01-15', 
+        endDate: '2025-09-30', 
+        location: 'Downtown District, New York', 
+        projectManager: 'You', 
+        teamSize: 12, 
+        budgetSpent: 6375000, 
+        budgetRemaining: 2125000, 
+        issues: 3, 
+        safetyIncidents: 1, 
+        qualityRating: 92, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Foundation Completion', 
+        nextMilestoneDate: '2025-04-15',
+        type: 'Commercial',
+        phase: 'Foundation',
+        department: 'Construction',
+        riskLevel: 'MEDIUM'
+      },
+      { 
+        id: 2, 
+        name: 'Residential Apartment Block B', 
+        client: 'Urban Developments', 
+        value: 12000000, 
+        status: 'DELAYED', 
+        progress: 45, 
+        startDate: '2025-02-10', 
+        endDate: '2025-10-15', 
+        location: 'Suburban Area, Chicago', 
+        projectManager: 'Sarah Johnson', 
+        teamSize: 18, 
+        budgetSpent: 5400000, 
+        budgetRemaining: 6600000, 
+        issues: 7, 
+        safetyIncidents: 2, 
+        qualityRating: 87, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Structural Framing', 
+        nextMilestoneDate: '2025-04-20',
+        type: 'Residential',
+        phase: 'Framing',
+        department: 'Construction',
+        riskLevel: 'HIGH'
+      },
+      { 
+        id: 3, 
+        name: 'Industrial Warehouse', 
+        client: 'Tech Storage Solutions', 
+        value: 21000000, 
+        status: 'ON_TRACK', 
+        progress: 90, 
+        startDate: '2024-11-01', 
+        endDate: '2025-03-30', 
+        location: 'River Crossing, Houston', 
+        projectManager: 'Mike Chen', 
+        teamSize: 24, 
+        budgetSpent: 18900000, 
+        budgetRemaining: 2100000, 
+        issues: 2, 
+        safetyIncidents: 0, 
+        qualityRating: 96, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Final Inspection', 
+        nextMilestoneDate: '2025-03-25',
+        type: 'Industrial',
+        phase: 'Finishing',
+        department: 'Construction',
+        riskLevel: 'LOW'
+      },
+      { 
+        id: 4, 
+        name: 'Retail Center Renovation', 
+        client: 'City Retail Group', 
+        value: 4500000, 
+        status: 'ON_HOLD', 
+        progress: 30, 
+        startDate: '2025-01-20', 
+        endDate: '2025-06-15', 
+        location: 'Shopping District, Los Angeles', 
+        projectManager: 'Emily Rodriguez', 
+        teamSize: 8, 
+        budgetSpent: 1350000, 
+        budgetRemaining: 3150000, 
+        issues: 5, 
+        safetyIncidents: 1, 
+        qualityRating: 89, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Permit Approval', 
+        nextMilestoneDate: '2025-04-05',
+        type: 'Renovation',
+        phase: 'Planning',
+        department: 'Renovation',
+        riskLevel: 'MEDIUM'
+      },
+      { 
+        id: 5, 
+        name: 'Mixed-Use Development', 
+        client: 'Downtown Developers LLC', 
+        value: 32000000, 
+        status: 'PLANNING', 
+        progress: 15, 
+        startDate: '2025-04-01', 
+        endDate: '2025-12-15', 
+        location: 'City Center, San Francisco', 
+        projectManager: 'David Wilson', 
+        teamSize: 15, 
+        budgetSpent: 0, 
+        budgetRemaining: 32000000, 
+        issues: 0, 
+        safetyIncidents: 0, 
+        qualityRating: 0, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Design Approval', 
+        nextMilestoneDate: '2025-04-30',
+        type: 'Mixed-Use',
+        phase: 'Design',
+        department: 'Development',
+        riskLevel: 'LOW'
+      }
+    ]
+    
+    setProjects(mockProjects)
+  }, [])
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'ACTIVE':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'ON_TRACK':
+        return 'bg-teal-100 text-teal-800'
+      case 'DELAYED':
+        return 'bg-amber-100 text-amber-800'
+      case 'ON_HOLD':
+        return 'bg-rose-100 text-rose-800'
+      case 'PLANNING':
+        return 'bg-blue-100 text-blue-800'
+      case 'COMPLETED':
+        return 'bg-indigo-100 text-indigo-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getRiskColor = (risk: string) => {
+    switch (risk) {
+      case 'LOW':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'MEDIUM':
+        return 'bg-amber-100 text-amber-800'
+      case 'HIGH':
+        return 'bg-rose-100 text-rose-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-2xl shadow-xl">
+          <h1 className="text-2xl font-bold mb-6 text-center text-slate-800">Please log in</h1>
+          <button 
+            className="bg-gradient-to-r from-teal-500 to-teal-600 text-white py-3 px-6 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md"
+            onClick={() => router.push('/login')}
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+      <div className="px-4 py-6">
+        {/* Page Header */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">Projects Dashboard</h1>
+              <p className="text-slate-600">Manage and track all your construction projects</p>
+            </div>
+            <div className="flex space-x-3">
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
+                onClick={() => router.push('/projects/create')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                New Project
+              </button>
+              <button 
+                className="border border-slate-300 text-slate-700 px-4 py-2 rounded-lg font-medium hover:bg-slate-50 transition duration-300 flex items-center"
+                onClick={() => router.push('/reports/generate')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Generate Report
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Total Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.length}</p>
+              </div>
+              <div className="bg-amber-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Active: {projects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects?status=active')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Active Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-emerald-500">↑ {projects.filter(p => p.status === 'DELAYED').length} delayed</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects?status=completed')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Completed Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => p.status === 'COMPLETED').length}</p>
+              </div>
+              <div className="bg-emerald-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Value: ₹{Math.round(projects.filter(p => p.status === 'COMPLETED').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects?status=planning')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Planning Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => p.status === 'PLANNING').length}</p>
+              </div>
+              <div className="bg-indigo-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Future value: ₹{Math.round(projects.filter(p => p.status === 'PLANNING').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Project List */}
+        <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-slate-800">Project Portfolio</h2>
+            <div className="text-sm text-slate-500">
+              Showing {projects.length} projects
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Client</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Value</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Progress</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Dates</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project Manager</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Team Size</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Budget</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Issues</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Safety</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Quality</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Last Update</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Next Milestone</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {projects.map((project: any) => (
+                  <tr 
+                    key={project.id} 
+                    className="hover:bg-slate-50 transition cursor-pointer"
+                    onClick={() => router.push(`/projects/${project.id}`)}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-slate-900">{project.name}</div>
+                      <div className="text-sm text-slate-500">
+                        {project.type} • {project.phase} • {project.department}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-slate-900">{project.client}</div>
+                      <div className="text-sm text-slate-500">{project.contact || 'N/A'}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      ₹{Math.round(project.value / 100000)}L
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(project.status)}`}>
+                        {project.status.replace('_', ' ')}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="text-sm font-medium text-slate-900">{project.progress}%</div>
+                        <div className="ml-2 w-16 bg-slate-200 rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-teal-500 to-teal-600 h-2 rounded-full" 
+                            style={{ width: `${project.progress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>{new Date(project.startDate).toLocaleDateString()}</div>
+                      <div>{new Date(project.endDate).toLocaleDateString()}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.location}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.projectManager}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.teamSize}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>Spent: ₹{Math.round(project.budgetSpent / 100000)}L</div>
+                      <div>Rem: ₹{Math.round(project.budgetRemaining / 100000)}L</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <span className={project.issues > 0 ? 'text-rose-600 font-medium' : 'text-slate-600'}>
+                        {project.issues}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <span className={project.safetyIncidents > 0 ? 'text-amber-600 font-medium' : 'text-slate-600'}>
+                        {project.safetyIncidents}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <span className={project.qualityRating >= 90 ? 'text-emerald-600 font-medium' : 'text-slate-600'}>
+                        {project.qualityRating}%
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {new Date(project.lastUpdate).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>{project.nextMilestone}</div>
+                      <div>{new Date(project.nextMilestoneDate).toLocaleDateString()}</div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Project Analytics */}
+        <div className="mt-8 bg-white rounded-2xl shadow-md p-6 card">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-slate-800">Project Analytics</h2>
+            <div className="flex space-x-2">
+              <button className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-600">
+                7D
+              </button>
+              <button className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-600">
+                30D
+              </button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-medium text-slate-700 mb-3">Project Completion Rate</h3>
+              <div className="h-64">
+                <div className="flex items-end h-5/6 space-x-1">
+                  {[74, 81, 69, 76, 70, 88, 84].map((value, index) => (
+                    <div key={index} className="flex flex-col items-center flex-1">
+                      <div 
+                        className="w-full bg-gradient-to-t from-teal-500 to-teal-600 rounded-t transition-all duration-300"
+                        style={{ height: `${value}%` }}
+                      ></div>
+                      <div className="text-xs text-slate-500 mt-2">Oct {10 + index}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between text-xs text-slate-500 mt-2">
+                  <span>Actual Completed</span>
+                  <span>Predicted Rate</span>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-medium text-slate-700 mb-3">Project Workload Distribution</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-slate-700">Foundation Phase</span>
+                    <span className="text-sm font-medium text-slate-700">15/20 crew</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-emerald-500 h-2.5 rounded-full transition-all duration-300" style={{ width: '75%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-slate-700">Framing Phase</span>
+                    <span className="text-sm font-medium text-slate-700">9/20 crew</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-amber-500 h-2.5 rounded-full transition-all duration-300" style={{ width: '45%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-slate-700">Electrical Phase</span>
+                    <span className="text-sm font-medium text-slate-700">12/18 crew</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style={{ width: '67%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ResponsiveSidebarLayout>
+  )
+}

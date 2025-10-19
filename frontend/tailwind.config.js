@@ -6,6 +6,22 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      // => @media (min-width: 640px) { ... }
+
+      'md': '768px',
+      // => @media (min-width: 768px) { ... }
+
+      'lg': '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      'xl': '1280px',
+      // => @media (min-width: 1280px) { ... }
+
+      '2xl': '1536px',
+      // => @media (min-width: 1536px) { ... }
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -108,6 +124,20 @@ module.exports = {
           '0%, 100%': { opacity: 1 },
           '50%': { opacity: 0.5 },
         }
+      },
+      // Add mobile-first responsive utilities
+      maxWidth: {
+        'mobile': '100%',
+        'tablet': '768px',
+        'desktop': '1280px',
+      },
+      fontSize: {
+        'mobile-lg': '1.125rem', // 18px
+        'mobile-xl': '1.25rem',  // 20px
+        'mobile-2xl': '1.5rem',  // 24px
+      },
+      spacing: {
+        'mobile-safe': 'env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)',
       }
     },
   },

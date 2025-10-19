@@ -50,162 +50,49 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scrollbars */
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  margin-top: 0;
-  margin-bottom: var(--spacing-md);
+/* Fix double scrollbar issue */
+html {
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: 2.5rem;
-  letter-spacing: -0.02em;
+body {
+  overflow-x: hidden;
+  overflow-y: auto; /* Only vertical scrollbar */
 }
 
-h2 {
-  font-size: 2rem;
-  letter-spacing: -0.01em;
+/* Ensure only vertical scrollbar */
+* {
+  overflow-x: hidden;
 }
 
-h3 {
-  font-size: 1.75rem;
+/* Custom scrollbar styling - vertical only */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-h4 {
-  font-size: 1.5rem;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-h5 {
-  font-size: 1.25rem;
+::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 4px;
 }
 
-h6 {
-  font-size: 1.125rem;
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
 }
 
-p {
-  margin-top: 0;
-  margin-bottom: var(--spacing-md);
+/* Hide horizontal scrollbar completely */
+::-webkit-scrollbar:horizontal {
+  height: 0;
+  display: none;
 }
 
-/* Focus styles */
-.focus-ring {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.focus-ring:focus-visible {
-  outline: 2px solid rgb(var(--primary-500));
-  outline-offset: 2px;
-}
-
-/* Custom utility classes */
-.shadow-card {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.shadow-card-hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.duration-300 {
-  transition-duration: 300ms;
-}
-
-/* Button styles */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.btn:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.btn:focus-visible {
-  outline: 2px solid rgb(var(--primary-500));
-  outline-offset: 2px;
-}
-
-.btn-primary {
-  background-color: rgb(var(--primary-600));
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: rgb(var(--primary-700));
-}
-
-/* Input styles */
-.input {
-  display: block;
-  width: 100%;
-  border-radius: 0.5rem;
-  border: 1px solid #d1d5db;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.input:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  border-color: rgb(var(--primary-500));
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
-}
-
-/* Card styles */
-.card {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-}
-
-/* Animation utilities */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+/* Ensure single vertical scrollbar */
+::-webkit-scrollbar:vertical {
+  width: 8px;
 }

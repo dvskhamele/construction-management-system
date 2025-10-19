@@ -12,8 +12,8 @@ interface User {
 
 interface Request {
   id: string;
-  guestName: string;
-  roomNumber: string;
+  clientName: string;
+  areaNumber: string;
   title: string;
   description: string;
   department: string;
@@ -49,10 +49,10 @@ export default function MobileRequests() {
     const mockRequests: Request[] = [
       {
         id: '1001',
-        guestName: 'Emma Davis',
-        roomNumber: '201',
+        clientName: 'Emma Davis',
+        areaNumber: '201',
         title: 'Extra Pillows',
-        description: 'Guest needs additional pillows for their stay',
+        description: 'Client needs additional pillows for their stay',
         department: 'HOUSEKEEPING',
         priority: 'MEDIUM',
         status: 'IN_PROGRESS',
@@ -61,10 +61,10 @@ export default function MobileRequests() {
       },
       {
         id: '1002',
-        guestName: 'James Wilson',
-        roomNumber: '305',
+        clientName: 'James Wilson',
+        areaNumber: '305',
         title: 'TV Not Working',
-        description: 'Television is not turning on in the room',
+        description: 'Television is not turning on in the area',
         department: 'MAINTENANCE',
         priority: 'HIGH',
         status: 'PENDING',
@@ -73,10 +73,10 @@ export default function MobileRequests() {
       },
       {
         id: '1003',
-        guestName: 'Olivia Martinez',
-        roomNumber: '108',
-        title: 'Room Service',
-        description: 'Guest wants to order breakfast to room',
+        clientName: 'Olivia Martinez',
+        areaNumber: '108',
+        title: 'Area Service',
+        description: 'Client wants to order breakfast to area',
         department: 'FOOD_SERVICE',
         priority: 'LOW',
         status: 'COMPLETED',
@@ -85,10 +85,10 @@ export default function MobileRequests() {
       },
       {
         id: '1004',
-        guestName: 'William Taylor',
-        roomNumber: '402',
+        clientName: 'William Taylor',
+        areaNumber: '402',
         title: 'Late Checkout',
-        description: 'Guest requests to check out at 2 PM instead of 12 PM',
+        description: 'Client requests to check out at 2 PM instead of 12 PM',
         department: 'CONCIERGE',
         priority: 'MEDIUM',
         status: 'COMPLETED',
@@ -97,10 +97,10 @@ export default function MobileRequests() {
       },
       {
         id: '1005',
-        guestName: 'Sophia Anderson',
-        roomNumber: '207',
+        clientName: 'Sophia Anderson',
+        areaNumber: '207',
         title: 'Wi-Fi Issues',
-        description: 'Guest reports slow internet connection in room',
+        description: 'Client reports slow internet connection in area',
         department: 'MAINTENANCE',
         priority: 'URGENT',
         status: 'PENDING',
@@ -109,10 +109,10 @@ export default function MobileRequests() {
       },
       {
         id: '1006',
-        guestName: 'Michael Brown',
-        roomNumber: '312',
+        clientName: 'Michael Brown',
+        areaNumber: '312',
         title: 'Extra Towels',
-        description: 'Guest needs additional towels for the pool',
+        description: 'Client needs additional towels for the pool',
         department: 'HOUSEKEEPING',
         priority: 'LOW',
         status: 'IN_PROGRESS',
@@ -137,8 +137,8 @@ export default function MobileRequests() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase()
       result = result.filter(request => 
-        request.guestName.toLowerCase().includes(query) ||
-        request.roomNumber.includes(query) ||
+        request.clientName.toLowerCase().includes(query) ||
+        request.areaNumber.includes(query) ||
         request.title.toLowerCase().includes(query) ||
         request.description.toLowerCase().includes(query)
       )
@@ -199,7 +199,7 @@ export default function MobileRequests() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-slate-800">Guest Requests</h1>
+            <h1 className="text-2xl font-bold text-slate-800">Client Requests</h1>
             <button 
               className="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 transition"
               onClick={() => router.push('/requests/new')}
@@ -207,7 +207,7 @@ export default function MobileRequests() {
               + New
             </button>
           </div>
-          <p className="text-slate-600 text-sm mt-1">Manage all guest requests in one place</p>
+          <p className="text-slate-600 text-sm mt-1">Manage all client requests in one place</p>
         </div>
 
         {/* Filters */}
@@ -219,7 +219,7 @@ export default function MobileRequests() {
               <input
                 type="text"
                 id="search"
-                placeholder="Search by guest, room, or request..."
+                placeholder="Search by client, area, or request..."
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -269,11 +269,11 @@ export default function MobileRequests() {
                   <div>
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold">{request.guestName.charAt(0)}</span>
+                        <span className="text-white font-bold">{request.clientName.charAt(0)}</span>
                       </div>
                       <div className="ml-3">
-                        <h3 className="text-sm font-medium text-slate-900">{request.guestName}</h3>
-                        <p className="text-xs text-slate-500">Room {request.roomNumber}</p>
+                        <h3 className="text-sm font-medium text-slate-900">{request.clientName}</h3>
+                        <p className="text-xs text-slate-500">Area {request.areaNumber}</p>
                       </div>
                     </div>
                     <div className="mt-3">

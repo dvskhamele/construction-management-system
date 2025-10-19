@@ -32,7 +32,7 @@ const StaffLocationTracking: React.FC = () => {
         lastUpdate: new Date(Date.now() - 60000).toISOString() // 1 minute ago
       },
       performance: 96,
-      currentTask: 'Inspecting room 205',
+      currentTask: 'Inspecting area 205',
       taskProgress: 75
     },
     {
@@ -47,7 +47,7 @@ const StaffLocationTracking: React.FC = () => {
         lastUpdate: new Date(Date.now() - 120000).toISOString() // 2 minutes ago
       },
       performance: 89,
-      currentTask: 'Cleaning room 108',
+      currentTask: 'Cleaning area 108',
       taskProgress: 40
     },
     {
@@ -75,7 +75,7 @@ const StaffLocationTracking: React.FC = () => {
         lastUpdate: new Date(Date.now() - 180000).toISOString() // 3 minutes ago
       },
       performance: 91,
-      currentTask: 'Fixing AC unit in room 302',
+      currentTask: 'Fixing AC unit in area 302',
       taskProgress: 60
     },
     {
@@ -244,7 +244,7 @@ const StaffLocationTracking: React.FC = () => {
       
       {/* Floor Visualization */}
       <div className="mb-8">
-        <h3 className="text-lg font-medium text-slate-800 mb-4">Hotel Floor Plan</h3>
+        <h3 className="text-lg font-medium text-slate-800 mb-4">Site Floor Plan</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {Object.entries(staffByFloor).map(([floor, floorStaff]) => (
             <div key={floor} className="border border-slate-200 rounded-xl p-4">

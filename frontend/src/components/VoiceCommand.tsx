@@ -139,10 +139,10 @@ const VoiceCommand: React.FC<VoiceCommandProps> = ({ onCommand }) => {
       <div className="mt-6 pt-4 border-t border-slate-200">
         <h4 className="text-sm font-medium text-slate-800 mb-2">Try these voice commands:</h4>
         <ul className="text-sm text-slate-600 space-y-1">
-          <li>• "Request extra towels for room 205"</li>
-          <li>• "Leaky faucet in room 108 needs maintenance"</li>
-          <li>• "Guest in room 302 wants late checkout"</li>
-          <li>• "Room 104 air conditioning not working"</li>
+          <li>• "Request extra towels for area 205"</li>
+          <li>• "Leaky faucet in area 108 needs maintenance"</li>
+          <li>• "Client in area 302 wants late checkout"</li>
+          <li>• "Area 104 air conditioning not working"</li>
         </ul>
       </div>
     </div>

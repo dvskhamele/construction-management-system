@@ -24,8 +24,8 @@ interface NotificationComponentProps {
 
 const NotificationComponent: React.FC<NotificationComponentProps> = ({ user }) => {
   const [notifications, setNotifications] = useState<Notification[]>([
-    { id: 1, title: 'New Request', message: 'John Doe requested extra towels in room 205', type: 'new_request', isRead: false, createdAt: new Date().toISOString() },
-    { id: 2, title: 'Room Status', message: 'Room 302 has been marked as clean', type: 'room_status', isRead: false, createdAt: new Date(Date.now() - 3600000).toISOString() },
+    { id: 1, title: 'New Request', message: 'John Doe requested extra towels in area 205', type: 'new_request', isRead: false, createdAt: new Date().toISOString() },
+    { id: 2, title: 'Area Status', message: 'Area 302 has been marked as clean', type: 'area_status', isRead: false, createdAt: new Date(Date.now() - 3600000).toISOString() },
     { id: 3, title: 'Request Update', message: 'Jane Smith\'s breakfast order is in progress', type: 'request_status', isRead: true, createdAt: new Date(Date.now() - 7200000).toISOString() }
   ])
   const [unreadCount, setUnreadCount] = useState(2)
@@ -52,7 +52,7 @@ const NotificationComponent: React.FC<NotificationComponentProps> = ({ user }) =
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'room_status':
+      case 'area_status':
         return '🛏️'
       case 'request_status':
         return '📋'

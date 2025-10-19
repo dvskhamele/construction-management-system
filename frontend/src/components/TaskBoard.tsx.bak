@@ -1,0 +1,211 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  priority: string;
+  status: string;
+  assignedTo: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
+  projectId: number;
+}
+
+interface TaskBoardProps {
+  currentUserRole: string;
+  userId?: number;
+}
+
+const TaskBoard: React.FC<TaskBoardProps> = ({ currentUserRole, userId }) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [draggedTask, setDraggedTask] = useState<Task | null>(null);
+  const [columns, setColumns] = useState([
+    { id: 'PENDING', title: 'To Do', color: 'bg-slate-100' },
+    { id: 'ASSIGNED', title: 'In Progress', color: 'bg-blue-100' },
+    { id: 'REVIEW', title: 'Review', color: 'bg-amber-100' },
+    { id: 'COMPLETED', title: 'Done', color: 'bg-emerald-100' },
+  ]);
+
+  useEffect(() => {
+    // Fetch tasks from localStorage or API
+    const storedTasks = localStorage.getItem('constructionTasks');
+    
+    if (storedTasks) {
+      let fetchedTasks = JSON.parse(storedTasks).tasks;
+      
+      // Filter tasks based on role and user
+      if (currentUserRole === 'CREW_LEADER' || currentUserRole === 'SUBCONTRACTOR') {
+        // Only show tasks assigned to the current user
+        if (userId) {
+          fetchedTasks = fetchedTasks.filter((task: Task) => task.assignedTo === `User ${userId}`);
+        }
+      }
+      
+      setTasks(fetchedTasks);
+    } else {
+      // Mock data for tasks
+      setTasks([
+        {
+          id: 1,
+          projectId: 1,
+          title: 'Foundation Work',
+          description: 'Pour concrete for foundation',
+          priority: 'HIGH',
+          status: 'ASSIGNED',
+          assignedTo: 'John Smith',
+          dueDate: '2025-02-15',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          projectId: 3,
+          title: 'Electrical Installation',
+          description: 'Install electrical wiring on second floor',
+          priority: 'MEDIUM',
+          status: 'PENDING',
+          assignedTo: 'Sarah Johnson',
+          dueDate: '2025-03-20',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        },
+        {
+          id: 3,
+          projectId: 2,
+          title: 'Design Approval',
+          description: 'Get architect approval for plans',
+          priority: 'LOW',
+          status: 'REVIEW',
+          assignedTo: 'Maria Garcia',
+          dueDate: '2025-04-10',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        },
+        {
+          id: 4,
+          projectId: 1,
+          title: 'Plumbing Installation',
+          description: 'Install main plumbing lines',
+          priority: 'HIGH',
+          status: 'COMPLETED',
+          assignedTo: 'David Wilson',
+          dueDate: '2025-02-28',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      ]);
+    }
+  }, [currentUserRole, userId]);
+
+  const handleDragStart = (e: React.DragEvent, task: Task) => {
+    setDraggedTask(task);
+    e.dataTransfer.setData('text/plain', task.id.toString());
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, newStatus: string) => {
+    e.preventDefault();
+    
+    if (draggedTask) {
+      const updatedTasks = tasks.map(task => 
+        task.id === draggedTask.id 
+          ? { ...task, status: newStatus, updatedAt: new Date().toISOString() } 
+          : task
+      );
+      
+      setTasks(updatedTasks);
+      setDraggedTask(null);
+      
+      // Update localStorage
+      localStorage.setItem('constructionTasks', JSON.stringify({ tasks: updatedTasks }));
+    }
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'HIGH': return 'bg-rose-100 text-rose-800';
+      case 'MEDIUM': return 'bg-amber-100 text-amber-800';
+      case 'LOW': return 'bg-green-100 text-green-800';
+      default: return 'bg-slate-100 text-slate-800';
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'PENDING': return 'bg-slate-100 text-slate-800';
+      case 'ASSIGNED': return 'bg-blue-100 text-blue-800';
+      case 'REVIEW': return 'bg-amber-100 text-amber-800';
+      case 'COMPLETED': return 'bg-emerald-100 text-emerald-800';
+      default: return 'bg-slate-100 text-slate-800';
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md p-6 card">
+      <h2 className="text-xl font-semibold text-slate-800 mb-4">Task Board</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {columns.map(column => (
+          <div 
+            key={column.id}
+            className={`${column.color} rounded-lg p-4 min-h-[500px]`}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, column.id)}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-medium text-slate-800">{column.title}</h3>
+              <span className="bg-white bg-opacity-50 text-slate-700 text-sm px-2 py-1 rounded-full">
+                {tasks.filter(task => task.status === column.id).length}
+              </span>
+            </div>
+            
+            <div className="space-y-3">
+              {tasks
+                .filter(task => task.status === column.id)
+                .map(task => (
+                  <div 
+                    key={task.id}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, task)}
+                    className="bg-white rounded-lg shadow-sm p-3 cursor-move hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-medium text-slate-800">{task.title}</h4>
+                      <span className={`px-2 py-1 rounded-full text-xs ${getPriorityColor(task.priority)}`}>
+                        {task.priority}
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-slate-600 mt-2 line-clamp-2">{task.description}</p>
+                    
+                    <div className="flex justify-between items-center mt-3">
+                      <span className="text-xs text-slate-500">
+                        Due: {new Date(task.dueDate).toLocaleDateString()}
+                      </span>
+                      <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(task.status)}`}>
+                        {task.status}
+                      </span>
+                    </div>
+                    
+                    <div className="mt-2">
+                      <p className="text-xs text-slate-600">Assigned to: {task.assignedTo}</p>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default TaskBoard

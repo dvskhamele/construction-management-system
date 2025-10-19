@@ -6,11 +6,11 @@ import Link from 'next/link'
 export default function FeaturesPage() {
   const features = [
     {
-      category: "Guest Experience",
+      category: "Client Experience",
       items: [
         {
-          title: "Guest Request Management",
-          description: "Centralized system for logging, tracking, and resolving guest requests with automatic department routing.",
+          title: "Client Request Management",
+          description: "Centralized system for logging, tracking, and resolving client requests with automatic department routing.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -18,27 +18,27 @@ export default function FeaturesPage() {
           ),
           benefits: [
             "30% reduction in response times",
-            "95% guest satisfaction with request handling",
+            "95% client satisfaction with request handling",
             "Automatic escalation for urgent requests"
           ]
         },
         {
-          title: "Personalized Guest Profiles",
-          description: "AI-powered guest preference tracking and personalization engine for tailored experiences.",
+          title: "Personalized Client Profiles",
+          description: "AI-powered client preference tracking and personalization engine for tailored experiences.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           ),
           benefits: [
-            "Increased guest loyalty and repeat bookings",
+            "Increased client loyalty and repeat bookings",
             "Higher average daily rates through upselling",
-            "Reduced guest complaints by 45%"
+            "Reduced client complaints by 45%"
           ]
         },
         {
           title: "Real-Time Communication",
-          description: "Multi-channel communication platform for seamless guest-staff interactions.",
+          description: "Multi-channel communication platform for seamless client-staff interactions.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
@@ -47,7 +47,7 @@ export default function FeaturesPage() {
           benefits: [
             "24/7 multilingual support",
             "Reduced miscommunication by 60%",
-            "Improved guest engagement scores"
+            "Improved client engagement scores"
           ]
         }
       ]
@@ -56,8 +56,8 @@ export default function FeaturesPage() {
       category: "Operations Management",
       items: [
         {
-          title: "Housekeeping & Room Status",
-          description: "Real-time room status tracking with mobile-friendly interfaces for staff to update statuses instantly.",
+          title: "Housekeeping & Area Status",
+          description: "Real-time area status tracking with mobile-friendly interfaces for staff to update statuses instantly.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -65,8 +65,8 @@ export default function FeaturesPage() {
           ),
           benefits: [
             "40% improvement in housekeeping efficiency",
-            "Real-time visibility into room availability",
-            "Reduced room turnaround time by 25%"
+            "Real-time visibility into area availability",
+            "Reduced area turnaround time by 25%"
           ]
         },
         {
@@ -85,7 +85,7 @@ export default function FeaturesPage() {
         },
         {
           title: "Inventory Control",
-          description: "Track and manage all hotel inventory with automated alerts for low stock and reorder recommendations.",
+          description: "Track and manage all construction inventory with automated alerts for low stock and reorder recommendations.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -113,7 +113,7 @@ export default function FeaturesPage() {
           benefits: [
             "Predictive demand forecasting",
             "Revenue optimization recommendations",
-            "Guest behavior pattern analysis"
+            "Client behavior pattern analysis"
           ]
         },
         {
@@ -158,7 +158,7 @@ export default function FeaturesPage() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-teal-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
-            HotelOps
+            BuildMate
           </Link>
           <div className="flex items-center space-x-4">
             <Link href="/login" className="text-slate-600 hover:text-teal-600 font-medium">
@@ -178,7 +178,7 @@ export default function FeaturesPage() {
       <div className="py-20 bg-gradient-to-r from-teal-600 to-emerald-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white">
-            Comprehensive Hotel Management Features
+            Comprehensive Construction Management Features
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-teal-100">
             Everything you need to run a world-class hospitality operation with zero human management required
@@ -251,7 +251,7 @@ export default function FeaturesPage() {
               Seamless Integration Benefits
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-300">
-              How HotelOps transforms your hotel operations through intelligent automation
+              How BuildMate transforms your construction operations through intelligent automation
             </p>
           </div>
 
@@ -311,10 +311,10 @@ export default function FeaturesPage() {
       <div className="py-20 bg-gradient-to-r from-teal-600 to-emerald-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Ready to Transform Your Hotel Operations?
+            Ready to Transform Your Construction Operations?
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-teal-100">
-            Join thousands of hotels worldwide using HotelOps to deliver exceptional guest experiences with zero human management required.
+            Join thousands of construction companies worldwide using BuildMate to deliver exceptional project outcomes with zero human management required.
           </p>
           
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">

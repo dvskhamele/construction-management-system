@@ -11,56 +11,56 @@ export default function HomePage() {
 
   const features = [
     {
-      title: "QR Code Tracking",
-      description: "Unique QR codes attached to every area ensures authenticity of photos and provides documents required at site.",
+      title: "Project Management",
+      description: "Comprehensive project management tools to plan, track, and deliver construction projects on time and within budget.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
         </svg>
       )
     },
     {
-      title: "Auto Scheduling",
-      description: "Auto calculating the new schedule of a project with every task and start/finish status.",
+      title: "Resource Planning",
+      description: "Advanced planning tools for crew management, equipment allocation, and material tracking across all your construction sites.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       )
     },
     {
-      title: "Project Gallery",
-      description: "All site photos auto-stored which are automatically sorted area wise, date wise etc.",
+      title: "Site Documentation",
+      description: "Digital documentation tools for progress tracking, daily logs, and photo documentation of your construction sites.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      title: "Field-to-Office Connect",
-      description: "QR based mobile and web application connect field and office team seamlessly.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-        </svg>
-      )
-    },
-    {
-      title: "Triggers & Notifications",
-      description: "Auto generated whatsapp and email notifications. Prepones your revenues linked with construction.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
         </svg>
       )
     },
     {
       title: "Quality Management",
-      description: "Records every work done at site along with the date, person responsible and photos of every task done at site.",
+      description: "Tools to track compliance, inspections, and quality control measures across all construction phases.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      )
+    },
+    {
+      title: "Progress Analytics",
+      description: "Real-time analytics and reporting on project metrics, team performance, and construction progress.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      )
+    },
+    {
+      title: "Communication Hub",
+      description: "Integrated communication tools to keep all stakeholders informed throughout the construction process.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
         </svg>
       )
     }
@@ -70,33 +70,33 @@ export default function HomePage() {
     {
       id: 'basic',
       name: 'BuildMate Basic',
-      price: '₹15,000',
-      description: 'Essential construction management features for small projects',
+      price: '₹20,000',
+      description: 'Essential construction management features for small contractors',
       features: [
-        'QR-based site tracking',
-        'Basic project scheduling',
-        'Photo gallery with date sorting',
+        'Project tracking with milestone management',
+        'Basic crew and equipment tracking',
+        'Simple reporting and analytics',
         'Mobile-responsive interface',
         'Email notifications',
-        'Up to 3 project sites',
-        '5GB storage'
+        'Up to 5 projects',
+        'Basic progress tracking'
       ],
       cta: 'Start Free Trial'
     },
     {
       id: 'professional',
       name: 'BuildMate Professional',
-      price: '₹35,000',
-      description: 'Comprehensive solution for medium-sized construction businesses',
+      price: '₹45,000',
+      description: 'Comprehensive solution for growing construction businesses',
       features: [
         'All Basic features',
-        'Advanced scheduling with auto-calculation',
+        'Advanced resource management',
+        'Quality control and inspection tools',
         'WhatsApp notifications',
-        'QR document management',
-        'Triggers for revenue generation',
-        'Up to 10 project sites',
-        '20GB storage',
-        'Priority support'
+        'Progress analytics dashboard',
+        'Up to 20 projects',
+        'Priority support',
+        'Custom project templates'
       ],
       cta: 'Start 14-Day Trial',
       popular: true
@@ -104,50 +104,50 @@ export default function HomePage() {
     {
       id: 'enterprise',
       name: 'BuildMate Enterprise',
-      price: '₹65,000',
-      description: 'Complete construction process automation platform',
+      price: '₹85,000',
+      description: 'Complete construction management platform',
       features: [
         'All Professional features',
-        'Unlimited project sites',
+        'Unlimited projects',
         'API access for custom integrations',
-        'MSP, Excel, Primavera compatibility',
-        'Advanced analytics & reporting',
+        'Advanced reporting & analytics',
+        'Custom reporting & analytics',
         'Dedicated account manager',
         'Custom training sessions',
         'White-label options',
-        '100GB storage'
+        'Unlimited storage for documentation'
       ],
       cta: 'Contact Sales'
     }
   ]
 
   const benefits = [
-    "Saves 2-3 manhours everyday for site team members",
-    "Keeps the project completion date visible at every minute",
-    "Enhance your project quality with comprehensive tracking",
-    "Reduces project delays by 40% with proactive scheduling",
-    "Provides 100% transparency between field and office teams",
+    "Increase project efficiency and complete jobs faster",
+    "Streamline your construction workflow and reduce delays",
+    "Enhance project presentation with real-time progress tracking",
+    "Generate more efficient workflows and improve team coordination",
+    "Provides 100% transparency with real-time updates",
     "Affordable rates at par with industry standard"
   ]
 
   const useCases = [
-    "Construction companies seeking centralized project management",
-    "Real estate developers managing multiple sites",
-    "Contractors wanting to modernize operations",
-    "Infrastructure projects requiring detailed tracking",
-    "Building firms with diverse construction needs",
-    "Project managers needing real-time updates"
+    "General contractors managing multiple construction sites",
+    "Construction companies overseeing project portfolios",
+    "Project managers coordinating complex builds",
+    "Construction firms tracking progress and quality",
+    "Contractors expanding their digital project management",
+    "Civil engineers monitoring construction phases"
   ]
 
   const technologies = [
-    { name: "Next.js 14+", category: "Frontend Framework" },
+    { name: "Next.js 15+", category: "Frontend Framework" },
     { name: "TypeScript", category: "Language" },
     { name: "Tailwind CSS", category: "Styling" },
     { name: "React", category: "UI Library" },
     { name: "Node.js", category: "Backend Runtime" },
     { name: "Express", category: "Backend Framework" },
     { name: "MongoDB", category: "Database" },
-    { name: "QR Code API", category: "Tracking Technology" },
+    { name: "Google Maps API", category: "Location Services" },
     { name: "Vercel", category: "Deployment" },
     { name: "Recharts", category: "Data Visualization" }
   ]
@@ -193,25 +193,25 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6">
-              BuildMate: Construction Process Automation
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-4 sm:mb-6">
+              BuildMate: Delhi's Premier Construction Management Platform
             </h1>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-10">
-              True construction process automation platform that helps builders plan, deploy, track & manage end to end project development.
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto mb-6 sm:mb-10">
+              A meticulously engineered platform designed to streamline construction workflows and improve project delivery. Plan, track, and manage every phase of your construction projects with unparalleled clarity and transparency.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <button 
                 onClick={() => router.push('/dashboard')}
-                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-lg font-medium text-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
-                Build Your Project
+                Explore Projects
               </button>
               <button 
                 onClick={() => setIsPreviewOpen(true)}
-                className="bg-white text-teal-600 border border-teal-500 px-8 py-4 rounded-lg font-medium text-lg hover:bg-slate-50 transition duration-300"
+                className="bg-white text-teal-600 border border-teal-500 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-50 transition duration-300"
               >
                 Preview Features
               </button>
@@ -224,66 +224,64 @@ export default function HomePage() {
       <section id="design" className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Design Illustration</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Strategic Construction Management</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our unique approach to construction management through innovative tools
+              Our unique approach to construction project management through innovative tools and Delhi market expertise
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+          <div className="flex flex-col md:flex-row gap-6 sm:gap-8 md:gap-12 items-center">
+            <div className="w-full md:w-1/2 space-y-4 sm:space-y-6">
               <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200">
-                <h3 className="text-xl font-semibold text-slate-800 mb-3">Construction Process Automation</h3>
+                <h3 className="text-xl font-semibold text-slate-800 mb-3">Project Management Excellence</h3>
                 <p className="text-slate-600 mb-4">
-                  Our platform automates the entire construction process from planning to project completion. 
-                  With BuildMate, you can manage every aspect of your project from a single dashboard.
+                  Our platform manages construction projects effectively with unparalleled clarity and transparency, providing detailed information that today's construction industry demands when managing projects in Delhi.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Real-time project tracking</span>
+                    <span>Comprehensive project tracking</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Automated scheduling and rescheduling</span>
+                    <span>Transparent progress and quality metrics</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>QR code-based verification</span>
+                    <span>Advanced resource allocation</span>
                   </li>
                 </ul>
               </div>
               
               <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200">
-                <h3 className="text-xl font-semibold text-slate-800 mb-3">Field-Office Integration</h3>
+                <h3 className="text-xl font-semibold text-slate-800 mb-3">Project Delivery Excellence</h3>
                 <p className="text-slate-600 mb-4">
-                  Connect your field teams with office management through our seamless platform integration.
-                  Everyone has access to the same information in real-time.
+                  Designed meticulously to facilitate project coordination and robust delivery management, effectively transitioning your offline success to the digital realm and securing a significant share of the construction market.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Mobile and web accessibility</span>
+                    <span>Efficient project coordination system</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Automated notifications</span>
+                    <span>Automated progress tracking</span>
                   </li>
                   <li className="flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Document management system</span>
+                    <span>Delivery optimization tools</span>
                   </li>
                 </ul>
               </div>
@@ -291,34 +289,34 @@ export default function HomePage() {
             
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-80 h-80 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center">
-                  <div className="w-64 h-64 bg-gradient-to-br from-teal-200 to-teal-300 rounded-full flex items-center justify-center">
-                    <div className="w-48 h-48 bg-gradient-to-br from-teal-300 to-teal-400 rounded-full flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <div className="bg-white rounded-lg p-4 shadow-lg mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-teal-600 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center">
+                  <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-gradient-to-br from-teal-200 to-teal-300 rounded-full flex items-center justify-center">
+                    <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 bg-gradient-to-br from-teal-300 to-teal-400 rounded-full flex items-center justify-center">
+                      <div className="text-center p-2 sm:p-3 md:p-4">
+                        <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg mb-2 sm:mb-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-teal-600 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
                         </div>
-                        <h3 className="text-lg font-bold text-white">BuildMate Process</h3>
-                        <p className="text-white text-sm mt-2">Automated Construction Management</p>
+                        <h3 className="text-base sm:text-lg font-bold text-white">Construction Process</h3>
+                        <p className="text-white text-xs sm:text-sm mt-1 sm:mt-2">Automated Project Management</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4 w-40">
+                <div className="absolute -top-4 -right-2 sm:-right-4 bg-white rounded-lg shadow-lg p-2 sm:p-4 w-32 sm:w-40">
                   <div className="flex items-center">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                    <span className="text-sm font-medium">Active</span>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mr-1 sm:mr-2"></div>
+                    <span className="text-xs sm:text-sm font-medium">Active</span>
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">Field Teams Connected</p>
+                  <p className="text-xs text-slate-600 mt-1">Projects Online</p>
                 </div>
                 
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4 w-40">
+                <div className="absolute -bottom-4 -left-2 sm:-left-4 bg-white rounded-lg shadow-lg p-2 sm:p-4 w-32 sm:w-40">
                   <div className="flex items-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                    <span className="text-sm font-medium">Synced</span>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full mr-1 sm:mr-2"></div>
+                    <span className="text-xs sm:text-sm font-medium">Synced</span>
                   </div>
                   <p className="text-xs text-slate-600 mt-1">Real-time Updates</p>
                 </div>
@@ -329,22 +327,28 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">BuildMate Features</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Everything you need to efficiently manage your construction projects in one place
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              BuildMate Features
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
+              Everything you need to efficiently manage and deliver construction projects in Delhi's dynamic market
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
             {features.map((feature, index) => (
-              <div key={index} className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-lg transition duration-300 border border-slate-100">
-                <div className="w-12 h-12 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
+              <div key={index} className="bg-gradient-to-br from-white to-slate-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-lg transition duration-300 border border-slate-100">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-3 sm:mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2">{feature.title}</h3>
-                <p className="text-slate-600">{feature.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm sm:text-base text-slate-600">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -352,103 +356,119 @@ export default function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section id="benefits" className="py-20 bg-slate-50">
+      <section id="benefits" className="py-12 sm:py-16 md:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Key Benefits</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Transform your construction operations with measurable improvements
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              Key Benefits
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
+              Transform your construction operations with measurable improvements in Delhi market
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-6 h-6 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                 </div>
-                <p className="ml-3 text-lg text-slate-700">{benefit}</p>
+                <p className="ml-2 sm:ml-3 text-sm sm:text-base text-slate-700">{benefit}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Use Cases Section */}
-      <section className="py-20 bg-white">
+      {/* Construction Market Insights */}
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perfect For</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our system adapts to various construction environments
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              Construction Market Insights
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
+              The construction segment is experiencing unprecedented growth, driven by infrastructure development
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {useCases.map((useCase, index) => (
-              <div key={index} className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-6 shadow-sm border border-slate-100">
-                <h3 className="text-lg font-semibold text-slate-800">{useCase}</h3>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-emerald-200">
+              <div className="text-2xl sm:text-3xl font-bold text-emerald-700 mb-1 sm:mb-2">12%</div>
+              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Construction Output Growth</h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">Year-on-year increase in construction sector output</p>
+            </div>
+            <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-amber-200">
+              <div className="text-2xl sm:text-3xl font-bold text-amber-700 mb-1 sm:mb-2">8%</div>
+              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Project Efficiency</h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">Average efficiency improvement with digital tools</p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-blue-200">
+              <div className="text-2xl sm:text-3xl font-bold text-blue-700 mb-1 sm:mb-2">35%</div>
+              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Time Savings</h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">Average project delivery time reduction</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Build Your Project Section */}
-      <section className="py-20 bg-slate-50">
+      {/* Curated Digital Experience */}
+      <section className="py-12 sm:py-16 md:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Build Your Project on Time Every Time</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-              Our proven 4-step process helps you execute construction projects efficiently and on schedule.
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              Curated Digital Experience
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto mb-6 sm:mb-8">
+              Architecting essential pages and sections for optimal project management and coordination
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-2">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-xl font-bold">01</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                  <span className="text-base sm:text-lg font-bold">01</span>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2">Know Your Daily Schedule</h3>
-                <p className="text-slate-600">Work widget updates engineers, supers and foreman with daily schedule to keep everyone aligned on tasks and deadlines.</p>
+                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Project Overview</h3>
+                <p className="text-xs sm:text-sm text-slate-600">Comprehensive project information and milestone tracking</p>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-2">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-xl font-bold">02</span>
+              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                  <span className="text-base sm:text-lg font-bold">02</span>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2">Scan QR Code</h3>
-                <p className="text-slate-600">Scan QR code at the job site to know the daily activity with timelines and access required documents instantly.</p>
+                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Site Management</h3>
+                <p className="text-xs sm:text-sm text-slate-600">Comprehensive site management with detailed information</p>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-2">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-xl font-bold">03</span>
+              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                  <span className="text-base sm:text-lg font-bold">03</span>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2">Click Picture</h3>
-                <p className="text-slate-600">Capture the image of the jobsite upon completion of the task for authentic record keeping and progress tracking.</p>
+                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Team Coordination</h3>
+                <p className="text-xs sm:text-sm text-slate-600">Dynamic interfaces for seamless team communication</p>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-2">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-xl font-bold">04</span>
+              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                  <span className="text-base sm:text-lg font-bold">04</span>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2">Mark Start/FINISH/WIP</h3>
-                <p className="text-slate-600">Follow step-wise instruction and mark status while beginning the task, during work-in-progress, and after completion.</p>
+                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Progress Tracking</h3>
+                <p className="text-xs sm:text-sm text-slate-600">Detailed progress reporting and analytics</p>
               </div>
             </div>
             
-            <div className="mt-12 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-8 text-white max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold mb-4">Ready to Build Your Project?</h3>
-              <p className="text-teal-100 mb-6">
-                Join hundreds of construction companies already using BuildMate to deliver projects on time and enhance quality.
+            <div className="mt-8 sm:mt-12 bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 text-white max-w-md sm:max-w-lg md:max-w-4xl mx-auto">
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Ready to Transform Your Construction Business?</h3>
+              <p className="text-teal-100 text-sm sm:text-base mb-4 sm:mb-6">
+                Join successful construction companies already using our platform to streamline operations and improve delivery times.
               </p>
               <button 
                 onClick={() => router.push('/dashboard')}
-                className="bg-white text-teal-600 px-8 py-4 rounded-lg font-medium text-lg hover:bg-slate-100 transition duration-300 shadow-lg"
+                className="bg-white text-teal-600 px-6 py-2 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-100 transition duration-300 shadow-lg w-full sm:w-auto"
               >
-                Start Building Today
+                Start Growing Today
               </button>
             </div>
           </div>
@@ -459,28 +479,28 @@ export default function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Compatible with Your Existing Tools</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Seamless Integrations</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Works seamlessly with MSP, Excel, Google sheets, Primavera and other tools you already use
+              Works seamlessly with design tools, equipment systems, and project management platforms you already use
             </p>
           </div>
           
           <div className="flex flex-wrap justify-center gap-6">
             <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
               <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Microsoft Project (MSP)</span>
-            </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Excel/Google Sheets</span>
-            </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Primavera</span>
-            </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
               <span className="font-medium text-slate-700">AutoCAD</span>
+            </div>
+            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
+              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
+              <span className="font-medium text-slate-700">Project Management Tools</span>
+            </div>
+            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
+              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
+              <span className="font-medium text-slate-700">Equipment Tracking</span>
+            </div>
+            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
+              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
+              <span className="font-medium text-slate-700">Google Maps</span>
             </div>
           </div>
         </div>
@@ -554,19 +574,21 @@ export default function HomePage() {
       </section>
 
       {/* Technology Stack */}
-      <section id="tech" className="py-20 bg-white">
+      <section id="tech" className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Modern Technology Stack</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Built with cutting-edge technologies for optimal performance
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              Modern Technology Stack
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
+              Built with cutting-edge technologies for optimal performance and mobile-first architecture
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {technologies.map((tech, index) => (
-              <div key={index} className="bg-slate-50 rounded-lg p-4 text-center hover:bg-slate-100 transition duration-300">
-                <h3 className="font-semibold text-slate-800">{tech.name}</h3>
-                <p className="text-sm text-slate-600 mt-1">{tech.category}</p>
+              <div key={index} className="bg-slate-50 rounded-lg p-3 sm:p-4 text-center hover:bg-slate-100 transition duration-300">
+                <h3 className="font-semibold text-sm sm:text-base text-slate-800">{tech.name}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1">{tech.category}</p>
               </div>
             ))}
           </div>
@@ -574,22 +596,24 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-teal-500 to-teal-600">
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-teal-500 to-teal-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Construction Management?</h2>
-          <p className="text-xl text-teal-100 max-w-3xl mx-auto mb-10">
-            Join hundreds of construction companies already using BuildMate to streamline their operations and improve project delivery.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
+            Ready to Transform Your Construction Business?
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl text-teal-100 max-w-md sm:max-w-xl md:max-w-3xl mx-auto mb-6 sm:mb-10">
+            Join successful construction companies already using our platform to streamline operations and improve project delivery in Delhi.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <button 
               onClick={() => router.push('/dashboard')}
-              className="bg-white text-teal-600 px-8 py-4 rounded-lg font-medium text-lg hover:bg-slate-100 transition duration-300 shadow-lg"
+              className="bg-white text-teal-600 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-100 transition duration-300 shadow-lg w-full sm:w-auto"
             >
               View Live Demo
             </button>
             <button 
               onClick={() => setIsPreviewOpen(true)}
-              className="bg-teal-700 text-white border border-teal-300 px-8 py-4 rounded-lg font-medium text-lg hover:bg-teal-800 transition duration-300"
+              className="bg-teal-700 text-white border border-teal-300 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-teal-800 transition duration-300 w-full sm:w-auto mt-2 sm:mt-0"
             >
               Schedule a Demo
             </button>
@@ -603,130 +627,144 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Construction people all over the world are happily using BuildMate. Here are answers to common questions.
+              Construction professionals from Delhi and beyond are successfully using our platform.
             </p>
           </div>
           
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">What is BuildMate and how does it help in construction management?</h3>
-              <p className="text-slate-600">BuildMate is a true construction process automation platform that helps builders plan, deploy, track & manage end to end project development. Our qr based mobile and web application connect field and office team, giving everyone on the jobsite tools to execute day to day tasks.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">What is BuildMate and how does it help in construction project management?</h3>
+              <p className="text-slate-600">BuildMate is a meticulously engineered platform designed to streamline construction workflows and improve project delivery. Our sophisticated platform connects your expertise in managing construction projects in Delhi with modern tools that enhance coordination, tracking, and quality control.</p>
             </div>
             
             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does the QR tracking system work?</h3>
-              <p className="text-slate-600">QR code attached to every area ensures authenticity of the photos and also provides documents required at site. This unique site management software gives everyone on the jobsite tools to execute day to day tasks while maintaining authenticity of all records.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does the project tracking system work?</h3>
+              <p className="text-slate-600">Our project tracking system enables you to manage all phases of construction from foundation to completion. This comprehensive management approach helps you understand project progress better, leading to more efficient workflows and faster project delivery.</p>
             </div>
             
             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
               <h3 className="text-xl font-semibold text-slate-800 mb-2">What compatibility does BuildMate offer with existing tools?</h3>
-              <p className="text-slate-600">BuildMate is compatible with all previous tools like MSP, Excel, Google sheets, Primavera etc. This allows for smooth integration with your existing workflows without disrupting your current processes.</p>
+              <p className="text-slate-600">BuildMate is compatible with most design software, equipment tracking systems, and project management platforms like AutoCAD, Procore, and PlanGrid. This allows for smooth integration with your existing workflows without disrupting your current processes.</p>
             </div>
             
             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does auto-scheduling work?</h3>
-              <p className="text-slate-600">BuildMate auto calculates the new schedule of a project with every task and start/finish status. This ensures that your project timeline remains accurate and up-to-date based on the actual progress on site.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does project management work?</h3>
+              <p className="text-slate-600">Our platform provides an efficient project management system that tracks progress from initial planning through to completion. You can manage schedules, resources, quality checks, and team communication all within our intuitive interface, ensuring no aspect of your project falls through the cracks.</p>
             </div>
             
             <div className="bg-white rounded-xl shadow-md p-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How much time can BuildMate save for my team?</h3>
-              <p className="text-slate-600">BuildMate saves 2-3 manhours everyday for site team members which were being utilized for emails/report making/rescheduling and other mundane works. This allows your team to focus on actual construction activities.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">How can BuildMate help me deliver projects more efficiently?</h3>
+              <p className="text-slate-600">Our platform is optimized for project efficiency and team collaboration, ensuring your construction projects get maximum visibility among stakeholders. With advanced tracking, resource management, and progress analytics, you can deliver projects on time while our management tools help you maintain quality standards in the Delhi market.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      <section id="contact" className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Contact Us</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Have questions? Get in touch with our team to learn how BuildMate can transform your construction projects.
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
+              Contact Us
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
+              Have questions? Get in touch with our team to learn how BuildMate can transform your construction project management.
             </p>
           </div>
           
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 shadow-md">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-4">BuildMate Solutions Private Limited</h3>
-                <div className="space-y-3 text-slate-600">
-                  <p>LA LAGUNE HOUSE NO-1702 BLOCK-D, SECTOR-54, GOLF COURSE ROAD, GURGAON, Gurgaon, Haryana, 122002</p>
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
+            <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
+              <div className="w-full md:w-1/2">
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-3 sm:mb-4">
+                  Signimus Technologies Private Limited
+                </h3>
+                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm md:text-base text-slate-600">
+                  <p>23, PU4, Behind C21 Mall, Scheme 54 PU4, Indore, Madhya Pradesh 452011</p>
                   <p>Phone: +91 98765 43210</p>
-                  <p>Email: support@buildmate.app</p>
-                  <p>Website: www.buildmate.app</p>
+                  <p>Email: contact@buildmate.com</p>
+                  <p>Website: www.buildmate.com</p>
                 </div>
                 
-                <div className="mt-8">
-                  <h4 className="text-lg font-semibold text-slate-800 mb-3">Our Values</h4>
-                  <ul className="space-y-2 text-slate-600">
+                <div className="mt-6 sm:mt-8">
+                  <h4 className="text-base sm:text-lg font-semibold text-slate-800 mb-2 sm:mb-3">
+                    Our Values
+                  </h4>
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm md:text-base text-slate-600">
                     <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       <span>Affordable: We promise to offer you the best rate we can - at par with the industry standard</span>
                     </li>
                     <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Quality: Enhance your project quality with comprehensive tracking</span>
+                      <span>Quality: Enhance your project management with comprehensive digital tools</span>
                     </li>
                     <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Reliability: Keeps the completion date of the project visible at every minute</span>
+                      <span>Reliability: Provides consistent performance and 24/7 availability</span>
                     </li>
                   </ul>
                 </div>
               </div>
               
-              <div>
-                <form className="space-y-4">
+              <div className="w-full md:w-1/2">
+                <form className="space-y-3 sm:space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
+                      Name
+                    </label>
                     <input 
                       type="text" 
                       id="name" 
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
                       placeholder="Your Name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
+                      Email
+                    </label>
                     <input 
                       type="email" 
                       id="email" 
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
                       placeholder="your@email.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">Company</label>
+                    <label htmlFor="company" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
+                      Company
+                    </label>
                     <input 
                       type="text" 
                       id="company" 
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
                       placeholder="Company Name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">Message</label>
+                    <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
+                      Message
+                    </label>
                     <textarea 
                       id="message" 
                       rows={4}
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
                       placeholder="How can we help you?"
                     ></textarea>
                   </div>
                   
                   <button 
                     type="submit"
-                    className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300"
+                    className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-2.5 sm:px-6 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:from-teal-600 hover:to-teal-700 transition duration-300"
                   >
                     Send Message
                   </button>
@@ -738,52 +776,52 @@ export default function HomePage() {
       </section>
       
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12">
+      <footer className="bg-slate-900 text-slate-400 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div>
               <div className="flex items-center">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.617 1.842 3.683a1 1 0 01-.213 1.106l-1.317 1.318a1 1 0 01-.944.29l-1.817-.545L10 13l-3.78 1.26a1 1 0 01-.945-.29l-1.317-1.317a1 1 0 01-.213-1.106l1.842-3.683-1.233-.617a1 1 0 01.894-1.789l1.599.799L9 5.405V3a1 1 0 011-1zm0 16a3 3 0 100-6 3 3 0 000 6z" />
                   </svg>
                 </div>
-                <span className="ml-2 text-xl font-bold text-white">BuildMate</span>
+                <span className="ml-2 text-lg sm:text-xl font-bold text-white">BuildMate</span>
               </div>
-              <p className="mt-4 text-sm">
-                True construction process automation platform.
+              <p className="mt-3 sm:mt-4 text-xs sm:text-sm">
+                Delhi's premier construction management platform for construction professionals.
               </p>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Product</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition">Features</a></li>
-                <li><a href="#" className="hover:text-white transition">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition">Templates</a></li>
-                <li><a href="#" className="hover:text-white transition">Releases</a></li>
+              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Product</h3>
+              <ul className="space-y-1.5 sm:space-y-2">
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Features</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Templates</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Releases</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li><a href="#about" className="hover:text-white transition">About</a></li>
-                <li><a href="#contact" className="hover:text-white transition">Contact</a></li>
-                <li><a href="#faqs" className="hover:text-white transition">FAQs</a></li>
-                <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
+              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
+              <ul className="space-y-1.5 sm:space-y-2">
+                <li><a href="#about" className="hover:text-white transition text-xs sm:text-sm">About</a></li>
+                <li><a href="#contact" className="hover:text-white transition text-xs sm:text-sm">Contact</a></li>
+                <li><a href="#faqs" className="hover:text-white transition text-xs sm:text-sm">FAQs</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Privacy Policy</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Support</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition">API Reference</a></li>
-                <li><a href="#" className="hover:text-white transition">Status</a></li>
-                <li><a href="#" className="hover:text-white transition">Help Center</a></li>
+              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Support</h3>
+              <ul className="space-y-1.5 sm:space-y-2">
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">API Reference</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Status</a></li>
+                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Help Center</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-12 pt-8 text-sm text-center">
-            <p>© 2025 BuildMate. All rights reserved.</p>
+          <div className="border-t border-slate-800 mt-6 sm:mt-12 pt-6 sm:pt-8 text-xs sm:text-sm text-center">
+            <p>© 2025 BuildMate by Signimus Technologies. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -808,13 +846,13 @@ export default function HomePage() {
                 <div className="text-center">
                   <div className="bg-gradient-to-br from-teal-500 to-teal-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
                   <h4 className="text-xl font-semibold text-slate-800 mb-2">Interactive Construction Dashboard</h4>
                   <p className="text-slate-600 max-w-md mx-auto">
-                    Experience the full BuildMate dashboard with real-time project analytics, QR tracking, 
-                    and progress monitoring.
+                    Experience the full BuildMate dashboard with real-time analytics, project management, 
+                    and progress tracking.
                   </p>
                 </div>
               </div>
@@ -825,11 +863,11 @@ export default function HomePage() {
                 </div>
                 <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-4 border border-slate-100">
                   <div className="text-3xl font-bold text-teal-600 mb-1">40%</div>
-                  <div className="text-slate-600">Reduction in Delays</div>
+                  <div className="text-slate-600">Timeline Improvement</div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-4 border border-slate-100">
                   <div className="text-3xl font-bold text-teal-600 mb-1">2x</div>
-                  <div className="text-slate-600">Team Productivity</div>
+                  <div className="text-slate-600">Project Efficiency</div>
                 </div>
               </div>
               <div className="bg-slate-50 rounded-xl p-6">
@@ -839,37 +877,37 @@ export default function HomePage() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Real-time Dashboard</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>QR Code Tracking</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Auto Scheduling</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Photo Gallery</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>WhatsApp/Email Notifications</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
                     <span>Project Management</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Team Coordination</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Progress Tracking</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Quality Management</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Resource Planning</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Mobile-First Design</span>
                   </li>
                 </ul>
               </div>

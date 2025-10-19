@@ -1,0 +1,902 @@
+'use client'
+
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import Header from '../../components/Header'
+
+export default function SettingsPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [user, setUser] = useState<any>({ name: 'Admin User', role: 'ADMIN' })
+  const [activeTab, setActiveTab] = useState('account')
+  const [formData, setFormData] = useState({
+    companyName: 'BuildMate Construction',
+    companyEmail: 'admin@buildmate.com',
+    companyPhone: '+1-555-0123',
+    companyAddress: '123 Construction Ave, Building City, BC 12345',
+    timezone: 'America/New_York',
+    currency: 'USD',
+    dateFormat: 'MM/DD/YYYY',
+    timeFormat: '12-hour',
+    notifications: {
+      email: true,
+      sms: false,
+      push: true
+    },
+    integrations: {
+      googleCalendar: true,
+      quickbooks: false,
+      slack: true
+    }
+  })
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  })
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      name: 'Admin User',
+      email: 'admin@buildmate.com',
+      role: 'Administrator',
+      status: 'Active',
+      lastLogin: '2025-03-18 09:30 AM'
+    },
+    {
+      id: 2,
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@buildmate.com',
+      role: 'Project Manager',
+      status: 'Active',
+      lastLogin: '2025-03-18 08:45 AM'
+    },
+    {
+      id: 3,
+      name: 'Mike Chen',
+      email: 'mike.chen@buildmate.com',
+      role: 'Site Supervisor',
+      status: 'Active',
+      lastLogin: '2025-03-17 07:15 AM'
+    },
+    {
+      id: 4,
+      name: 'Emily Rodriguez',
+      email: 'emily.rodriguez@buildmate.com',
+      role: 'Estimator',
+      status: 'Inactive',
+      lastLogin: '2025-03-10 03:22 PM'
+    }
+  ])
+  const [roles, setRoles] = useState([
+    { id: 1, name: 'Administrator', permissions: ['full_access'] },
+    { id: 2, name: 'Project Manager', permissions: ['manage_projects', 'view_reports'] },
+    { id: 3, name: 'Site Supervisor', permissions: ['view_projects', 'update_tasks'] },
+    { id: 4, name: 'Estimator', permissions: ['create_estimates', 'view_pricing'] },
+    { id: 5, name: 'Viewer', permissions: ['view_only'] }
+  ])
+
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUser(null)
+    router.push('/login')
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked
+      if (name.startsWith('notifications.')) {
+        const key = name.split('.')[1]
+        setFormData({
+          ...formData,
+          notifications: {
+            ...formData.notifications,
+            [key]: checked
+          }
+        })
+      } else if (name.startsWith('integrations.')) {
+        const key = name.split('.')[1]
+        setFormData({
+          ...formData,
+          integrations: {
+            ...formData.integrations,
+            [key]: checked
+          }
+        })
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      })
+    }
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setPasswordForm({
+      ...passwordForm,
+      [name]: value
+    })
+  }
+
+  const saveSettings = () => {
+    // Save settings logic here
+    alert('Settings saved successfully!')
+  }
+
+  const changePassword = () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      alert('New passwords do not match!')
+      return
+    }
+    // Change password logic here
+    alert('Password changed successfully!')
+    setPasswordForm({
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    })
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Active':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'Inactive':
+        return 'bg-amber-100 text-amber-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case 'Administrator':
+        return 'bg-rose-100 text-rose-800'
+      case 'Project Manager':
+        return 'bg-teal-100 text-teal-800'
+      case 'Site Supervisor':
+        return 'bg-amber-100 text-amber-800'
+      case 'Estimator':
+        return 'bg-indigo-100 text-indigo-800'
+      case 'Viewer':
+        return 'bg-slate-100 text-slate-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <Header user={user} onLogout={handleLogout} />
+
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-800">Settings</h1>
+          <p className="text-slate-600">Manage your construction management system preferences</p>
+        </div>
+
+        {/* Settings Navigation */}
+        <div className="flex flex-wrap mb-6 border-b border-slate-200">
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'account'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('account')}
+          >
+            Account Settings
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'security'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('security')}
+          >
+            Security
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'users'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('users')}
+          >
+            User Management
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'roles'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('roles')}
+          >
+            Roles & Permissions
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'notifications'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('notifications')}
+          >
+            Notifications
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg ${
+              activeTab === 'integrations'
+                ? 'text-teal-600 border-b-2 border-teal-500 bg-teal-50'
+                : 'text-slate-600 hover:text-teal-600'
+            }`}
+            onClick={() => setActiveTab('integrations')}
+          >
+            Integrations
+          </button>
+        </div>
+
+        {/* Account Settings Tab */}
+        {activeTab === 'account' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-6">Account Settings</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={formData.companyName}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Company Email</label>
+                <input
+                  type="email"
+                  name="companyEmail"
+                  value={formData.companyEmail}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Company Phone</label>
+                <input
+                  type="tel"
+                  name="companyPhone"
+                  value={formData.companyPhone}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Company Address</label>
+                <input
+                  type="text"
+                  name="companyAddress"
+                  value={formData.companyAddress}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Timezone</label>
+                <select
+                  name="timezone"
+                  value={formData.timezone}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="America/New_York">Eastern Time (ET)</option>
+                  <option value="America/Chicago">Central Time (CT)</option>
+                  <option value="America/Denver">Mountain Time (MT)</option>
+                  <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Currency</label>
+                <select
+                  name="currency"
+                  value={formData.currency}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="USD">US Dollar (USD)</option>
+                  <option value="EUR">Euro (EUR)</option>
+                  <option value="GBP">British Pound (GBP)</option>
+                  <option value="CAD">Canadian Dollar (CAD)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Date Format</label>
+                <select
+                  name="dateFormat"
+                  value={formData.dateFormat}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Time Format</label>
+                <select
+                  name="timeFormat"
+                  value={formData.timeFormat}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="12-hour">12-hour (AM/PM)</option>
+                  <option value="24-hour">24-hour</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-8 flex justify-end">
+              <button
+                onClick={saveSettings}
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Security Tab */}
+        {activeTab === 'security' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-6">Security Settings</h2>
+            <div className="grid grid-cols-1 gap-6">
+              <div>
+                <h3 className="text-lg font-medium text-slate-800 mb-4">Change Password</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Current Password</label>
+                    <input
+                      type="password"
+                      name="currentPassword"
+                      value={passwordForm.currentPassword}
+                      onChange={handlePasswordChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div></div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
+                    <input
+                      type="password"
+                      name="newPassword"
+                      value={passwordForm.newPassword}
+                      onChange={handlePasswordChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Confirm New Password</label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      value={passwordForm.confirmPassword}
+                      onChange={handlePasswordChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <button
+                    onClick={changePassword}
+                    className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300"
+                  >
+                    Change Password
+                  </button>
+                </div>
+              </div>
+              
+              <div className="border-t border-slate-200 pt-6">
+                <h3 className="text-lg font-medium text-slate-800 mb-4">Two-Factor Authentication</h3>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-600">Add an extra layer of security to your account</p>
+                    <p className="text-sm text-slate-500 mt-1">Status: <span className="text-amber-600">Not enabled</span></p>
+                  </div>
+                  <button className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300">
+                    Enable 2FA
+                  </button>
+                </div>
+              </div>
+              
+              <div className="border-t border-slate-200 pt-6">
+                <h3 className="text-lg font-medium text-slate-800 mb-4">Login History</h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-slate-200">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date & Time</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">IP Address</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-slate-200">
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">2025-03-18 09:30 AM</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">192.168.1.100</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">New York, NY</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800">Successful</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">2025-03-17 08:45 AM</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">192.168.1.100</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">New York, NY</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800">Successful</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">2025-03-16 09:15 AM</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">192.168.1.100</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">New York, NY</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800">Successful</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* User Management Tab */}
+        {activeTab === 'users' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-slate-800">User Management</h2>
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 flex items-center"
+                onClick={() => router.push('/settings/users/new')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                Add User
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Role</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Last Login</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-200">
+                  {users.map((user) => (
+                    <tr key={user.id} className="hover:bg-slate-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
+                            <span className="text-white font-bold">{user.name.charAt(0)}</span>
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-slate-900">{user.name}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{user.email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 text-xs rounded-full ${getRoleColor(user.role)}`}>
+                          {user.role}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(user.status)}`}>
+                          {user.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{user.lastLogin}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button className="text-teal-600 hover:text-teal-900 mr-3">Edit</button>
+                        <button className="text-rose-600 hover:text-rose-900">Delete</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Roles & Permissions Tab */}
+        {activeTab === 'roles' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-slate-800">Roles & Permissions</h2>
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 flex items-center"
+                onClick={() => router.push('/settings/roles/new')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                Add Role
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {roles.map((role) => (
+                <div key={role.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition">
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-lg font-medium text-slate-800">{role.name}</h3>
+                    <button className="text-slate-400 hover:text-slate-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="text-sm font-medium text-slate-700 mb-2">Permissions:</h4>
+                    <div className="space-y-2">
+                      {role.permissions.map((permission, index) => (
+                        <div key={index} className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-emerald-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-sm text-slate-600">{permission.replace(/_/g, ' ')}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 flex justify-end">
+                    <button className="text-sm text-teal-600 hover:text-teal-800 font-medium mr-3">Edit</button>
+                    <button className="text-sm text-rose-600 hover:text-rose-800 font-medium">Delete</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Notifications Tab */}
+        {activeTab === 'notifications' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-6">Notification Preferences</h2>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-medium text-slate-800 mb-4">Email Notifications</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Project Updates</p>
+                      <p className="text-sm text-slate-600">Receive notifications when project status changes</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.email"
+                        checked={formData.notifications.email}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Bid Deadlines</p>
+                      <p className="text-sm text-slate-600">Get reminders before bid submission deadlines</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.email"
+                        checked={formData.notifications.email}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Safety Alerts</p>
+                      <p className="text-sm text-slate-600">Immediate notifications for safety incidents</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.email"
+                        checked={formData.notifications.email}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-slate-200 pt-6">
+                <h3 className="text-lg font-medium text-slate-800 mb-4">SMS Notifications</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Critical Alerts</p>
+                      <p className="text-sm text-slate-600">Urgent notifications that require immediate attention</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.sms"
+                        checked={formData.notifications.sms}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Daily Summaries</p>
+                      <p className="text-sm text-slate-600">End-of-day summaries of project activities</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.sms"
+                        checked={formData.notifications.sms}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-slate-200 pt-6">
+                <h3 className="text-lg font-medium text-slate-800 mb-4">Push Notifications</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Task Assignments</p>
+                      <p className="text-sm text-slate-600">Notifications when new tasks are assigned to you</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.push"
+                        checked={formData.notifications.push}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-slate-800">Meeting Reminders</p>
+                      <p className="text-sm text-slate-600">Reminders for upcoming meetings and site visits</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="notifications.push"
+                        checked={formData.notifications.push}
+                        onChange={handleInputChange}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Integrations Tab */}
+        {activeTab === 'integrations' && (
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-6">System Integrations</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-slate-800">Google Calendar</h3>
+                    <p className="text-sm text-slate-600">Sync events and meetings</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between items-center">
+                  <span className={`px-2 py-1 text-xs rounded-full ${formData.integrations.googleCalendar ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                    {formData.integrations.googleCalendar ? 'Connected' : 'Not Connected'}
+                  </span>
+                  <button 
+                    className={`px-3 py-1 text-sm rounded-lg ${
+                      formData.integrations.googleCalendar 
+                        ? 'bg-rose-100 text-rose-800 hover:bg-rose-200' 
+                        : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
+                    }`}
+                    onClick={() => setFormData({
+                      ...formData,
+                      integrations: {
+                        ...formData.integrations,
+                        googleCalendar: !formData.integrations.googleCalendar
+                      }
+                    })}
+                  >
+                    {formData.integrations.googleCalendar ? 'Disconnect' : 'Connect'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-slate-800">QuickBooks</h3>
+                    <p className="text-sm text-slate-600">Financial data synchronization</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between items-center">
+                  <span className={`px-2 py-1 text-xs rounded-full ${formData.integrations.quickbooks ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                    {formData.integrations.quickbooks ? 'Connected' : 'Not Connected'}
+                  </span>
+                  <button 
+                    className={`px-3 py-1 text-sm rounded-lg ${
+                      formData.integrations.quickbooks 
+                        ? 'bg-rose-100 text-rose-800 hover:bg-rose-200' 
+                        : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
+                    }`}
+                    onClick={() => setFormData({
+                      ...formData,
+                      integrations: {
+                        ...formData.integrations,
+                        quickbooks: !formData.integrations.quickbooks
+                      }
+                    })}
+                  >
+                    {formData.integrations.quickbooks ? 'Disconnect' : 'Connect'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-slate-800">Slack</h3>
+                    <p className="text-sm text-slate-600">Team communication integration</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between items-center">
+                  <span className={`px-2 py-1 text-xs rounded-full ${formData.integrations.slack ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                    {formData.integrations.slack ? 'Connected' : 'Not Connected'}
+                  </span>
+                  <button 
+                    className={`px-3 py-1 text-sm rounded-lg ${
+                      formData.integrations.slack 
+                        ? 'bg-rose-100 text-rose-800 hover:bg-rose-200' 
+                        : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
+                    }`}
+                    onClick={() => setFormData({
+                      ...formData,
+                      integrations: {
+                        ...formData.integrations,
+                        slack: !formData.integrations.slack
+                      }
+                    })}
+                  >
+                    {formData.integrations.slack ? 'Disconnect' : 'Connect'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5 5 0 00-9.9 0m-.1 0h-.01M12 3v.01M12 21v-.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-slate-800">Weather API</h3>
+                    <p className="text-sm text-slate-600">Weather data for project scheduling</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between items-center">
+                  <span className="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800">
+                    Connected
+                  </span>
+                  <button className="px-3 py-1 text-sm rounded-lg bg-rose-100 text-rose-800 hover:bg-rose-200">
+                    Disconnect
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Features Section */}
+        <div className="mt-8 bg-white rounded-2xl shadow-md p-6 card">
+          <h2 className="text-xl font-semibold text-slate-800 mb-4">Settings Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Customization</h3>
+              <p className="text-sm text-slate-600">Tailor the system to your company's specific needs</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Security</h3>
+              <p className="text-sm text-slate-600">Advanced security controls and authentication options</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">User Management</h3>
+              <p className="text-sm text-slate-600">Control access and permissions for team members</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Integrations</h3>
+              <p className="text-sm text-slate-600">Connect with popular tools and services</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}

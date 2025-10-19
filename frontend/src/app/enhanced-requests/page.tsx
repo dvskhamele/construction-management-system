@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function EnhancedRequests() {
   const [requests, setRequests] = useState<any[]>([])
@@ -18,8 +18,8 @@ export default function EnhancedRequests() {
   const [showRequestDetailModal, setShowRequestDetailModal] = useState(false)
   const [selectedRequest, setSelectedRequest] = useState<any>(null)
   const [newRequest, setNewRequest] = useState({
-    guestName: '',
-    roomNumber: '',
+    clientName: '',
+    areaNumber: '',
     title: '',
     department: '',
     priority: 'MEDIUM',
@@ -50,15 +50,15 @@ export default function EnhancedRequests() {
       const mockRequests = [
         { 
           id: 1, 
-          guestName: 'John Doe', 
-          roomNumber: '205', 
+          clientName: 'John Doe', 
+          areaNumber: '205', 
           title: 'Extra towels needed', 
           department: 'Housekeeping', 
           priority: 'MEDIUM', 
           status: 'PENDING',
           assignedTo: null,
           createdAt: new Date(Date.now() - 3600000).toISOString(),
-          description: 'Guest needs extra towels in room 205',
+          description: 'Client needs extra towels in area 205',
           comments: [
             {
               id: 1,
@@ -71,41 +71,41 @@ export default function EnhancedRequests() {
         },
         { 
           id: 2, 
-          guestName: 'Jane Smith', 
-          roomNumber: '108', 
+          clientName: 'Jane Smith', 
+          areaNumber: '108', 
           title: 'Breakfast order', 
           department: 'Food & Beverage', 
           priority: 'HIGH', 
           status: 'IN_PROGRESS',
           assignedTo: 3,
           createdAt: new Date(Date.now() - 7200000).toISOString(),
-          description: 'Guest ordered breakfast to room 108',
+          description: 'Client ordered breakfast to area 108',
           comments: []
         },
         { 
           id: 3, 
-          guestName: 'Robert Johnson', 
-          roomNumber: '210', 
+          clientName: 'Robert Johnson', 
+          areaNumber: '210', 
           title: 'Leaky faucet', 
           department: 'Maintenance', 
           priority: 'URGENT', 
           status: 'PENDING',
           assignedTo: null,
           createdAt: new Date(Date.now() - 10800000).toISOString(),
-          description: 'Bathroom faucet is leaking in room 210',
+          description: 'Batharea faucet is leaking in area 210',
           comments: []
         },
         { 
           id: 4, 
-          guestName: 'Emily Wilson', 
-          roomNumber: '302', 
-          title: 'Room service', 
+          clientName: 'Emily Wilson', 
+          areaNumber: '302', 
+          title: 'Area service', 
           department: 'Food & Beverage', 
           priority: 'LOW', 
           status: 'COMPLETED',
           assignedTo: 4,
           createdAt: new Date(Date.now() - 14400000).toISOString(),
-          description: 'Guest ordered dinner to room 302',
+          description: 'Client ordered dinner to area 302',
           comments: [
             {
               id: 1,
@@ -116,7 +116,7 @@ export default function EnhancedRequests() {
             },
             {
               id: 2,
-              comment: 'Delivered to room',
+              comment: 'Delivered to area',
               staffId: 4,
               staffName: 'Mike Thompson',
               timestamp: new Date(Date.now() - 12000000).toISOString()
@@ -125,15 +125,15 @@ export default function EnhancedRequests() {
         },
         { 
           id: 5, 
-          guestName: 'Michael Brown', 
-          roomNumber: '104', 
+          clientName: 'Michael Brown', 
+          areaNumber: '104', 
           title: 'Air conditioning not working', 
           department: 'Maintenance', 
           priority: 'URGENT', 
           status: 'IN_PROGRESS',
           assignedTo: 5,
           createdAt: new Date(Date.now() - 18000000).toISOString(),
-          description: 'Air conditioning unit not cooling properly in room 104',
+          description: 'Air conditioning unit not cooling properly in area 104',
           comments: [
             {
               id: 1,
@@ -200,8 +200,8 @@ export default function EnhancedRequests() {
     
     if (searchTerm) {
       result = result.filter(request => 
-        request.guestName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        request.roomNumber.includes(searchTerm) ||
+        request.clientName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        request.areaNumber.includes(searchTerm) ||
         request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.description.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -348,8 +348,8 @@ export default function EnhancedRequests() {
     
     // Reset form and close modal
     setNewRequest({
-      guestName: '',
-      roomNumber: '',
+      clientName: '',
+      areaNumber: '',
       title: '',
       department: '',
       priority: 'MEDIUM',
@@ -381,14 +381,12 @@ export default function EnhancedRequests() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-800">Enhanced Guest Requests</h2>
-            <p className="text-slate-600">Manage guest requests with advanced features</p>
+            <h2 className="text-2xl font-bold text-slate-800">Enhanced Client Requests</h2>
+            <p className="text-slate-600">Manage client requests with advanced features</p>
           </div>
           <button 
             className="bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
@@ -435,7 +433,7 @@ export default function EnhancedRequests() {
               <input
                 type="text"
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 bg-white"
-                placeholder="Guest, room, or request"
+                placeholder="Client, area, or request"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -520,7 +518,7 @@ export default function EnhancedRequests() {
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Guest & Room</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Client & Area</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Request</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Priority</th>
@@ -535,11 +533,11 @@ export default function EnhancedRequests() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
-                          <span className="text-white font-medium">{request.guestName.charAt(0)}</span>
+                          <span className="text-white font-medium">{request.clientName.charAt(0)}</span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-slate-900">{request.guestName}</div>
-                          <div className="text-sm text-slate-500">Room {request.roomNumber}</div>
+                          <div className="text-sm font-medium text-slate-900">{request.clientName}</div>
+                          <div className="text-sm text-slate-500">Area {request.areaNumber}</div>
                         </div>
                       </div>
                     </td>
@@ -616,23 +614,23 @@ export default function EnhancedRequests() {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Guest Name</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Client Name</label>
                     <input
                       type="text"
                       className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 bg-white"
-                      placeholder="Guest name"
-                      value={newRequest.guestName}
-                      onChange={(e) => setNewRequest({...newRequest, guestName: e.target.value})}
+                      placeholder="Client name"
+                      value={newRequest.clientName}
+                      onChange={(e) => setNewRequest({...newRequest, clientName: e.target.value})}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Room</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Area</label>
                     <input
                       type="text"
                       className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 bg-white"
-                      placeholder="Room number"
-                      value={newRequest.roomNumber}
-                      onChange={(e) => setNewRequest({...newRequest, roomNumber: e.target.value})}
+                      placeholder="Area number"
+                      value={newRequest.areaNumber}
+                      onChange={(e) => setNewRequest({...newRequest, areaNumber: e.target.value})}
                     />
                   </div>
                 </div>
@@ -641,7 +639,7 @@ export default function EnhancedRequests() {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 bg-white"
-                    placeholder="What does the guest need?"
+                    placeholder="What does the client need?"
                     value={newRequest.title}
                     onChange={(e) => setNewRequest({...newRequest, title: e.target.value})}
                   />
@@ -723,12 +721,12 @@ export default function EnhancedRequests() {
                   <h4 className="text-md font-semibold text-slate-800 mb-2">Request Information</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-slate-600">Guest:</span>
-                      <span className="text-sm font-medium">{selectedRequest.guestName}</span>
+                      <span className="text-sm text-slate-600">Client:</span>
+                      <span className="text-sm font-medium">{selectedRequest.clientName}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-slate-600">Room:</span>
-                      <span className="text-sm font-medium">{selectedRequest.roomNumber}</span>
+                      <span className="text-sm text-slate-600">Area:</span>
+                      <span className="text-sm font-medium">{selectedRequest.areaNumber}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm text-slate-600">Department:</span>
@@ -844,6 +842,6 @@ export default function EnhancedRequests() {
           </div>
         </div>
       )}
-    </div>
+    </UserLayout>
   )
 }

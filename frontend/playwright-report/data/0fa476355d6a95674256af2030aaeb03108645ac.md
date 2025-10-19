@@ -1,0 +1,395 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - complementary [ref=e4]:
+        - generic [ref=e5]:
+          - link "BuildMate" [ref=e7]:
+            - /url: /dashboard
+            - img [ref=e8]
+            - generic [ref=e10]: BuildMate
+          - navigation [ref=e11]:
+            - list [ref=e12]:
+              - listitem [ref=e13]:
+                - link "Dashboard" [ref=e14]:
+                  - /url: /dashboard
+                  - img [ref=e15]
+                  - generic [ref=e17]: Dashboard
+              - listitem [ref=e18]:
+                - link "Tasks" [ref=e19]:
+                  - /url: /tasks
+                  - img [ref=e20]
+                  - generic [ref=e22]: Tasks
+              - listitem [ref=e23]:
+                - link "Projects" [ref=e24]:
+                  - /url: /projects
+                  - img [ref=e25]
+                  - generic [ref=e27]: Projects
+              - listitem [ref=e28]:
+                - link "Sites" [ref=e29]:
+                  - /url: /sites
+                  - img [ref=e30]
+                  - generic [ref=e32]: Sites
+              - listitem [ref=e33]:
+                - link "Crew" [ref=e34]:
+                  - /url: /crew
+                  - img [ref=e35]
+                  - generic [ref=e37]: Crew
+              - listitem [ref=e38]:
+                - link "Equipment" [ref=e39]:
+                  - /url: /equipment
+                  - img [ref=e40]
+                  - generic [ref=e42]: Equipment
+              - listitem [ref=e43]:
+                - link "Analytics" [ref=e44]:
+                  - /url: /analytics
+                  - img [ref=e45]
+                  - generic [ref=e47]: Analytics
+              - listitem [ref=e48]:
+                - link "Subcontractors" [ref=e49]:
+                  - /url: /subcontractors
+                  - img [ref=e50]
+                  - generic [ref=e52]: Subcontractors
+              - listitem [ref=e53]:
+                - link "Defects" [ref=e54]:
+                  - /url: /defects
+                  - img [ref=e55]
+                  - generic [ref=e57]: Defects
+              - listitem [ref=e58]:
+                - link "Safety" [ref=e59]:
+                  - /url: /safety
+                  - img [ref=e60]
+                  - generic [ref=e62]: Safety
+              - listitem [ref=e63]:
+                - link "Materials" [ref=e64]:
+                  - /url: /materials
+                  - img [ref=e65]
+                  - generic [ref=e67]: Materials
+              - listitem [ref=e68]:
+                - link "Crew Tracking" [ref=e69]:
+                  - /url: /crew-tracking
+                  - img [ref=e70]
+                  - generic [ref=e72]: Crew Tracking
+              - listitem [ref=e73]:
+                - link "Admin" [ref=e74]:
+                  - /url: /admin
+                  - img [ref=e75]
+                  - generic [ref=e77]: Admin
+          - generic [ref=e78]:
+            - generic [ref=e80]:
+              - img [ref=e82]
+              - generic [ref=e84]:
+                - paragraph [ref=e85]: Project Manager
+                - paragraph [ref=e86]: ADMIN
+            - button "Logout" [ref=e87] [cursor=pointer]:
+              - img [ref=e88]
+              - text: Logout
+      - main [ref=e91]:
+        - main [ref=e92]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - heading "Projects Dashboard" [level=1] [ref=e96]
+              - paragraph [ref=e97]: Manage and track all your construction projects
+            - generic [ref=e98]:
+              - button "New Project" [ref=e99] [cursor=pointer]:
+                - img [ref=e100]
+                - text: New Project
+              - button "Generate Report" [ref=e102] [cursor=pointer]:
+                - img [ref=e103]
+                - text: Generate Report
+          - generic [ref=e105]:
+            - generic [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]:
+                - generic [ref=e108]:
+                  - paragraph [ref=e109]: Total Projects
+                  - paragraph [ref=e110]: "5"
+                - img [ref=e112]
+              - generic [ref=e115]: "Active: 2"
+            - generic [ref=e116] [cursor=pointer]:
+              - generic [ref=e117]:
+                - generic [ref=e118]:
+                  - paragraph [ref=e119]: Active Projects
+                  - paragraph [ref=e120]: "2"
+                - img [ref=e122]
+              - generic [ref=e125]: ↑ 1 delayed
+            - generic [ref=e126] [cursor=pointer]:
+              - generic [ref=e127]:
+                - generic [ref=e128]:
+                  - paragraph [ref=e129]: Completed Projects
+                  - paragraph [ref=e130]: "0"
+                - img [ref=e132]
+              - generic [ref=e135]: "Value: ₹0L"
+            - generic [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]:
+                - generic [ref=e138]:
+                  - paragraph [ref=e139]: Planning Projects
+                  - paragraph [ref=e140]: "1"
+                - img [ref=e142]
+              - generic [ref=e145]: "Future value: ₹320L"
+          - generic [ref=e146]:
+            - generic [ref=e147]:
+              - heading "Project Portfolio" [level=2] [ref=e148]
+              - generic [ref=e149]: Showing 5 projects
+            - table [ref=e151]:
+              - rowgroup [ref=e152]:
+                - row "Project Client Value Status Progress Dates Location Project Manager Team Size Budget Issues Safety Quality Last Update Next Milestone" [ref=e153]:
+                  - cell "Project" [ref=e154]
+                  - cell "Client" [ref=e155]
+                  - cell "Value" [ref=e156]
+                  - cell "Status" [ref=e157]
+                  - cell "Progress" [ref=e158]
+                  - cell "Dates" [ref=e159]
+                  - cell "Location" [ref=e160]
+                  - cell "Project Manager" [ref=e161]
+                  - cell "Team Size" [ref=e162]
+                  - cell "Budget" [ref=e163]
+                  - cell "Issues" [ref=e164]
+                  - cell "Safety" [ref=e165]
+                  - cell "Quality" [ref=e166]
+                  - cell "Last Update" [ref=e167]
+                  - cell "Next Milestone" [ref=e168]
+              - rowgroup [ref=e169]:
+                - 'row "Downtown Office Complex Commercial • Foundation • Construction Meridian Properties N/A ₹85L ACTIVE 75% 1/15/2025 9/30/2025 Downtown District, New York You 12 Spent: ₹64L Rem: ₹21L 3 1 92% 3/18/2025 Foundation Completion 4/15/2025" [ref=e170] [cursor=pointer]':
+                  - cell "Downtown Office Complex Commercial • Foundation • Construction" [ref=e171]:
+                    - generic [ref=e172]: Downtown Office Complex
+                    - generic [ref=e173]: Commercial • Foundation • Construction
+                  - cell "Meridian Properties N/A" [ref=e174]:
+                    - generic [ref=e175]: Meridian Properties
+                    - generic [ref=e176]: N/A
+                  - cell "₹85L" [ref=e177]
+                  - cell "ACTIVE" [ref=e178]
+                  - cell "75%" [ref=e179]:
+                    - generic [ref=e181]: 75%
+                  - cell "1/15/2025 9/30/2025" [ref=e184]:
+                    - generic [ref=e185]: 1/15/2025
+                    - generic [ref=e186]: 9/30/2025
+                  - cell "Downtown District, New York" [ref=e187]
+                  - cell "You" [ref=e188]
+                  - cell "12" [ref=e189]
+                  - 'cell "Spent: ₹64L Rem: ₹21L" [ref=e190]':
+                    - generic [ref=e191]: "Spent: ₹64L"
+                    - generic [ref=e192]: "Rem: ₹21L"
+                  - cell "3" [ref=e193]
+                  - cell "1" [ref=e194]
+                  - cell "92%" [ref=e195]:
+                    - generic [ref=e196]: 92%
+                  - cell "3/18/2025" [ref=e197]
+                  - cell "Foundation Completion 4/15/2025" [ref=e198]:
+                    - generic [ref=e199]: Foundation Completion
+                    - generic [ref=e200]: 4/15/2025
+                - 'row "Residential Apartment Block B Residential • Framing • Construction Urban Developments N/A ₹120L DELAYED 45% 2/10/2025 10/15/2025 Suburban Area, Chicago Sarah Johnson 18 Spent: ₹54L Rem: ₹66L 7 2 87% 3/18/2025 Structural Framing 4/20/2025" [ref=e201] [cursor=pointer]':
+                  - cell "Residential Apartment Block B Residential • Framing • Construction" [ref=e202]:
+                    - generic [ref=e203]: Residential Apartment Block B
+                    - generic [ref=e204]: Residential • Framing • Construction
+                  - cell "Urban Developments N/A" [ref=e205]:
+                    - generic [ref=e206]: Urban Developments
+                    - generic [ref=e207]: N/A
+                  - cell "₹120L" [ref=e208]
+                  - cell "DELAYED" [ref=e209]
+                  - cell "45%" [ref=e210]:
+                    - generic [ref=e212]: 45%
+                  - cell "2/10/2025 10/15/2025" [ref=e215]:
+                    - generic [ref=e216]: 2/10/2025
+                    - generic [ref=e217]: 10/15/2025
+                  - cell "Suburban Area, Chicago" [ref=e218]
+                  - cell "Sarah Johnson" [ref=e219]
+                  - cell "18" [ref=e220]
+                  - 'cell "Spent: ₹54L Rem: ₹66L" [ref=e221]':
+                    - generic [ref=e222]: "Spent: ₹54L"
+                    - generic [ref=e223]: "Rem: ₹66L"
+                  - cell "7" [ref=e224]
+                  - cell "2" [ref=e225]
+                  - cell "87%" [ref=e226]:
+                    - generic [ref=e227]: 87%
+                  - cell "3/18/2025" [ref=e228]
+                  - cell "Structural Framing 4/20/2025" [ref=e229]:
+                    - generic [ref=e230]: Structural Framing
+                    - generic [ref=e231]: 4/20/2025
+                - 'row "Industrial Warehouse Industrial • Finishing • Construction Tech Storage Solutions N/A ₹210L ON TRACK 90% 11/1/2024 3/30/2025 River Crossing, Houston Mike Chen 24 Spent: ₹189L Rem: ₹21L 2 0 96% 3/18/2025 Final Inspection 3/25/2025" [ref=e232] [cursor=pointer]':
+                  - cell "Industrial Warehouse Industrial • Finishing • Construction" [ref=e233]:
+                    - generic [ref=e234]: Industrial Warehouse
+                    - generic [ref=e235]: Industrial • Finishing • Construction
+                  - cell "Tech Storage Solutions N/A" [ref=e236]:
+                    - generic [ref=e237]: Tech Storage Solutions
+                    - generic [ref=e238]: N/A
+                  - cell "₹210L" [ref=e239]
+                  - cell "ON TRACK" [ref=e240]
+                  - cell "90%" [ref=e241]:
+                    - generic [ref=e243]: 90%
+                  - cell "11/1/2024 3/30/2025" [ref=e246]:
+                    - generic [ref=e247]: 11/1/2024
+                    - generic [ref=e248]: 3/30/2025
+                  - cell "River Crossing, Houston" [ref=e249]
+                  - cell "Mike Chen" [ref=e250]
+                  - cell "24" [ref=e251]
+                  - 'cell "Spent: ₹189L Rem: ₹21L" [ref=e252]':
+                    - generic [ref=e253]: "Spent: ₹189L"
+                    - generic [ref=e254]: "Rem: ₹21L"
+                  - cell "2" [ref=e255]
+                  - cell "0" [ref=e256]
+                  - cell "96%" [ref=e257]:
+                    - generic [ref=e258]: 96%
+                  - cell "3/18/2025" [ref=e259]
+                  - cell "Final Inspection 3/25/2025" [ref=e260]:
+                    - generic [ref=e261]: Final Inspection
+                    - generic [ref=e262]: 3/25/2025
+                - 'row "Retail Center Renovation Renovation • Planning • Renovation City Retail Group N/A ₹45L ON HOLD 30% 1/20/2025 6/15/2025 Shopping District, Los Angeles Emily Rodriguez 8 Spent: ₹14L Rem: ₹32L 5 1 89% 3/18/2025 Permit Approval 4/5/2025" [ref=e263] [cursor=pointer]':
+                  - cell "Retail Center Renovation Renovation • Planning • Renovation" [ref=e264]:
+                    - generic [ref=e265]: Retail Center Renovation
+                    - generic [ref=e266]: Renovation • Planning • Renovation
+                  - cell "City Retail Group N/A" [ref=e267]:
+                    - generic [ref=e268]: City Retail Group
+                    - generic [ref=e269]: N/A
+                  - cell "₹45L" [ref=e270]
+                  - cell "ON HOLD" [ref=e271]
+                  - cell "30%" [ref=e272]:
+                    - generic [ref=e274]: 30%
+                  - cell "1/20/2025 6/15/2025" [ref=e277]:
+                    - generic [ref=e278]: 1/20/2025
+                    - generic [ref=e279]: 6/15/2025
+                  - cell "Shopping District, Los Angeles" [ref=e280]
+                  - cell "Emily Rodriguez" [ref=e281]
+                  - cell "8" [ref=e282]
+                  - 'cell "Spent: ₹14L Rem: ₹32L" [ref=e283]':
+                    - generic [ref=e284]: "Spent: ₹14L"
+                    - generic [ref=e285]: "Rem: ₹32L"
+                  - cell "5" [ref=e286]
+                  - cell "1" [ref=e287]
+                  - cell "89%" [ref=e288]:
+                    - generic [ref=e289]: 89%
+                  - cell "3/18/2025" [ref=e290]
+                  - cell "Permit Approval 4/5/2025" [ref=e291]:
+                    - generic [ref=e292]: Permit Approval
+                    - generic [ref=e293]: 4/5/2025
+                - 'row "Mixed-Use Development Mixed-Use • Design • Development Downtown Developers LLC N/A ₹320L PLANNING 15% 4/1/2025 12/15/2025 City Center, San Francisco David Wilson 15 Spent: ₹0L Rem: ₹320L 0 0 0% 3/18/2025 Design Approval 4/30/2025" [ref=e294] [cursor=pointer]':
+                  - cell "Mixed-Use Development Mixed-Use • Design • Development" [ref=e295]:
+                    - generic [ref=e296]: Mixed-Use Development
+                    - generic [ref=e297]: Mixed-Use • Design • Development
+                  - cell "Downtown Developers LLC N/A" [ref=e298]:
+                    - generic [ref=e299]: Downtown Developers LLC
+                    - generic [ref=e300]: N/A
+                  - cell "₹320L" [ref=e301]
+                  - cell "PLANNING" [ref=e302]
+                  - cell "15%" [ref=e303]:
+                    - generic [ref=e305]: 15%
+                  - cell "4/1/2025 12/15/2025" [ref=e308]:
+                    - generic [ref=e309]: 4/1/2025
+                    - generic [ref=e310]: 12/15/2025
+                  - cell "City Center, San Francisco" [ref=e311]
+                  - cell "David Wilson" [ref=e312]
+                  - cell "15" [ref=e313]
+                  - 'cell "Spent: ₹0L Rem: ₹320L" [ref=e314]':
+                    - generic [ref=e315]: "Spent: ₹0L"
+                    - generic [ref=e316]: "Rem: ₹320L"
+                  - cell "0" [ref=e317]
+                  - cell "0" [ref=e318]
+                  - cell "0%" [ref=e319]:
+                    - generic [ref=e320]: 0%
+                  - cell "3/18/2025" [ref=e321]
+                  - cell "Design Approval 4/30/2025" [ref=e322]:
+                    - generic [ref=e323]: Design Approval
+                    - generic [ref=e324]: 4/30/2025
+          - generic [ref=e325]:
+            - generic [ref=e326]:
+              - heading "Project Analytics" [level=2] [ref=e327]
+              - generic [ref=e328]:
+                - button "7D" [ref=e329] [cursor=pointer]
+                - button "30D" [ref=e330] [cursor=pointer]
+            - generic [ref=e331]:
+              - generic [ref=e332]:
+                - heading "Project Completion Rate" [level=3] [ref=e333]
+                - generic [ref=e334]:
+                  - generic [ref=e335]:
+                    - generic [ref=e337]: Oct 10
+                    - generic [ref=e339]: Oct 11
+                    - generic [ref=e341]: Oct 12
+                    - generic [ref=e343]: Oct 13
+                    - generic [ref=e345]: Oct 14
+                    - generic [ref=e347]: Oct 15
+                    - generic [ref=e349]: Oct 16
+                  - generic [ref=e350]:
+                    - generic [ref=e351]: Actual Completed
+                    - generic [ref=e352]: Predicted Rate
+              - generic [ref=e353]:
+                - heading "Project Workload Distribution" [level=3] [ref=e354]
+                - generic [ref=e355]:
+                  - generic [ref=e357]:
+                    - generic [ref=e358]: Foundation Phase
+                    - generic [ref=e359]: 15/20 crew
+                  - generic [ref=e363]:
+                    - generic [ref=e364]: Framing Phase
+                    - generic [ref=e365]: 9/20 crew
+                  - generic [ref=e369]:
+                    - generic [ref=e370]: Electrical Phase
+                    - generic [ref=e371]: 12/18 crew
+    - contentinfo [ref=e374]:
+      - generic [ref=e375]:
+        - generic [ref=e376]:
+          - generic [ref=e377]:
+            - generic [ref=e378]:
+              - img [ref=e380]
+              - generic [ref=e382]: BuildMate
+            - paragraph [ref=e383]: Delhi's premier construction management platform for construction professionals.
+          - generic [ref=e384]:
+            - heading "Product" [level=3] [ref=e385]
+            - list [ref=e386]:
+              - listitem [ref=e387]:
+                - link "Features" [ref=e388]:
+                  - /url: "#"
+              - listitem [ref=e389]:
+                - link "Pricing" [ref=e390]:
+                  - /url: "#"
+              - listitem [ref=e391]:
+                - link "Templates" [ref=e392]:
+                  - /url: "#"
+              - listitem [ref=e393]:
+                - link "Releases" [ref=e394]:
+                  - /url: "#"
+          - generic [ref=e395]:
+            - heading "Company" [level=3] [ref=e396]
+            - list [ref=e397]:
+              - listitem [ref=e398]:
+                - link "About" [ref=e399]:
+                  - /url: "#about"
+              - listitem [ref=e400]:
+                - link "Contact" [ref=e401]:
+                  - /url: "#contact"
+              - listitem [ref=e402]:
+                - link "FAQs" [ref=e403]:
+                  - /url: "#faqs"
+              - listitem [ref=e404]:
+                - link "Privacy Policy" [ref=e405]:
+                  - /url: "#"
+          - generic [ref=e406]:
+            - heading "Support" [level=3] [ref=e407]
+            - list [ref=e408]:
+              - listitem [ref=e409]:
+                - link "Documentation" [ref=e410]:
+                  - /url: "#"
+              - listitem [ref=e411]:
+                - link "API Reference" [ref=e412]:
+                  - /url: "#"
+              - listitem [ref=e413]:
+                - link "Status" [ref=e414]:
+                  - /url: "#"
+              - listitem [ref=e415]:
+                - link "Help Center" [ref=e416]:
+                  - /url: "#"
+        - paragraph [ref=e418]: © 2025 BuildMate by Signimus Technologies. All rights reserved.
+  - generic:
+    - generic [ref=e421] [cursor=pointer]:
+      - img [ref=e422]
+      - generic [ref=e424]: 2 errors
+      - button "Hide Errors" [ref=e425]:
+        - img [ref=e426]
+    - status [ref=e429]:
+      - generic [ref=e430]:
+        - img [ref=e432]
+        - generic [ref=e434]:
+          - text: Static route
+          - button "Hide static indicator" [ref=e435] [cursor=pointer]:
+            - img [ref=e436]
+  - alert [ref=e439]
+```

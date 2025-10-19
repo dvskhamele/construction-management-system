@@ -1,0 +1,246 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useAutomation } from '../context/AutomationContext';
+import { PROJECT_TEMPLATES } from '../utils/automationRules';
+
+interface User {
+  name: string;
+  role: string;
+}
+
+interface Project {
+  id: number;
+  name: string;
+  type: string;
+  description: string;
+  status: string;
+  progress: number;
+  startDate: string;
+  deadline: string;
+  budget: number;
+  assignedCrew: string;
+}
+
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  projectId: number;
+  stage: string;
+  status: string;
+  priority: string;
+  assignedTo: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface CreateProjectProps {
+  currentUser: User;
+  onClose: () => void;
+}
+
+const CreateProject: React.FC<CreateProjectProps> = ({ currentUser, onClose }) => {
+  const { triggerEvent } = useAutomation();
+  const [projectData, setProjectData] = useState({
+    name: '',
+    type: 'residential',
+    description: '',
+    startDate: '',
+    deadline: '',
+    budget: 0
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      // Create project data
+      const newProject: Project = {
+        id: Date.now(),
+        name: projectData.name,
+        type: projectData.type,
+        description: projectData.description,
+        status: 'PLANNING',
+        progress: 0,
+        startDate: projectData.startDate,
+        deadline: projectData.deadline,
+        budget: projectData.budget,
+        assignedCrew: 'New Team'
+      };
+
+      // Trigger automation event
+      const result = triggerEvent('PROJECT_CREATED', newProject);
+
+      if (result) {
+        // Save to localStorage
+        const storedProjects = localStorage.getItem('constructionProjects');
+        let projectsData = storedProjects ? JSON.parse(storedProjects) : { projects: [] };
+        
+        projectsData.projects.push(newProject);
+        localStorage.setItem('constructionProjects', JSON.stringify(projectsData));
+
+        // Process auto-created tasks
+        if (result.tasks) {
+          const storedTasks = localStorage.getItem('constructionTasks');
+          const tasksData = storedTasks ? JSON.parse(storedTasks) : { tasks: [] };
+          
+          result.tasks.forEach((task: Task) => {
+            tasksData.tasks.push(task);
+          });
+          
+          localStorage.setItem('constructionTasks', JSON.stringify(tasksData));
+        }
+
+        // Process auto-created budget
+        if (result.budget) {
+          const storedBudgets = localStorage.getItem('constructionBudgets');
+          const budgetsData = storedBudgets ? JSON.parse(storedBudgets) : [];
+          budgetsData.push(result.budget);
+          localStorage.setItem('constructionBudgets', JSON.stringify(budgetsData));
+        }
+
+        alert('Project created successfully with automated tasks and budget!');
+        onClose();
+      }
+    } catch (err) {
+      setError('Failed to create project. Please try again.');
+      console.error('Project creation error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Create New Project</h2>
+          
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Project Name</label>
+              <input
+                type="text"
+                value={projectData.name}
+                onChange={(e) => setProjectData({...projectData, name: e.target.value})}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                placeholder="Enter project name"
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Project Type</label>
+              <select
+                value={projectData.type}
+                onChange={(e) => setProjectData({...projectData, type: e.target.value})}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+              >
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+              <textarea
+                value={projectData.description}
+                onChange={(e) => setProjectData({...projectData, description: e.target.value})}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                placeholder="Project description"
+                rows={3}
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Start Date</label>
+                <input
+                  type="date"
+                  value={projectData.startDate}
+                  onChange={(e) => setProjectData({...projectData, startDate: e.target.value})}
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Deadline</label>
+                <input
+                  type="date"
+                  value={projectData.deadline}
+                  onChange={(e) => setProjectData({...projectData, deadline: e.target.value})}
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Budget (₹)</label>
+              <input
+                type="number"
+                value={projectData.budget}
+                onChange={(e) => setProjectData({...projectData, budget: Number(e.target.value)})}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                placeholder="Enter budget amount"
+              />
+            </div>
+            
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-slate-600 hover:text-slate-800 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className={`px-4 py-2 rounded-lg font-medium ${
+                  loading 
+                    ? 'bg-slate-300 text-slate-500 cursor-not-allowed' 
+                    : 'bg-teal-600 text-white hover:bg-teal-700'
+                }`}
+              >
+                {loading ? 'Creating...' : 'Create Project'}
+              </button>
+            </div>
+          </form>
+          
+          <div className="mt-6 p-4 bg-slate-50 rounded-lg">
+            <h3 className="font-medium text-slate-700 mb-2">What will be auto-created:</h3>
+            <ul className="text-sm text-slate-600 space-y-1">
+              {PROJECT_TEMPLATES[projectData.type as keyof typeof PROJECT_TEMPLATES]?.stages.map((stage, idx) => (
+                <li key={idx} className="flex items-center">
+                  <span className="text-teal-600 mr-2">✓</span>
+                  {stage.name} stage with {stage.autoTasks.length} subtasks
+                </li>
+              ))}
+              <li className="flex items-center">
+                <span className="text-teal-600 mr-2">✓</span>
+                Budget tracking with categories
+              </li>
+              <li className="flex items-center">
+                <span className="text-teal-600 mr-2">✓</span>
+                Task workflow automation
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateProject;

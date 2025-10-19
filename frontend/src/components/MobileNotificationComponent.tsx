@@ -15,22 +15,22 @@ const MobileNotificationComponent: React.FC<NotificationComponentProps> = ({ use
   const [notifications, setNotifications] = useState([
     {
       id: '1',
-      title: 'New guest request',
-      description: 'Emma Davis needs extra pillows in room 201',
+      title: 'New client request',
+      description: 'Emma Davis needs extra pillows in area 201',
       time: '2 min ago',
       read: false
     },
     {
       id: '2',
       title: 'Maintenance required',
-      description: 'TV not working in room 305',
+      description: 'TV not working in area 305',
       time: '15 min ago',
       read: false
     },
     {
       id: '3',
       title: 'Housekeeping update',
-      description: 'Room 104 has been cleaned and inspected',
+      description: 'Area 104 has been cleaned and inspected',
       time: '1 hour ago',
       read: true
     }

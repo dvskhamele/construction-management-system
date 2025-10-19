@@ -1,0 +1,378 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+
+interface SiteEmergency {
+  id: number
+  type: string // Medical, Safety, Equipment Failure, Weather, Other
+  location: string
+  site: string
+  description: string
+  status: string // Reported, In Progress, Resolved
+  reportedBy: string
+  reportedAt: string
+  assignedTo?: string
+  resolvedAt?: string
+  priority: string // Low, Medium, High, Critical
+  injuries?: number
+  fatalities?: number
+}
+
+const SiteEmergencyResponse: React.FC = () => {
+  const [emergencies, setEmergencies] = useState<SiteEmergency[]>([
+    {
+      id: 1,
+      type: 'Safety',
+      location: 'Foundation Area',
+      site: 'Downtown Office Complex',
+      description: 'Worker fell from scaffolding, requires immediate medical attention',
+      status: 'In Progress',
+      reportedBy: 'John Smith',
+      reportedAt: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
+      priority: 'Critical',
+      assignedTo: 'Site Supervisor',
+      injuries: 1
+    },
+    {
+      id: 2,
+      type: 'Equipment Failure',
+      location: 'Electrical Area B1',
+      site: 'Downtown Office Complex',
+      description: 'Main circuit breaker tripped, power outage in half the building',
+      status: 'Reported',
+      reportedBy: 'Mike Johnson',
+      reportedAt: new Date(Date.now() - 1800000).toISOString(), // 30 minutes ago
+      priority: 'High',
+      assignedTo: 'Electrical Supervisor'
+    },
+    {
+      id: 3,
+      type: 'Weather',
+      location: 'Roof Level',
+      site: 'Downtown Office Complex',
+      description: 'Heavy rain causing water infiltration in roof work area',
+      status: 'Resolved',
+      reportedBy: 'Sarah Williams',
+      reportedAt: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+      resolvedAt: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+      priority: 'Medium',
+      assignedTo: 'Site Supervisor'
+    }
+  ])
+
+  const [showReportModal, setShowReportModal] = useState(false)
+  const [newEmergency, setNewEmergency] = useState({
+    type: 'Safety',
+    location: '',
+    site: 'Downtown Office Complex',
+    description: '',
+    priority: 'Medium'
+  })
+
+  const [activeFilter, setActiveFilter] = useState('all')
+
+  // Filter emergencies based on active filter
+  const filteredEmergencies = activeFilter === 'all' 
+    ? emergencies 
+    : emergencies.filter(emergency => emergency.status.toLowerCase() === activeFilter)
+
+  const handleReportEmergency = () => {
+    const emergencyToReport: SiteEmergency = {
+      id: Date.now(),
+      type: newEmergency.type,
+      location: newEmergency.location,
+      site: newEmergency.site,
+      description: newEmergency.description,
+      status: 'Reported',
+      reportedBy: 'Current User', // Would be actual user in real app
+      reportedAt: new Date().toISOString(),
+      priority: newEmergency.priority
+    }
+
+    setEmergencies([emergencyToReport, ...emergencies])
+    setNewEmergency({
+      type: 'Safety',
+      location: '',
+      site: 'Downtown Office Complex',
+      description: '',
+      priority: 'Medium'
+    })
+    setShowReportModal(false)
+  }
+
+  const updateEmergencyStatus = (id: number, status: string) => {
+    setEmergencies(emergencies.map(emergency => 
+      emergency.id === id ? { ...emergency, status } : emergency
+    ))
+  }
+
+  const getTypeColor = (type: string) => {
+    switch(type) {
+      case 'Safety': return 'bg-red-100 text-red-800'
+      case 'Medical': return 'bg-rose-100 text-rose-800'
+      case 'Equipment Failure': return 'bg-amber-100 text-amber-800'
+      case 'Weather': return 'bg-blue-100 text-blue-800'
+      default: return 'bg-slate-100 text-slate-800'
+    }
+  }
+
+  const getPriorityColor = (priority: string) => {
+    switch(priority) {
+      case 'Critical': return 'bg-red-600 text-white'
+      case 'High': return 'bg-orange-500 text-white'
+      case 'Medium': return 'bg-amber-500 text-white'
+      case 'Low': return 'bg-green-500 text-white'
+      default: return 'bg-slate-500 text-white'
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md p-6 card">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-800">Site Emergency Response</h2>
+          <p className="text-sm text-slate-600 mt-1">Manage and track site emergencies</p>
+        </div>
+        <button 
+          className="bg-gradient-to-br from-red-500 to-red-600 text-white py-2 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition duration-300 shadow-md flex items-center"
+          onClick={() => setShowReportModal(true)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          Report Emergency
+        </button>
+      </div>
+
+      {/* Emergency Status Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+          <div className="text-2xl font-bold text-red-700">{emergencies.filter(e => e.status === 'Reported').length}</div>
+          <div className="text-sm text-red-600">Reported</div>
+        </div>
+        <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+          <div className="text-2xl font-bold text-amber-700">{emergencies.filter(e => e.status === 'In Progress').length}</div>
+          <div className="text-sm text-amber-600">In Progress</div>
+        </div>
+        <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+          <div className="text-2xl font-bold text-emerald-700">{emergencies.filter(e => e.status === 'Resolved').length}</div>
+          <div className="text-sm text-emerald-600">Resolved</div>
+        </div>
+        <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+          <div className="text-2xl font-bold text-slate-700">{emergencies.length}</div>
+          <div className="text-sm text-slate-600">Total Emergencies</div>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <button 
+          className={`px-3 py-1 rounded-full text-sm ${activeFilter === 'all' ? 'bg-teal-500 text-white' : 'bg-slate-100 text-slate-700'}`}
+          onClick={() => setActiveFilter('all')}
+        >
+          All Emergencies
+        </button>
+        <button 
+          className={`px-3 py-1 rounded-full text-sm ${activeFilter === 'reported' ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-700'}`}
+          onClick={() => setActiveFilter('reported')}
+        >
+          Reported
+        </button>
+        <button 
+          className={`px-3 py-1 rounded-full text-sm ${activeFilter === 'in progress' ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-700'}`}
+          onClick={() => setActiveFilter('in progress')}
+        >
+          In Progress
+        </button>
+        <button 
+          className={`px-3 py-1 rounded-full text-sm ${activeFilter === 'resolved' ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-700'}`}
+          onClick={() => setActiveFilter('resolved')}
+        >
+          Resolved
+        </button>
+      </div>
+
+      {/* Emergency List */}
+      <div className="space-y-4">
+        {filteredEmergencies.length === 0 ? (
+          <div className="text-center py-8">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <h3 className="mt-4 text-lg font-medium text-slate-800">No emergencies found</h3>
+            <p className="mt-1 text-slate-600">There are no emergencies matching your current filter.</p>
+          </div>
+        ) : (
+          filteredEmergencies.map((emergency) => (
+            <div 
+              key={emergency.id} 
+              className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="flex items-center">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(emergency.type)}`}>
+                      {emergency.type}
+                    </span>
+                    <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(emergency.priority)}`}>
+                      {emergency.priority}
+                    </span>
+                  </div>
+                  <h3 className="font-medium text-slate-800 mt-2">{emergency.description}</h3>
+                  <div className="flex flex-wrap gap-2 mt-2 text-sm text-slate-600">
+                    <span>{emergency.site}</span>
+                    <span>•</span>
+                    <span>{emergency.location}</span>
+                    <span>•</span>
+                    <span>Reported by {emergency.reportedBy}</span>
+                    <span>•</span>
+                    <span>{new Date(emergency.reportedAt).toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    emergency.status === 'Reported' ? 'bg-rose-100 text-rose-800' :
+                    emergency.status === 'In Progress' ? 'bg-amber-100 text-amber-800' :
+                    'bg-emerald-100 text-emerald-800'
+                  }`}>
+                    {emergency.status}
+                  </span>
+                  {emergency.assignedTo && (
+                    <span className="text-xs text-slate-500 mt-1">Assigned to {emergency.assignedTo}</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-2 mt-4">
+                {emergency.status === 'Reported' && (
+                  <button 
+                    className="text-sm bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 transition"
+                    onClick={() => updateEmergencyStatus(emergency.id, 'In Progress')}
+                  >
+                    Acknowledge
+                  </button>
+                )}
+                {emergency.status === 'In Progress' && (
+                  <button 
+                    className="text-sm bg-emerald-500 text-white px-3 py-1 rounded hover:bg-emerald-600 transition"
+                    onClick={() => updateEmergencyStatus(emergency.id, 'Resolved')}
+                  >
+                    Mark Resolved
+                  </button>
+                )}
+                <button className="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded hover:bg-slate-200 transition">
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Report Emergency Modal */}
+      {showReportModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-slate-800">Report Site Emergency</h3>
+                <button 
+                  className="text-slate-500 hover:text-slate-700"
+                  onClick={() => setShowReportModal(false)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Emergency Type</label>
+                  <select
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={newEmergency.type}
+                    onChange={(e) => setNewEmergency({...newEmergency, type: e.target.value})}
+                  >
+                    <option value="Safety">Safety Incident</option>
+                    <option value="Medical">Medical Emergency</option>
+                    <option value="Equipment Failure">Equipment Failure</option>
+                    <option value="Weather">Weather Emergency</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Site</label>
+                  <select
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={newEmergency.site}
+                    onChange={(e) => setNewEmergency({...newEmergency, site: e.target.value})}
+                  >
+                    <option value="Downtown Office Complex">Downtown Office Complex</option>
+                    <option value="Residential Tower A">Residential Tower A</option>
+                    <option value="Shopping Mall B">Shopping Mall B</option>
+                    <option value="Industrial Facility C">Industrial Facility C</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Enter specific location"
+                    value={newEmergency.location}
+                    onChange={(e) => setNewEmergency({...newEmergency, location: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Priority</label>
+                  <select
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={newEmergency.priority}
+                    onChange={(e) => setNewEmergency({...newEmergency, priority: e.target.value})}
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+                  <textarea
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    rows={3}
+                    placeholder="Describe the emergency situation"
+                    value={newEmergency.description}
+                    onChange={(e) => setNewEmergency({...newEmergency, description: e.target.value})}
+                  ></textarea>
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-2">
+                  <button
+                    className="px-4 py-2 text-slate-600 hover:text-slate-800 font-medium"
+                    onClick={() => setShowReportModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition"
+                    onClick={handleReportEmergency}
+                  >
+                    Report Emergency
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default SiteEmergencyResponse

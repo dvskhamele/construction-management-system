@@ -1,7 +1,7 @@
 {
-  "name": "HotelOps - Hotel Operations Management",
-  "short_name": "HotelOps",
-  "description": "Comprehensive hotel operations management system for efficient hotel management",
+  "name": "BuildMate - Construction Management Platform",
+  "short_name": "BuildMate",
+  "description": "Comprehensive construction management platform for efficient project management",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
@@ -62,26 +62,26 @@
     {
       "name": "Dashboard",
       "short_name": "Dashboard",
-      "description": "View hotel dashboard",
+      "description": "View construction dashboard",
       "url": "/dashboard",
       "icons": [{ "src": "/icons/dashboard-shortcut.png", "sizes": "96x96" }]
     },
     {
-      "name": "Guest Requests",
+      "name": "Project Requests",
       "short_name": "Requests",
-      "description": "Manage guest requests",
+      "description": "Manage project requests",
       "url": "/requests",
       "icons": [{ "src": "/icons/requests-shortcut.png", "sizes": "96x96" }]
     },
     {
-      "name": "Rooms",
-      "short_name": "Rooms",
-      "description": "Manage hotel rooms",
+      "name": "Sites",
+      "short_name": "Sites",
+      "description": "Manage construction sites",
       "url": "/rooms",
       "icons": [{ "src": "/icons/rooms-shortcut.png", "sizes": "96x96" }]
     }
   ],
-  "categories": ["business", "productivity", "travel"],
+  "categories": ["business", "productivity", "construction"],
   "lang": "en",
   "dir": "ltr",
   "screenshots": [

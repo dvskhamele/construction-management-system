@@ -1,14 +1,20 @@
 'use client'
 
+'use client'
+
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import Header from '../../components/Header'
-import HousekeepingAnalytics from '../../components/HousekeepingAnalytics' // This will be renamed to ProjectAnalytics
-import StaffLeaderboard from '../../components/StaffLeaderboard' // This will be renamed to TeamLeaderboard
+import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import ProjectAnalytics from '../../components/ProjectAnalytics'
+import TeamLeaderboard from '../../components/TeamLeaderboard'
 import MobileNavigation from '../../components/MobileNavigation'
-import OfflineIndicator from '../../components/OfflineIndicator'
-import apiService from '../../utils/apiService'
+import TaskAssignment from '../../components/TaskAssignment'
+import TaskBoard from '../../components/TaskBoard'
+import VastuDashboard from '../../components/VastuDashboard'
+import CreateProject from '../../components/CreateProject'
+
+import apiService from '../../utils/constructionApiService'
 import MobileDashboard from './page-mobile'
 
 export default function Dashboard() {
@@ -29,9 +35,9 @@ export default function Dashboard() {
   const [projects, setProjects] = useState<any[]>([])
   const [tasks, setTasks] = useState<any[]>([])
   const [performance, setPerformance] = useState({
-    progress: 92,
-    quality: 87,
-    efficiency: 95
+    projectPerformance: 92,
+    teamPerformance: 87,
+    qualityMetrics: 95
   })
   const [timeRange, setTimeRange] = useState('7d') // For charts
   const [isMobile, setIsMobile] = useState(false)
@@ -47,13 +53,26 @@ export default function Dashboard() {
     checkIsMobile()
     window.addEventListener('resize', checkIsMobile)
     
-    // For prototype, always allow access and mock login
-    const token = localStorage.getItem('token') || 'mock-token';
-    localStorage.setItem('token', token);
+    // Check if user is authenticated by looking for token in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Get user data from localStorage (set during login)
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        setUser(user);
+        setIsLoggedIn(true);
+      } else {
+        // Fallback to decode token or make API call to get user data in a real app
+        // For now, set a default user
+        setUser({ name: 'Project Manager', role: 'ADMIN' });
+        setIsLoggedIn(true);
+      }
+    } else {
+      // If no token, redirect to login
+      router.push('/login');
+    }
     
-    // Mock user data for prototype
-    setUser({ name: 'Project Manager', role: 'ADMIN' } as any);
-    setIsLoggedIn(true)
     fetchDashboardData()
     
     return () => {
@@ -81,20 +100,29 @@ export default function Dashboard() {
       
       // Fetch performance data
       const performanceData = await apiService.getDashboardPerformance()
-      setPerformance(performanceData)
+      setPerformance({
+        projectPerformance: performanceData.projectPerformance,
+        teamPerformance: performanceData.teamPerformance,
+        qualityMetrics: performanceData.qualityMetrics
+      })
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
       // Fallback to mock data if API fails
       setStats({
-        pendingTasks: 12,
-        activeProjects: 3,
-        completedProjects: 15,
+        pendingTasks: 18,
+        activeProjects: 12,
+        completedProjects: 8,
         revenueToday: 45000,
         projectCompletionRate: 78,
         teamActive: 24,
-        maintenanceRequests: 8,
-        avgResponseTime: 28,
-        qualityRating: 94
+        maintenanceRequests: 5,
+        avgResponseTime: 25,
+        qualityRating: 92
+      })
+      setPerformance({
+        projectPerformance: 87,
+        teamPerformance: 92,
+        qualityMetrics: 95
       })
     }
   }
@@ -107,20 +135,18 @@ export default function Dashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'CLEAN': // Renamed for construction context
+      case 'COMPLETED': // Construction phase status and general
         return 'bg-emerald-100 text-emerald-800'
-      case 'DIRTY': // Renamed for construction context
+      case 'ACTIVE': // Construction phase status
         return 'bg-amber-100 text-amber-800'
-      case 'INSPECTED': // Renamed for construction context
+      case 'INSPECTED': // Construction phase status
         return 'bg-blue-100 text-blue-800'
-      case 'OUT_OF_ORDER': // Renamed for construction context
+      case 'ON_HOLD': // Construction phase status
         return 'bg-rose-100 text-rose-800'
       case 'PENDING':
         return 'bg-amber-100 text-amber-800'
       case 'IN_PROGRESS':
         return 'bg-blue-100 text-blue-800'
-      case 'COMPLETED':
-        return 'bg-emerald-100 text-emerald-800'
       case 'OVERDUE':
         return 'bg-rose-100 text-rose-800'
       default:
@@ -286,17 +312,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <OfflineIndicator />
-      <Header user={user} onLogout={handleLogout} />
-
-      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+      <div className="px-4 py-6">
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold text-slate-800">Welcome, {user?.name}</h1>
-              <p className="text-slate-600">Here's what's happening with your construction projects today.</p>
+              <p className="text-slate-600">Here's what's happening with your construction sites today.</p>
             </div>
             <div className="mt-4 md:mt-0">
               <div className="flex items-center space-x-2">
@@ -315,9 +338,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/tasks')}>
+        {/* Stats Cards - Mobile-first responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div 
+            className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" 
+            onClick={() => router.push('/tasks')}
+          >
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Pending Tasks</p>
@@ -334,15 +360,18 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects')}>
+          <div 
+            className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" 
+            onClick={() => router.push('/projects')}
+          >
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm font-medium text-slate-500">Active Projects</p>
+                <p className="text-sm font-medium text-slate-500">Active Sites</p>
                 <p className="text-3xl font-bold text-slate-800 mt-1">{stats.activeProjects}</p>
               </div>
               <div className="bg-blue-100 p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
             </div>
@@ -351,7 +380,10 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/analytics')}>
+          <div 
+            className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" 
+            onClick={() => router.push('/analytics')}
+          >
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Revenue Today</p>
@@ -368,10 +400,13 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/team')}>
+          <div 
+            className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1" 
+            onClick={() => router.push('/team')}
+          >
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm font-medium text-slate-500">Team Members</p>
+                <p className="text-sm font-medium text-slate-500">Crew Members</p>
                 <p className="text-3xl font-bold text-slate-800 mt-1">{stats.teamActive}</p>
               </div>
               <div className="bg-indigo-100 p-3 rounded-full">
@@ -386,8 +421,76 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Vastu Dashboard for non-client users */}
+        {user?.role !== 'CLIENT' && <VastuDashboard currentUser={user} />}
+        
+        {/* Task Assignment and Board for specific roles */}
+        {(user?.role === 'ADMIN' || user?.role === 'PROJECT_MANAGER' || user?.role === 'SITE_SUPERVISOR') && (
+          <div className={`grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8 ${user?.role !== 'CLIENT' ? 'mt-6 sm:mt-8' : ''}`}>
+            <TaskAssignment currentUserRole={user?.role} />
+            <TaskBoard currentUserRole={user?.role} />
+          </div>
+        )}
+        
+        {/* Client Dashboard View */}
+        {user?.role === 'CLIENT' && (
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            {/* Project Progress Card */}
+            <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 card">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Project Progress</h2>
+              <div className="space-y-4">
+                {projects.map((project) => (
+                  <div key={project.id} className="border-b border-slate-200 pb-4 last:border-0 last:pb-0">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-medium text-slate-800">{project.name}</h3>
+                      <span className="text-sm font-medium text-teal-600">{project.progress}%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div
+                        className="bg-gradient-to-r from-teal-400 to-teal-600 h-2.5 rounded-full"
+                        style={{ width: `${project.progress}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-slate-500 mt-2">
+                      <span>Status: {project.status}</span>
+                      <span>Deadline: {new Date(project.deadline).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Billing Card */}
+            <div className="bg-white rounded-2xl shadow-md p-6 card">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Billing Status</h2>
+              <div className="space-y-4">
+                <div className="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                  <p className="font-medium text-amber-800">Pending Payment</p>
+                  <p className="text-2xl font-bold text-amber-600 mt-2">₹45,000</p>
+                  <p className="text-sm text-amber-600 mt-1">Due: 03 Nov 2024</p>
+                  <button className="mt-3 w-full bg-amber-500 text-white py-2 px-4 rounded-lg hover:bg-amber-600 transition text-sm font-medium">
+                    Pay Now
+                  </button>
+                </div>
+                
+                <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                  <p className="font-medium text-emerald-800">Total Paid</p>
+                  <p className="text-2xl font-bold text-emerald-600 mt-2">₹1,20,000</p>
+                  <p className="text-sm text-emerald-600 mt-1">This project</p>
+                </div>
+                
+                <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                  <p className="font-medium text-slate-800">Next Invoice</p>
+                  <p className="text-xl font-bold text-slate-700 mt-2">₹75,000</p>
+                  <p className="text-sm text-slate-600 mt-1">Plaster work completion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* Project Completion Chart */}
           <div className="bg-white rounded-2xl shadow-md p-6 card">
             <div className="flex justify-between items-center mb-4">
@@ -502,7 +605,7 @@ export default function Dashboard() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="text-sm font-medium">Departments</span>
+                <span className="text-sm font-medium">Crews</span>
               </div>
               
               {/* New Quick Action Buttons */}
@@ -1021,7 +1124,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+        </div>
+    </ResponsiveSidebarLayout>
   )
 }

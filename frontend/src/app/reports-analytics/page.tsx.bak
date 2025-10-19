@@ -1,0 +1,849 @@
+'use client'
+
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import Header from '../../components/Header'
+
+export default function ProjectsPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [user, setUser] = useState<any>({ name: 'Project Manager', role: 'ADMIN' })
+  const [projects, setProjects] = useState<any[]>([
+    {
+      id: 1,
+      name: 'Downtown Office Complex',
+      client: 'Meridian Properties',
+      value: 850000,
+      status: 'ACTIVE',
+      progress: 75,
+      startDate: '2025-01-15',
+      endDate: '2025-09-30',
+      location: 'Downtown District, New York',
+      projectManager: 'You',
+      teamSize: 12,
+      budgetSpent: 637500,
+      budgetRemaining: 212500,
+      issues: 3,
+      safetyIncidents: 1,
+      qualityRating: 92,
+      lastUpdate: '2025-03-18',
+      nextMilestone: 'Foundation Completion',
+      nextMilestoneDate: '2025-04-15'
+    },
+    {
+      id: 2,
+      name: 'Residential Apartment Block B',
+      client: 'Urban Developments',
+      value: 1200000,
+      status: 'DELAYED',
+      progress: 45,
+      startDate: '2025-02-10',
+      endDate: '2025-10-15',
+      location: 'Suburban Area, Chicago',
+      projectManager: 'Sarah Johnson',
+      teamSize: 18,
+      budgetSpent: 540000,
+      budgetRemaining: 660000,
+      issues: 7,
+      safetyIncidents: 2,
+      qualityRating: 87,
+      lastUpdate: '2025-03-18',
+      nextMilestone: 'Structural Framing',
+      nextMilestoneDate: '2025-04-20'
+    },
+    {
+      id: 3,
+      name: 'Industrial Warehouse',
+      client: 'Tech Storage Solutions',
+      value: 2100000,
+      status: 'ON_TRACK',
+      progress: 90,
+      startDate: '2024-11-01',
+      endDate: '2025-03-30',
+      location: 'River Crossing, Houston',
+      projectManager: 'Mike Chen',
+      teamSize: 24,
+      budgetSpent: 1890000,
+      budgetRemaining: 210000,
+      issues: 2,
+      safetyIncidents: 0,
+      qualityRating: 96,
+      lastUpdate: '2025-03-18',
+      nextMilestone: 'Final Inspection',
+      nextMilestoneDate: '2025-03-25'
+    },
+    {
+      id: 4,
+      name: 'Retail Center Renovation',
+      client: 'City Retail Group',
+      value: 450000,
+      status: 'ON_HOLD',
+      progress: 30,
+      startDate: '2025-01-20',
+      endDate: '2025-06-15',
+      location: 'Shopping District, Los Angeles',
+      projectManager: 'Emily Rodriguez',
+      teamSize: 8,
+      budgetSpent: 135000,
+      budgetRemaining: 315000,
+      issues: 5,
+      safetyIncidents: 1,
+      qualityRating: 89,
+      lastUpdate: '2025-03-18',
+      nextMilestone: 'Permit Approval',
+      nextMilestoneDate: '2025-04-05'
+    },
+    {
+      id: 5,
+      name: 'Mixed-Use Development',
+      client: 'Downtown Developers LLC',
+      value: 3200000,
+      status: 'PLANNING',
+      progress: 15,
+      startDate: '2025-03-01',
+      endDate: '2026-02-28',
+      location: 'Mixed-Use Zone, Miami',
+      projectManager: 'David Kim',
+      teamSize: 32,
+      budgetSpent: 480000,
+      budgetRemaining: 2720000,
+      issues: 8,
+      safetyIncidents: 3,
+      qualityRating: 85,
+      lastUpdate: '2025-03-18',
+      nextMilestone: 'Design Approval',
+      nextMilestoneDate: '2025-04-10'
+    }
+  ])
+  const [stats, setStats] = useState({
+    totalProjects: 24,
+    activeProjects: 5,
+    completedProjects: 12,
+    onHoldProjects: 3,
+    delayedProjects: 2,
+    planningProjects: 2,
+    totalValue: 8500000,
+    avgProjectValue: 354167,
+    totalBudget: 6800000,
+    budgetSpent: 5100000,
+    budgetRemaining: 1700000,
+    onTimeProjects: 15,
+    overdueProjects: 4
+  })
+  const [filter, setFilter] = useState('all')
+  const [sortBy, setSortBy] = useState('progress')
+  const [timeRange, setTimeRange] = useState('30d')
+  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [showProjectModal, setShowProjectModal] = useState(false)
+  const [showReportModal, setShowReportModal] = useState(false)
+  const [selectedReport, setSelectedReport] = useState<any>(null)
+
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUser(null)
+    router.push('/login')
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'ACTIVE':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'ON_TRACK':
+        return 'bg-teal-100 text-teal-800'
+      case 'DELAYED':
+        return 'bg-amber-100 text-amber-800'
+      case 'ON_HOLD':
+        return 'bg-rose-100 text-rose-800'
+      case 'PLANNING':
+        return 'bg-blue-100 text-blue-800'
+      case 'COMPLETED':
+        return 'bg-indigo-100 text-indigo-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const filteredProjects = projects.filter(project => {
+    if (filter === 'all') return true
+    if (filter === 'active') return ['ACTIVE', 'ON_TRACK'].includes(project.status)
+    if (filter === 'delayed') return project.status === 'DELAYED'
+    if (filter === 'onhold') return project.status === 'ON_HOLD'
+    if (filter === 'planning') return project.status === 'PLANNING'
+    if (filter === 'completed') return project.status === 'COMPLETED'
+    return true
+  })
+
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    if (sortBy === 'progress') return b.progress - a.progress
+    if (sortBy === 'value') return b.value - a.value
+    if (sortBy === 'startDate') return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    if (sortBy === 'endDate') return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+    if (sortBy === 'issues') return b.issues - a.issues
+    if (sortBy === 'safety') return b.safetyIncidents - a.safetyIncidents
+    if (sortBy === 'quality') return b.qualityRating - a.qualityRating
+    return 0
+  })
+
+  const openProjectModal = (project: any) => {
+    setSelectedProject(project)
+    setShowProjectModal(true)
+  }
+
+  const closeProjectModal = () => {
+    setShowProjectModal(false)
+    setSelectedProject(null)
+  }
+
+  // Report Modal Functions
+  const openReportModal = (report: any) => {
+    setSelectedReport(report)
+    setShowReportModal(true)
+  }
+
+  const closeReportModal = () => {
+    setShowReportModal(false)
+    setSelectedReport(null)
+  }
+
+  // Helper functions for report styling
+  const getCategoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      sales: 'bg-blue-100 text-blue-800',
+      finance: 'bg-amber-100 text-amber-800',
+      operations: 'bg-emerald-100 text-emerald-800',
+      quality: 'bg-purple-100 text-purple-800',
+      safety: 'bg-red-100 text-red-800',
+      customer: 'bg-indigo-100 text-indigo-800',
+      project: 'bg-teal-100 text-teal-800',
+    }
+    return colors[category] || 'bg-slate-100 text-slate-800'
+  }
+
+  const getReportStatusColor = (status: string) => {
+    return status === 'Active' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'
+  }
+
+  const getAccessColor = (access: string) => {
+    return access === 'Public' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <Header user={user} onLogout={handleLogout} />
+
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">Construction Projects</h1>
+              <p className="text-slate-600">Manage and track all construction projects</p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
+                onClick={() => router.push('/projects/create')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                New Project
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-gray-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('all')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Total Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.totalProjects}</p>
+              </div>
+              <div className="bg-gray-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Value: ₹{Math.round(stats.totalValue / 100000)}L</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('active')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Active Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.activeProjects}</p>
+              </div>
+              <div className="bg-emerald-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-emerald-500">↑ 2 from last month</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('delayed')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Delayed Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.delayedProjects}</p>
+              </div>
+              <div className="bg-amber-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 01-9 9m9-9a9 9 0 00-9 9m9-9v4m0 0V8m0 4v4m0 0h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-amber-500">↓ 1 from last month</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('planning')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Planning Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.planningProjects}</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Avg value: ₹{Math.round(stats.avgProjectValue / 1000)}k</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Budget Utilization</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{Math.round((stats.budgetSpent / stats.totalBudget) * 100)}%</p>
+              </div>
+              <div className="bg-indigo-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="w-full bg-slate-200 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-indigo-400 to-indigo-600 h-2 rounded-full"
+                  style={{ width: `${(stats.budgetSpent / stats.totalBudget) * 100}%` }}
+                ></div>
+              </div>
+              <div className="flex justify-between text-xs text-slate-500 mt-1">
+                <span>₹{Math.round(stats.budgetSpent / 100000)}L spent</span>
+                <span>₹{Math.round(stats.budgetRemaining / 100000)}L remaining</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-teal-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">On-Time Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.onTimeProjects}</p>
+              </div>
+              <div className="bg-teal-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">
+                {Math.round((stats.onTimeProjects / stats.totalProjects) * 100)}% on-time completion rate
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-rose-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Overdue Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.overdueProjects}</p>
+              </div>
+              <div className="bg-rose-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">
+                {Math.round((stats.overdueProjects / stats.totalProjects) * 100)}% overdue rate
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Filter and Sort Controls */}
+        <div className="flex flex-wrap items-center justify-between mb-6 bg-white rounded-2xl shadow-md p-4">
+          <div className="flex flex-wrap space-x-2 mb-2 sm:mb-0">
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'all' 
+                  ? 'bg-teal-100 text-teal-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('all')}
+            >
+              All Projects
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'active' 
+                  ? 'bg-emerald-100 text-emerald-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('active')}
+            >
+              Active
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'delayed' 
+                  ? 'bg-amber-100 text-amber-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('delayed')}
+            >
+              Delayed
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'onhold' 
+                  ? 'bg-rose-100 text-rose-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('onhold')}
+            >
+              On Hold
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'planning' 
+                  ? 'bg-blue-100 text-blue-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('planning')}
+            >
+              Planning
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'completed' 
+                  ? 'bg-indigo-100 text-indigo-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('completed')}
+            >
+              Completed
+            </button>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <span className="text-sm text-slate-600 mr-2">Sort by:</span>
+              <select 
+                className="border border-slate-300 rounded-lg px-2 py-1 text-sm"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="progress">Progress</option>
+                <option value="value">Value</option>
+                <option value="startDate">Start Date</option>
+                <option value="endDate">End Date</option>
+                <option value="issues">Issues</option>
+                <option value="safety">Safety Incidents</option>
+                <option value="quality">Quality Rating</option>
+              </select>
+            </div>
+            
+            <div className="flex items-center">
+              <span className="text-sm text-slate-600 mr-2">Time Range:</span>
+              <select 
+                className="border border-slate-300 rounded-lg px-2 py-1 text-sm"
+                value={timeRange}
+                onChange={(e) => setTimeRange(e.target.value)}
+              >
+                <option value="7d">Last 7 days</option>
+                <option value="30d">Last 30 days</option>
+                <option value="90d">Last 90 days</option>
+                <option value="1y">Last year</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Projects List */}
+        <div className="bg-white rounded-2xl shadow-md p-6 card">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-slate-800">
+              {filter === 'all' ? 'All Projects' : 
+               filter === 'active' ? 'Active Projects' : 
+               filter === 'delayed' ? 'Delayed Projects' : 
+               filter === 'onhold' ? 'On Hold Projects' : 
+               filter === 'planning' ? 'Planning Projects' : 'Completed Projects'}
+            </h2>
+            <button 
+              className="text-sm text-teal-600 hover:text-teal-800 font-medium"
+              onClick={() => router.push('/projects/archived')}
+            >
+              View Archived Projects
+            </button>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Client</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Value</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Progress</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Dates</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project Manager</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Team Size</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Budget</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Issues</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Safety</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Quality</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Last Update</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Next Milestone</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {sortedProjects.map((project) => (
+                  <tr 
+                    key={project.id} 
+                    className="hover:bg-slate-50 transition cursor-pointer"
+                    onClick={() => openProjectModal(project)}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-slate-900">{project.name}</div>
+                      <div className="text-sm text-slate-500">{project.type}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-slate-900">{project.client}</div>
+                      <div className="text-sm text-slate-500">{project.industry}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      ₹{Math.round(project.value / 1000)}k
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(project.status)}`}>
+                        {project.status.replace('_', ' ')}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-16 bg-slate-200 rounded-full h-2 mr-2">
+                          <div 
+                            className={`h-2 rounded-full ${
+                              project.progress < 50 ? 'bg-amber-500' : 
+                              project.progress < 80 ? 'bg-blue-500' : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${project.progress}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-xs text-slate-600">{project.progress}%</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>{project.startDate}</div>
+                      <div>{project.endDate}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.location}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.projectManager}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.teamSize} members
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>Spent: ₹{Math.round(project.budgetSpent / 1000)}k</div>
+                      <div>Remaining: ₹{Math.round(project.budgetRemaining / 1000)}k</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.issues}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.safetyIncidents}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.qualityRating}%
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {project.lastUpdate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div>{project.nextMilestone}</div>
+                      <div>{project.nextMilestoneDate}</div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Project Analytics */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Project Status Distribution */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-4">Project Status Distribution</h2>
+            <div className="h-64 flex items-end space-x-2 mt-8">
+              {Object.entries({
+                'Active': stats.activeProjects,
+                'Delayed': stats.delayedProjects,
+                'On Hold': stats.onHoldProjects,
+                'Planning': stats.planningProjects,
+                'Completed': stats.completedProjects
+              }).map(([status, count], index) => (
+                <div key={index} className="flex flex-col items-center flex-1 group">
+                  <div className="text-center mb-2">
+                    <div className="text-lg font-bold text-slate-800">{count}</div>
+                    <div className="text-xs text-slate-600">{status}</div>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-24 flex items-end">
+                    <div 
+                      className={`h-24 rounded-t transition-all duration-300 group-hover:from-teal-500 group-hover:to-teal-700 ${
+                        status === 'Active' ? 'bg-gradient-to-t from-emerald-400 to-emerald-600' :
+                        status === 'Delayed' ? 'bg-gradient-to-t from-amber-400 to-amber-600' :
+                        status === 'On Hold' ? 'bg-gradient-to-t from-rose-400 to-rose-600' :
+                        status === 'Planning' ? 'bg-gradient-to-t from-blue-400 to-blue-600' :
+                        'bg-gradient-to-t from-indigo-400 to-indigo-600'
+                      }`}
+                      style={{ width: '100%' }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-slate-600 mt-2">₹{Math.round(count * 120000 / 1000)}k avg</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Budget Utilization */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-4">Budget Utilization</h2>
+            <div className="h-64 flex items-end space-x-2 mt-8">
+              {sortedProjects.slice(0, 5).map((project, index) => (
+                <div key={index} className="flex flex-col items-center flex-1 group">
+                  <div className="text-center mb-2">
+                    <div className="text-lg font-bold text-slate-800">₹{(project.budgetSpent / 100000).toFixed(1)}L</div>
+                    <div className="text-xs text-slate-600 truncate w-full text-center">{project.name}</div>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-24 flex items-end">
+                    <div 
+                      className="w-full bg-gradient-to-t from-indigo-400 to-indigo-600 rounded-t transition-all duration-300 group-hover:from-indigo-500 group-hover:to-indigo-700"
+                      style={{ height: `${(project.budgetSpent / Math.max(...sortedProjects.map(p => p.budgetSpent))) * 200}px` }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-slate-600 mt-2">{Math.round((project.budgetSpent / project.value) * 100)}% utilized</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Analytics Features */}
+        <div className="mt-8 bg-white rounded-2xl shadow-md p-6 card">
+          <h2 className="text-xl font-semibold text-slate-800 mb-4">Analytics & Reporting Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Real-time Dashboards</h3>
+              <p className="text-sm text-slate-600">Interactive dashboards with live project data and KPIs</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2h-2a2 2 0 01-2-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Custom Reports</h3>
+              <p className="text-sm text-slate-600">Create custom reports with drag-and-drop report builder</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v3a2 2 0 002 2h6m-6 4v3m-6-3h.01M9 16h.01M15 12v3m-6 0v-3" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Scheduled Reports</h3>
+              <p className="text-sm text-slate-600">Automated report generation and delivery on custom schedules</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Advanced Analytics</h3>
+              <p className="text-sm text-slate-600">Predictive analytics and machine learning for project insights</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Report Details Modal */}
+      {showReportModal && selectedReport && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto max-w-[calc(100vw-2rem)]">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0 bg-white">
+              <h3 className="text-lg font-semibold text-slate-800">{selectedReport.name}</h3>
+              <button 
+                onClick={closeReportModal}
+                className="text-slate-400 hover:text-slate-500"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="mb-6">
+                <p className="text-slate-600">{selectedReport.description}</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <h4 className="font-medium text-slate-800 mb-2">Report Details</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Category:</span>
+                      <span className={`px-2 py-1 text-xs rounded-full ${getCategoryColor(selectedReport.category)}`}>
+                        {selectedReport.category}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Last Generated:</span>
+                      <span className="text-slate-800">{selectedReport.lastGenerated}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Frequency:</span>
+                      <span className="text-slate-800">{selectedReport.frequency}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Format:</span>
+                      <span className="text-slate-800">{selectedReport.format}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Status:</span>
+                      <span className={`px-2 py-1 text-xs rounded-full ${getReportStatusColor(selectedReport.status)}`}>
+                        {selectedReport.status}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Access:</span>
+                      <span className={`px-2 py-1 text-xs rounded-full ${getAccessColor(selectedReport.access)}`}>
+                        {selectedReport.access}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-slate-800 mb-2">Engagement Metrics</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Total Views:</span>
+                      <span className="text-slate-800">{selectedReport.views}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Total Downloads:</span>
+                      <span className="text-slate-800">{selectedReport.downloads}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Avg. Time Spent:</span>
+                      <span className="text-slate-800">3.2 min</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Completion Rate:</span>
+                      <span className="text-slate-800">78%</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Feedback Score:</span>
+                      <span className="text-slate-800">4.6/5</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <h4 className="font-medium text-slate-800 mb-2">Recent Activity</h4>
+                <div className="space-y-3">
+                  <div className="border-l-4 border-teal-500 pl-4 py-2">
+                    <p className="text-sm text-slate-800">Report generated successfully</p>
+                    <p className="text-xs text-slate-500">Today, 9:30 AM</p>
+                  </div>
+                  <div className="border-l-4 border-amber-500 pl-4 py-2">
+                    <p className="text-sm text-slate-800">Report viewed by Sarah Johnson</p>
+                    <p className="text-xs text-slate-500">Today, 10:15 AM</p>
+                  </div>
+                  <div className="border-l-4 border-blue-500 pl-4 py-2">
+                    <p className="text-sm text-slate-800">Report downloaded by Mike Chen</p>
+                    <p className="text-xs text-slate-500">Today, 11:45 AM</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex space-x-3">
+                <button 
+                  className="flex-1 bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300"
+                  onClick={() => {
+                    // Download report logic here
+                    alert(`Downloading ${selectedReport.name}...`)
+                  }}
+                >
+                  Download Report
+                </button>
+                <button 
+                  className="flex-1 border border-slate-300 text-slate-700 py-2 px-4 rounded-lg font-medium hover:bg-slate-50 transition duration-300"
+                  onClick={() => router.push(`/reports/${selectedReport.id}/edit`)}
+                >
+                  Customize Report
+                </button>
+                <button 
+                  className="flex-1 border border-slate-300 text-slate-700 py-2 px-4 rounded-lg font-medium hover:bg-slate-50 transition duration-300"
+                  onClick={closeReportModal}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

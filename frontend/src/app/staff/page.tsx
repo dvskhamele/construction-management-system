@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function Staff() {
   const [staff, setStaff] = useState<any[]>([])
@@ -33,17 +33,17 @@ export default function Staff() {
 
     // Mock data for prototype
     const mockStaff = [
-      { id: 1, name: 'Alice Johnson', department: 'Housekeeping', position: 'Supervisor', status: 'Active', email: 'alice.johnson@example.com', phone: '+1234567890', hireDate: '2022-01-15', performance: 92, schedule: '9:00 AM - 5:00 PM' },
-      { id: 2, name: 'Bob Smith', department: 'Housekeeping', position: 'Staff', status: 'Active', email: 'bob.smith@example.com', phone: '+1234567891', hireDate: '2022-03-22', performance: 87, schedule: '9:00 AM - 5:00 PM' },
-      { id: 3, name: 'Carol Davis', department: 'Housekeeping', position: 'Staff', status: 'Offline', email: 'carol.davis@example.com', phone: '+1234567892', hireDate: '2021-11-05', performance: 95, schedule: '9:00 AM - 5:00 PM' },
-      { id: 4, name: 'David Wilson', department: 'Maintenance', position: 'Supervisor', status: 'Active', email: 'david.wilson@example.com', phone: '+1234567893', hireDate: '2020-07-18', performance: 88, schedule: '8:00 AM - 4:00 PM' },
-      { id: 5, name: 'Eva Brown', department: 'Maintenance', position: 'Staff', status: 'Break', email: 'eva.brown@example.com', phone: '+1234567894', hireDate: '2023-02-10', performance: 91, schedule: '8:00 AM - 4:00 PM' },
-      { id: 6, name: 'Frank Miller', department: 'Food & Beverage', position: 'Manager', status: 'Active', email: 'frank.miller@example.com', phone: '+1234567895', hireDate: '2019-05-30', performance: 96, schedule: '7:00 AM - 3:00 PM' },
-      { id: 7, name: 'Grace Lee', department: 'Food & Beverage', position: 'Staff', status: 'Active', email: 'grace.lee@example.com', phone: '+1234567896', hireDate: '2022-09-14', performance: 89, schedule: '7:00 AM - 3:00 PM' },
-      { id: 8, name: 'Henry Taylor', department: 'Food & Beverage', position: 'Staff', status: 'Active', email: 'henry.taylor@example.com', phone: '+1234567897', hireDate: '2023-01-20', performance: 93, schedule: '7:00 AM - 3:00 PM' },
-      { id: 9, name: 'Ivy Chen', department: 'Food & Beverage', position: 'Staff', status: 'Offline', email: 'ivy.chen@example.com', phone: '+1234567898', hireDate: '2022-12-03', performance: 85, schedule: '7:00 AM - 3:00 PM' },
-      { id: 10, name: 'Jack Roberts', department: 'Front Desk', position: 'Receptionist', status: 'Active', email: 'jack.roberts@example.com', phone: '+1234567899', hireDate: '2021-04-12', performance: 94, schedule: '6:00 AM - 2:00 PM' },
-      { id: 11, name: 'Kate Williams', department: 'Front Desk', position: 'Manager', status: 'Active', email: 'kate.williams@example.com', phone: '+1234567800', hireDate: '2020-09-08', performance: 97, schedule: '6:00 AM - 2:00 PM' }
+      { id: 1, name: 'Alice Johnson', department: 'Foundation', position: 'Supervisor', status: 'Active', email: 'alice.johnson@example.com', phone: '+1234567890', hireDate: '2022-01-15', performance: 92, schedule: '7:00 AM - 3:00 PM' },
+      { id: 2, name: 'Bob Smith', department: 'Foundation', position: 'Worker', status: 'Active', email: 'bob.smith@example.com', phone: '+1234567891', hireDate: '2022-03-22', performance: 87, schedule: '7:00 AM - 3:00 PM' },
+      { id: 3, name: 'Carol Davis', department: 'Foundation', position: 'Worker', status: 'Offline', email: 'carol.davis@example.com', phone: '+1234567892', hireDate: '2021-11-05', performance: 95, schedule: '7:00 AM - 3:00 PM' },
+      { id: 4, name: 'David Wilson', department: 'Framing', position: 'Supervisor', status: 'Active', email: 'david.wilson@example.com', phone: '+1234567893', hireDate: '2020-07-18', performance: 88, schedule: '8:00 AM - 4:00 PM' },
+      { id: 5, name: 'Eva Brown', department: 'Framing', position: 'Worker', status: 'Break', email: 'eva.brown@example.com', phone: '+1234567894', hireDate: '2023-02-10', performance: 91, schedule: '8:00 AM - 4:00 PM' },
+      { id: 6, name: 'Frank Miller', department: 'Electrical', position: 'Manager', status: 'Active', email: 'frank.miller@example.com', phone: '+1234567895', hireDate: '2019-05-30', performance: 96, schedule: '9:00 AM - 5:00 PM' },
+      { id: 7, name: 'Grace Lee', department: 'Electrical', position: 'Electrician', status: 'Active', email: 'grace.lee@example.com', phone: '+1234567896', hireDate: '2022-09-14', performance: 89, schedule: '9:00 AM - 5:00 PM' },
+      { id: 8, name: 'Henry Taylor', department: 'Plumbing', position: 'Plumber', status: 'Active', email: 'henry.taylor@example.com', phone: '+1234567897', hireDate: '2023-01-20', performance: 93, schedule: '9:00 AM - 5:00 PM' },
+      { id: 9, name: 'Ivy Chen', department: 'Plumbing', position: 'Plumber', status: 'Offline', email: 'ivy.chen@example.com', phone: '+1234567898', hireDate: '2022-12-03', performance: 85, schedule: '9:00 AM - 5:00 PM' },
+      { id: 10, name: 'Jack Roberts', department: 'Safety', position: 'Safety Officer', status: 'Active', email: 'jack.roberts@example.com', phone: '+1234567899', hireDate: '2021-04-12', performance: 94, schedule: '6:00 AM - 2:00 PM' },
+      { id: 11, name: 'Kate Williams', department: 'Project Management', position: 'Project Manager', status: 'Active', email: 'kate.williams@example.com', phone: '+1234567800', hireDate: '2020-09-08', performance: 97, schedule: '8:00 AM - 4:00 PM' }
     ]
     
     setStaff(mockStaff)
@@ -140,14 +140,12 @@ export default function Staff() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-800">Staff Management</h2>
-            <p className="text-slate-600">Manage your hotel staff and track performance</p>
+            <p className="text-slate-600">Manage your construction crew and track performance</p>
           </div>
           <button 
             className="bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
@@ -188,7 +186,7 @@ export default function Staff() {
               <input
                 type="text"
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 bg-white"
-                placeholder="Name, position, or email"
+                placeholder="Crew member name, position, or email"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -201,7 +199,7 @@ export default function Staff() {
                 value={selectedDepartment}
                 onChange={(e) => setSelectedDepartment(e.target.value)}
               >
-                <option value="">All Departments</option>
+                <option value="">All Crews</option>
                 {departments.map((dept: string) => (
                   <option key={dept} value={dept}>{dept}</option>
                 ))}
@@ -493,7 +491,7 @@ export default function Staff() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
             <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-slate-800">Add New Staff Member</h3>
+              <h3 className="text-lg font-semibold text-slate-800">Add New Crew Member</h3>
               <button 
                 onClick={() => setShowAddStaffModal(false)}
                 className="text-slate-400 hover:text-slate-500"
@@ -536,20 +534,20 @@ export default function Staff() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Crew</label>
                   <select 
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     value={newStaff.department}
                     onChange={(e) => setNewStaff({...newStaff, department: e.target.value})}
                   >
-                    <option value="">Select department</option>
+                    <option value="">Select crew</option>
                     {departments.map((dept: string) => (
                       <option key={dept} value={dept}>{dept}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Position</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
@@ -663,6 +661,6 @@ export default function Staff() {
           </div>
         </div>
       )}
-    </div>
+    </UserLayout>
   )
 }

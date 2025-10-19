@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
-import EmergencyResponse from '../../components/EmergencyResponse'
+import UserLayout from '../../components/UserLayout'
+import SiteEmergencyResponse from '../../components/SiteEmergencyResponse'
 
 export default function EmergencySystem() {
   const [user, setUser] = useState<any>(null)
@@ -24,13 +24,11 @@ export default function EmergencySystem() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-800">Emergency Response System</h2>
-          <p className="text-slate-600">Manage and respond to hotel emergencies</p>
+          <p className="text-slate-600">Manage and respond to construction site emergencies</p>
         </div>
 
         {/* Tabs */}
@@ -81,7 +79,7 @@ export default function EmergencySystem() {
 
         {/* Tab Content */}
         {activeTab === 'dashboard' && (
-          <EmergencyResponse />
+          <SiteEmergencyResponse />
         )}
 
         {activeTab === 'protocols' && (
@@ -95,10 +93,10 @@ export default function EmergencySystem() {
                     <ol className="list-decimal pl-5 space-y-2 text-slate-700">
                       <li>Activate nearest fire alarm</li>
                       <li>Call emergency services (911) immediately</li>
-                      <li>Evacuate guests using designated fire exits</li>
+                      <li>Evacuate workers using designated fire exits</li>
                       <li>Close all doors behind you to contain fire</li>
                       <li>Assemble at designated safe assembly point</li>
-                      <li>Account for all guests and staff</li>
+                      <li>Account for all workers</li>
                       <li>Do not re-enter building until declared safe</li>
                     </ol>
                   </div>
@@ -124,11 +122,11 @@ export default function EmergencySystem() {
                     <ol className="list-decimal pl-5 space-y-2 text-slate-700">
                       <li>Assess the situation and ensure safety</li>
                       <li>Call emergency services (911) if life-threatening</li>
-                      <li>Request hotel medical kit if available</li>
+                      <li>Request site medical kit if available</li>
                       <li>Provide basic first aid if trained</li>
                       <li>Keep injured person calm and comfortable</li>
                       <li>Document incident details</li>
-                      <li>Notify hotel management immediately</li>
+                      <li>Notify site management immediately</li>
                     </ol>
                   </div>
                   
@@ -157,7 +155,7 @@ export default function EmergencySystem() {
                       <li>Remain calm and assess the threat</li>
                       <li>Contact security team immediately</li>
                       <li>Follow lockdown or evacuation procedures as directed</li>
-                      <li>Protect guest and staff privacy</li>
+                      <li>Protect worker privacy</li>
                       <li>Coordinate with law enforcement when present</li>
                       <li>Document incident for insurance purposes</li>
                       <li>Provide support to affected individuals</li>
@@ -170,12 +168,12 @@ export default function EmergencySystem() {
                   <div className="prose prose-slate max-w-none">
                     <ol className="list-decimal pl-5 space-y-2 text-slate-700">
                       <li>Monitor weather alerts and official communications</li>
-                      <li>Secure outdoor furniture and loose objects</li>
-                      <li>Move guests to interior rooms if necessary</li>
+                      <li>Secure outdoor equipment and loose materials</li>
+                      <li>Move workers to interior areas if necessary</li>
                       <li>Stock emergency supplies (water, food, flashlights)</li>
                       <li>Establish communication with emergency services</li>
                       <li>Follow evacuation orders if issued</li>
-                      <li>Account for all guests and staff</li>
+                      <li>Account for all workers</li>
                     </ol>
                   </div>
                   
@@ -203,7 +201,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Fire Drill</h5>
                         <span className="text-sm text-slate-600">Oct 15, 2023</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">Full hotel evacuation drill</p>
+                      <p className="text-sm text-slate-600 mt-1">Full site evacuation drill</p>
                       <div className="mt-2 flex justify-between items-center">
                         <span className="text-xs px-2 py-1 bg-amber-100 text-amber-800 rounded-full">Scheduled</span>
                         <button className="text-xs text-slate-600 hover:text-slate-800">View Details</button>
@@ -214,7 +212,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Medical Emergency Drill</h5>
                         <span className="text-sm text-slate-600">Nov 5, 2023</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">First aid and emergency response</p>
+                      <p className="text-sm text-slate-600 mt-1">First aid and emergency response for construction sites</p>
                       <div className="mt-2 flex justify-between items-center">
                         <span className="text-xs px-2 py-1 bg-amber-100 text-amber-800 rounded-full">Scheduled</span>
                         <button className="text-xs text-slate-600 hover:text-slate-800">View Details</button>
@@ -225,7 +223,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Security Threat Drill</h5>
                         <span className="text-sm text-slate-600">Sep 28, 2023</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">Lockdown and evacuation procedures</p>
+                      <p className="text-sm text-slate-600 mt-1">Site lockdown and evacuation procedures</p>
                       <div className="mt-2 flex justify-between items-center">
                         <span className="text-xs px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full">Completed</span>
                         <button className="text-xs text-slate-600 hover:text-slate-800">View Report</button>
@@ -242,7 +240,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Basic First Aid</h5>
                         <span className="text-sm text-slate-600">45 min</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">Essential first aid skills for hotel staff</p>
+                      <p className="text-sm text-slate-600 mt-1">Essential first aid skills for construction workers</p>
                       <div className="mt-3 flex justify-between items-center">
                         <div className="w-3/4 bg-slate-200 rounded-full h-2">
                           <div className="bg-emerald-500 h-2 rounded-full" style={{ width: '65%' }}></div>
@@ -255,7 +253,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Emergency Communication</h5>
                         <span className="text-sm text-slate-600">30 min</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">Effective communication during emergencies</p>
+                      <p className="text-sm text-slate-600 mt-1">Effective communication during construction site emergencies</p>
                       <div className="mt-3 flex justify-between items-center">
                         <div className="w-3/4 bg-slate-200 rounded-full h-2">
                           <div className="bg-blue-500 h-2 rounded-full" style={{ width: '30%' }}></div>
@@ -268,7 +266,7 @@ export default function EmergencySystem() {
                         <h5 className="font-medium text-slate-800">Evacuation Procedures</h5>
                         <span className="text-sm text-slate-600">60 min</span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1">Safe and efficient evacuation techniques</p>
+                      <p className="text-sm text-slate-600 mt-1">Safe and efficient construction site evacuation techniques</p>
                       <div className="mt-3 flex justify-between items-center">
                         <div className="w-3/4 bg-slate-200 rounded-full h-2">
                           <div className="bg-slate-500 h-2 rounded-full" style={{ width: '0%' }}></div>
@@ -289,21 +287,21 @@ export default function EmergencySystem() {
                         <span className="text-sm font-medium text-emerald-800">CPR Certified</span>
                         <span className="text-xs text-emerald-700">Expires: Jun 2024</span>
                       </div>
-                      <p className="text-xs text-emerald-600 mt-1">8 staff members certified</p>
+                      <p className="text-xs text-emerald-600 mt-1">8 workers certified</p>
                     </div>
                     <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
                       <div className="flex justify-between">
                         <span className="text-sm font-medium text-amber-800">First Aid Training</span>
                         <span className="text-xs text-amber-700">Expires: Dec 2023</span>
                       </div>
-                      <p className="text-xs text-amber-600 mt-1">12 staff members trained</p>
+                      <p className="text-xs text-amber-600 mt-1">12 workers trained</p>
                     </div>
                     <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
                       <div className="flex justify-between">
                         <span className="text-sm font-medium text-slate-800">Fire Safety Certification</span>
                         <span className="text-xs text-slate-700">Expires: Feb 2024</span>
                       </div>
-                      <p className="text-xs text-slate-600 mt-1">5 staff members certified</p>
+                      <p className="text-xs text-slate-600 mt-1">5 workers certified</p>
                     </div>
                   </div>
                   
@@ -378,7 +376,7 @@ export default function EmergencySystem() {
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-slate-900">John Smith</div>
-                                <div className="text-sm text-slate-500">General Manager</div>
+                                <div className="text-sm text-slate-500">Site Manager</div>
                               </div>
                             </div>
                           </td>
@@ -399,7 +397,7 @@ export default function EmergencySystem() {
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-slate-900">Sarah Davis</div>
-                                <div className="text-sm text-slate-500">Security Director</div>
+                                <div className="text-sm text-slate-500">Site Security Director</div>
                               </div>
                             </div>
                           </td>
@@ -420,7 +418,7 @@ export default function EmergencySystem() {
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-slate-900">Robert Wilson</div>
-                                <div className="text-sm text-slate-500">Head of Housekeeping</div>
+                                <div className="text-sm text-slate-500">Head of Site Operations</div>
                               </div>
                             </div>
                           </td>
@@ -476,7 +474,7 @@ export default function EmergencySystem() {
                         <tr>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-slate-900">Hospital</div>
-                            <div className="text-sm text-slate-500">St. Mary's Medical Center</div>
+                            <div className="text-sm text-slate-500">Nearby Medical Facility</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">ER: (555) 555-0199</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">Ambulance: (555) 555-0123</td>
@@ -519,7 +517,7 @@ export default function EmergencySystem() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
-                      <span className="mt-2 text-sm font-medium text-amber-800">Front Desk</span>
+                      <span className="mt-2 text-sm font-medium text-amber-800">Site Office</span>
                       <span className="text-xs text-amber-600">Ext. 1000</span>
                     </button>
                   </div>
@@ -544,7 +542,7 @@ export default function EmergencySystem() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                       </svg>
-                      <span className="ml-2">Post emergency contact list in all staff areas</span>
+                      <span className="ml-2">Post emergency contact list in all work areas</span>
                     </li>
                   </ul>
                 </div>
@@ -553,6 +551,6 @@ export default function EmergencySystem() {
           </div>
         )}
       </main>
-    </div>
+    </UserLayout>
   )
 }

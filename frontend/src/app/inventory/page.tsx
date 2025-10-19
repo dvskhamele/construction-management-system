@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function Inventory() {
   const [inventory, setInventory] = useState<any[]>([])
@@ -34,16 +34,16 @@ export default function Inventory() {
 
     // Mock data for prototype
     const mockInventory = [
-      { id: 1, name: 'Luxury Towels', category: 'Linens', quantity: 150, minStock: 100, supplier: 'Premium Linens Co.', price: 12.99, lastOrdered: '2023-08-15' },
-      { id: 2, name: 'Hotel Shampoo', category: 'Toiletries', quantity: 85, minStock: 50, supplier: 'Spa Essentials', price: 3.50, lastOrdered: '2023-08-20' },
-      { id: 3, name: 'Coffee Beans', category: 'Food & Beverage', quantity: 25, minStock: 20, supplier: 'Gourmet Coffee Supply', price: 18.75, lastOrdered: '2023-09-01' },
-      { id: 4, name: 'Cleaning Supplies', category: 'Housekeeping', quantity: 40, minStock: 30, supplier: 'CleanCo', price: 8.99, lastOrdered: '2023-08-25' },
-      { id: 5, name: 'Wine Glasses', category: 'Dining', quantity: 75, minStock: 50, supplier: 'Fine Glassware', price: 9.25, lastOrdered: '2023-07-30' },
-      { id: 6, name: 'Bed Sheets', category: 'Linens', quantity: 95, minStock: 80, supplier: 'Premium Linens Co.', price: 24.50, lastOrdered: '2023-08-10' },
-      { id: 7, name: 'Conditioner', category: 'Toiletries', quantity: 45, minStock: 50, supplier: 'Spa Essentials', price: 3.75, lastOrdered: '2023-08-20' },
-      { id: 8, name: 'Chocolate Assortment', category: 'Food & Beverage', quantity: 15, minStock: 20, supplier: 'Gourmet Delights', price: 22.50, lastOrdered: '2023-09-05' },
-      { id: 9, name: 'Trash Bags', category: 'Housekeeping', quantity: 120, minStock: 100, supplier: 'CleanCo', price: 15.99, lastOrdered: '2023-08-28' },
-      { id: 10, name: 'Silverware Set', category: 'Dining', quantity: 60, minStock: 50, supplier: 'Fine Glassware', price: 12.75, lastOrdered: '2023-08-05' }
+      { id: 1, name: 'Steel Beams', category: 'Structural Materials', quantity: 150, minStock: 100, supplier: 'Steel Suppliers Inc.', price: 129.99, lastOrdered: '2023-08-15' },
+      { id: 2, name: 'Concrete Mix', category: 'Foundation Materials', quantity: 85, minStock: 50, supplier: 'Concrete Co.', price: 35.50, lastOrdered: '2023-08-20' },
+      { id: 3, name: 'Electrical Wiring', category: 'Electrical Materials', quantity: 2500, minStock: 2000, supplier: 'ElectroSupply', price: 0.75, lastOrdered: '2023-09-01' },
+      { id: 4, name: 'Safety Helmets', category: 'Safety Equipment', quantity: 40, minStock: 30, supplier: 'SafetyFirst', price: 28.99, lastOrdered: '2023-08-25' },
+      { id: 5, name: 'Wood Planks', category: 'Framing Materials', quantity: 750, minStock: 500, supplier: 'Timber Works', price: 19.25, lastOrdered: '2023-07-30' },
+      { id: 6, name: 'Drywall Sheets', category: 'Finishing Materials', quantity: 95, minStock: 80, supplier: 'WallPro', price: 24.50, lastOrdered: '2023-08-10' },
+      { id: 7, name: 'Paint Cans', category: 'Finishing Materials', quantity: 45, minStock: 50, supplier: 'ColorCo', price: 43.75, lastOrdered: '2023-08-20' },
+      { id: 8, name: 'Power Tools', category: 'Equipment', quantity: 15, minStock: 20, supplier: 'ToolTech', price: 122.50, lastOrdered: '2023-09-05' },
+      { id: 9, name: 'Work Gloves', category: 'Safety Equipment', quantity: 120, minStock: 100, supplier: 'SafetyFirst', price: 5.99, lastOrdered: '2023-08-28' },
+      { id: 10, name: 'Plumbing Pipes', category: 'Plumbing Materials', quantity: 600, minStock: 500, supplier: 'PipePro', price: 12.75, lastOrdered: '2023-08-05' }
     ]
     
     setInventory(mockInventory)
@@ -130,14 +130,13 @@ export default function Inventory() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
+    <UserLayout user={user} onLogout={handleLogout}>
 
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-800">Inventory Management</h2>
-            <p className="text-slate-600">Track and manage hotel inventory</p>
+            <p className="text-slate-600">Track and manage construction materials inventory</p>
           </div>
           <button 
             className="bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
@@ -183,7 +182,7 @@ export default function Inventory() {
                 type="text"
                 id="search"
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Item name, category, or supplier"
+                placeholder="Material name, category, or supplier"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -453,7 +452,7 @@ export default function Inventory() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
             <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-slate-800">Add New Inventory Item</h3>
+              <h3 className="text-lg font-semibold text-slate-800">Add New Construction Material</h3>
               <button 
                 onClick={() => setShowAddItemModal(false)}
                 className="text-slate-400 hover:text-slate-500"
@@ -470,7 +469,7 @@ export default function Inventory() {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    placeholder="Enter item name"
+                    placeholder="Enter material name"
                     value={newItem.name}
                     onChange={(e) => setNewItem({...newItem, name: e.target.value})}
                   />
@@ -636,6 +635,6 @@ export default function Inventory() {
           </div>
         </div>
       )}
-    </div>
+    </UserLayout>
   )
 }

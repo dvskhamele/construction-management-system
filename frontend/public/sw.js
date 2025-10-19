@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hotelops-v1.0.0';
+const CACHE_NAME = 'BuildMate-v1.0.0';
 const CACHE_EXPIRATION = 60 * 60 * 1000; // 1 hour
 
 // Files to cache during installation
@@ -192,13 +192,13 @@ self.addEventListener('push', (event) => {
   }
   
   const data = event.data.json();
-  const title = data.title || 'HotelOps Notification';
+  const title = data.title || 'BuildMate Notification';
   const options = {
     body: data.body || 'You have a new notification',
     icon: '/icons/icon-192x192.png',
     badge: '/icons/icon-72x72.png',
     data: data.url || '/',
-    tag: data.tag || 'hotelops-notification'
+    tag: data.tag || 'BuildMate-notification'
   };
   
   event.waitUntil(self.registration.showNotification(title, options));

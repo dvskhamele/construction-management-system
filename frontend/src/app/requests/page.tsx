@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 import MobileNavigation from '../../components/MobileNavigation'
 import MobileRequests from './page-mobile'
 
@@ -30,9 +30,7 @@ export default function Requests() {
 
   // Desktop version would go here in a real implementation
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={null} onLogout={() => {}} />
-      
+    <UserLayout user={null} onLogout={() => {}}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-md p-8 text-center">
           <h1 className="text-2xl font-bold text-slate-800 mb-4">Desktop Version</h1>
@@ -40,6 +38,6 @@ export default function Requests() {
           <p className="text-slate-500 text-sm">Resize your browser window to see the mobile-optimized version.</p>
         </div>
       </main>
-    </div>
+    </UserLayout>
   )
 }

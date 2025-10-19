@@ -1,0 +1,557 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import UserLayout from '../../components/UserLayout'
+
+export default function ConstructionDashboard() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [user, setUser] = useState<any>({ name: 'Project Manager', role: 'ADMIN' })
+  const [stats, setStats] = useState({
+    activeProjects: 0,
+    totalBudget: 0,
+    spentBudget: 0,
+    budgetRemaining: 0,
+    onTimeProjects: 0,
+    delayedProjects: 0,
+    safetyIncidents: 0,
+    qualityIssues: 0,
+    crewMembers: 0,
+    equipmentCount: 0,
+    materialsInStock: 0,
+    permitsPending: 0,
+    inspectionsCompleted: 0
+  })
+  const [projects, setProjects] = useState<any[]>([])
+  const [defects, setDefects] = useState<any[]>([])
+  const [safetyReports, setSafetyReports] = useState<any[]>([])
+  const [materials, setMaterials] = useState<any[]>([])
+  const [equipment, setEquipment] = useState<any[]>([])
+  const [timeRange, setTimeRange] = useState('7d')
+
+  const router = useRouter()
+
+  // Mock data initialization
+  useEffect(() => {
+    // Set mock construction-specific data
+    setStats({
+      activeProjects: 5,
+      totalBudget: 2500000,
+      spentBudget: 1850000,
+      budgetRemaining: 650000,
+      onTimeProjects: 3,
+      delayedProjects: 2,
+      safetyIncidents: 1,
+      qualityIssues: 7,
+      crewMembers: 42,
+      equipmentCount: 18,
+      materialsInStock: 850,
+      permitsPending: 3,
+      inspectionsCompleted: 12
+    })
+
+    // Mock projects data
+    setProjects([
+      {
+        id: 1,
+        name: 'Downtown Commercial Complex',
+        status: 'IN_PROGRESS',
+        progress: 75,
+        budget: 1200000,
+        spent: 900000,
+        startDate: '2025-01-15',
+        endDate: '2025-09-30',
+        location: 'Downtown District'
+      },
+      {
+        id: 2,
+        name: 'Residential Apartment Block A',
+        status: 'DELAYED',
+        progress: 45,
+        budget: 800000,
+        spent: 380000,
+        startDate: '2025-02-10',
+        endDate: '2025-10-15',
+        location: 'Suburban Area'
+      },
+      {
+        id: 3,
+        name: 'Infrastructure Bridge Project',
+        status: 'ON_TIME',
+        progress: 90,
+        budget: 500000,
+        spent: 470000,
+        startDate: '2024-11-01',
+        endDate: '2025-03-30',
+        location: 'River Crossing'
+      }
+    ])
+
+    // Mock defects data
+    setDefects([
+      {
+        id: 1,
+        project: 'Downtown Commercial Complex',
+        title: 'Cracked concrete in foundation',
+        priority: 'HIGH',
+        assignedTo: 'Foundation Team',
+        status: 'PENDING',
+        date: '2025-03-15'
+      },
+      {
+        id: 2,
+        project: 'Residential Apartment Block A',
+        title: 'Electrical wiring issue in unit 305',
+        priority: 'MEDIUM',
+        assignedTo: 'Electrical Team',
+        status: 'IN_PROGRESS',
+        date: '2025-03-18'
+      },
+      {
+        id: 3,
+        project: 'Infrastructure Bridge Project',
+        title: 'Rust on support beam',
+        priority: 'HIGH',
+        assignedTo: 'Structural Team',
+        status: 'RESOLVED',
+        date: '2025-03-10'
+      }
+    ])
+
+    // Mock safety reports
+    setSafetyReports([
+      {
+        id: 1,
+        type: 'Incident',
+        description: 'Minor fall from height equipment',
+        severity: 'LOW',
+        date: '2025-03-12',
+        project: 'Downtown Commercial Complex'
+      },
+      {
+        id: 2,
+        type: 'Near Miss',
+        description: 'Equipment collision avoided',
+        severity: 'MEDIUM',
+        date: '2025-03-10',
+        project: 'Residential Apartment Block A'
+      }
+    ])
+
+    // Mock materials
+    setMaterials([
+      {
+        id: 1,
+        name: 'Reinforced Steel',
+        category: 'Structural',
+        quantity: 150,
+        unit: 'tons',
+        required: 200,
+        supplier: 'SteelCorp Industries',
+        deliveryDate: '2025-03-25'
+      },
+      {
+        id: 2,
+        name: 'Portland Cement',
+        category: 'Concrete',
+        quantity: 85,
+        unit: 'tons',
+        required: 100,
+        supplier: 'Cement Solutions Ltd',
+        deliveryDate: '2025-03-22'
+      }
+    ])
+
+    // Mock equipment
+    setEquipment([
+      {
+        id: 1,
+        name: 'Tower Crane 1',
+        type: 'Lifting',
+        location: 'Downtown Commercial Complex',
+        operator: 'John Smith',
+        status: 'OPERATIONAL',
+        maintenanceDue: '2025-04-15'
+      },
+      {
+        id: 2,
+        name: 'Excavator 3',
+        type: 'Earthwork',
+        location: 'Residential Apartment Block A',
+        operator: 'Mike Johnson',
+        status: 'MAINTENANCE',
+        maintenanceDue: '2025-03-20'
+      }
+    ])
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUser(null)
+    router.push('/login')
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'IN_PROGRESS':
+        return 'bg-amber-100 text-amber-800'
+      case 'ON_TIME':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'DELAYED':
+        return 'bg-rose-100 text-rose-800'
+      case 'PENDING':
+        return 'bg-amber-100 text-amber-800'
+      case 'RESOLVED':
+        return 'bg-blue-100 text-blue-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'HIGH':
+        return 'bg-rose-100 text-rose-800'
+      case 'MEDIUM':
+        return 'bg-amber-100 text-amber-800'
+      case 'LOW':
+        return 'bg-emerald-100 text-emerald-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'HIGH':
+        return 'bg-rose-100 text-rose-800'
+      case 'MEDIUM':
+        return 'bg-amber-100 text-amber-800'
+      case 'LOW':
+        return 'bg-blue-100 text-blue-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  return (
+    <UserLayout user={user} onLogout={handleLogout}>
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">Construction Dashboard</h1>
+              <p className="text-slate-600">Manage your construction projects, resources, and quality control</p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-slate-500">Last updated:</span>
+                <span className="text-sm font-medium text-slate-700">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                <button 
+                  className="p-1 rounded-full hover:bg-slate-200 transition focus-ring"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v7a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/projects')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Active Projects</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.activeProjects}</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-emerald-500">↑ 2 from last month</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/budget')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Budget Remaining</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">₹{stats.budgetRemaining.toLocaleString()}</p>
+              </div>
+              <div className="bg-emerald-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-amber-500">↑ 5% from last month</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/safety')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Safety Incidents</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.safetyIncidents}</p>
+              </div>
+              <div className="bg-amber-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-rose-500">1 in last week</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/crew')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Active Crew</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.crewMembers}</p>
+              </div>
+              <div className="bg-indigo-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">2 specialists on leave</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-slate-800">{stats.onTimeProjects}</p>
+            <p className="text-sm text-slate-600">On Time</p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-rose-700">{stats.delayedProjects}</p>
+            <p className="text-sm text-slate-600">Delayed</p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-slate-800">{stats.qualityIssues}</p>
+            <p className="text-sm text-slate-600">Defects</p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-slate-800">{stats.equipmentCount}</p>
+            <p className="text-sm text-slate-600">Equipment</p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-slate-800">{stats.materialsInStock}</p>
+            <p className="text-sm text-slate-600">Materials</p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-4 text-center border border-slate-200">
+            <p className="text-lg font-bold text-slate-800">{stats.permitsPending}</p>
+            <p className="text-sm text-slate-600">Permits</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Project Status Chart */}
+          <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-4">Project Progress Overview</h2>
+            <div className="space-y-4">
+              {projects.map((project) => (
+                <div key={project.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition" onClick={() => router.push(`/projects/${project.id}`)}>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="font-medium text-slate-800">{project.name}</h3>
+                    <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(project.status)}`}>
+                      {project.status.replace('_', ' ')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm text-slate-600 mb-1">
+                    <span>{project.location}</span>
+                    <span>{project.progress}%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div 
+                      className={`h-2.5 rounded-full ${
+                        project.progress < 50 ? 'bg-amber-500' : 
+                        project.progress < 80 ? 'bg-blue-500' : 'bg-emerald-500'
+                      }`}
+                      style={{ width: `${project.progress}%` }}
+                    ></div>
+                  </div>
+                  <div className="mt-2 flex justify-between text-xs text-slate-500">
+                    <span>₹{project.spent.toLocaleString()} spent</span>
+                    <span>₹{project.budget.toLocaleString()} budget</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Construction Defects */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-4">Defects Tracking</h2>
+            <div className="overflow-y-auto max-h-96">
+              {defects.map((defect) => (
+                <div 
+                  key={defect.id} 
+                  className="border-l-4 border-rose-500 pl-4 py-3 bg-slate-50 rounded-lg mb-3 transition-all duration-300 hover:shadow-sm cursor-pointer"
+                  onClick={() => router.push(`/defects/${defect.id}`)}
+                >
+                  <div className="flex justify-between">
+                    <h3 className="font-medium text-slate-800">{defect.title}</h3>
+                    <span className={`px-2 py-1 text-xs rounded-full ${getPriorityColor(defect.priority)}`}>
+                      {defect.priority}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-600 mt-1">{defect.project}</p>
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>Assigned: {defect.assignedTo}</span>
+                    <span>{defect.date}</span>
+                  </div>
+                </div>
+              ))}
+              {defects.length === 0 && (
+                <p className="text-slate-500 text-center py-4">No defects reported</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Main Dashboard Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Safety Management */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-slate-800">Safety Management</h2>
+              <button className="text-sm text-teal-600 hover:text-teal-800 font-medium" onClick={() => router.push('/safety')}>
+                View All
+              </button>
+            </div>
+            <div className="space-y-3">
+              {safetyReports.map((report) => (
+                <div key={report.id} className="border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition cursor-pointer" onClick={() => router.push('/safety')}>
+                  <div className="flex justify-between">
+                    <h3 className="font-medium text-slate-800">{report.type}</h3>
+                    <span className={`px-2 py-1 text-xs rounded-full ${getSeverityColor(report.severity)}`}>
+                      {report.severity}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-600 mt-1">{report.description}</p>
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>{report.project}</span>
+                    <span>{report.date}</span>
+                  </div>
+                </div>
+              ))}
+              {safetyReports.length === 0 && (
+                <p className="text-slate-500 text-center py-2">No safety incidents reported</p>
+              )}
+            </div>
+          </div>
+
+          {/* Resource Management */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-slate-800">Resource Management</h2>
+              <button className="text-sm text-teal-600 hover:text-teal-800 font-medium" onClick={() => router.push('/resources')}>
+                View All
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-50 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-slate-800">{stats.crewMembers}</p>
+                <p className="text-sm text-slate-600">Crew Members</p>
+              </div>
+              <div className="bg-slate-50 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-slate-800">{stats.equipmentCount}</p>
+                <p className="text-sm text-slate-600">Equipment Units</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <h3 className="font-medium text-slate-800 mb-2">Equipment Status</h3>
+              {equipment.map((item) => (
+                <div key={item.id} className="flex justify-between py-2 border-b border-slate-100 last:border-0">
+                  <div>
+                    <p className="font-medium text-slate-800">{item.name}</p>
+                    <p className="text-xs text-slate-500">{item.type}</p>
+                  </div>
+                  <span className={`px-2 py-1 text-xs rounded-full ${
+                    item.status === 'OPERATIONAL' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {item.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Material Tracking */}
+        <div className="mt-6 bg-white rounded-2xl shadow-md p-6 card">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-slate-800">Material Tracking</h2>
+            <button className="text-sm text-teal-600 hover:text-teal-800 font-medium" onClick={() => router.push('/materials')}>
+              View All
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Material</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">On Hand</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Required</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {materials.map((material) => {
+                  const percent = Math.min(100, Math.round((material.quantity / material.required) * 100));
+                  return (
+                    <tr key={material.id} className="hover:bg-slate-50 transition cursor-pointer" onClick={() => router.push('/materials')}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-slate-900">{material.name}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-600">{material.category}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-600">{material.quantity} {material.unit}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-600">{material.required} {material.unit}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="w-full bg-slate-200 rounded-full h-2.5">
+                          <div 
+                            className={`h-2.5 rounded-full ${
+                              percent < 20 ? 'bg-rose-500' : 
+                              percent < 50 ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${percent}%` }}
+                          ></div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{material.deliveryDate}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </UserLayout>
+  )
+}

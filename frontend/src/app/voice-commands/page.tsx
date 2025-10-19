@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 import VoiceCommand from '../../components/VoiceCommand'
 
 export default function VoiceCommands() {
@@ -39,42 +39,59 @@ export default function VoiceCommands() {
     const lowerCommand = command.toLowerCase()
     
     let title = ''
-    let roomNumber = ''
+    let siteNumber = ''
     let department = ''
     
-    // Extract room number
-    const roomMatch = lowerCommand.match(/room\s+(\d+)/)
-    if (roomMatch) {
-      roomNumber = roomMatch[1]
+    // Extract site number
+    const siteMatch = lowerCommand.match(/site\\s+(\\d+)/);
+    if (siteMatch) {
+      siteNumber = siteMatch[1];
     }
-    
+
+    // Extract area/section number
+    const areaMatch = lowerCommand.match(/area\\s+(\\d+)/) || lowerCommand.match(/section\\s+(\\d+)/);
+    if (areaMatch) {
+      siteNumber = areaMatch[1]; // Using siteNumber field for area/section
+    }    
     // Determine department and title based on keywords
-    if (lowerCommand.includes('towel') || lowerCommand.includes('linen')) {
-      department = 'Housekeeping'
-      title = 'Extra towels/linens needed'
-    } else if (lowerCommand.includes('leak') || lowerCommand.includes('faucet') || 
-               lowerCommand.includes('ac') || lowerCommand.includes('air') ||
-               lowerCommand.includes('temperature') || lowerCommand.includes('hot water')) {
-      department = 'Maintenance'
-      title = 'Maintenance request'
-    } else if (lowerCommand.includes('checkout') || lowerCommand.includes('check out')) {
-      department = 'Front Desk'
-      title = 'Late checkout request'
-    } else if (lowerCommand.includes('food') || lowerCommand.includes('meal') || 
-               lowerCommand.includes('breakfast') || lowerCommand.includes('lunch') ||
-               lowerCommand.includes('dinner') || lowerCommand.includes('room service')) {
-      department = 'Food & Beverage'
-      title = 'Food service request'
+    if (lowerCommand.includes('foundation') || lowerCommand.includes('concrete') || 
+        lowerCommand.includes('excavation') || lowerCommand.includes('dig')) {
+      department = 'Foundation'
+      title = 'Foundation work needed'
+    } else if (lowerCommand.includes('framing') || lowerCommand.includes('wood') || 
+               lowerCommand.includes('lumber') || lowerCommand.includes('walls')) {
+      department = 'Framing'
+      title = 'Framing task needed'
+    } else if (lowerCommand.includes('electrical') || lowerCommand.includes('wiring') || 
+               lowerCommand.includes('outlet') || lowerCommand.includes('breaker')) {
+      department = 'Electrical'
+      title = 'Electrical work needed'
+    } else if (lowerCommand.includes('plumbing') || lowerCommand.includes('pipe') || 
+               lowerCommand.includes('water') || lowerCommand.includes('drain')) {
+      department = 'Plumbing'
+      title = 'Plumbing task needed'
+    } else if (lowerCommand.includes('safety') || lowerCommand.includes('hazard') || 
+               lowerCommand.includes('danger') || lowerCommand.includes('accident')) {
+      department = 'Safety'
+      title = 'Safety concern reported'
+    } else if (lowerCommand.includes('equipment') || lowerCommand.includes('tool') || 
+               lowerCommand.includes('crane') || lowerCommand.includes('excavator')) {
+      department = 'Equipment'
+      title = 'Equipment issue reported'
+    } else if (lowerCommand.includes('materials') || lowerCommand.includes('supply') || 
+               lowerCommand.includes('delivery') || lowerCommand.includes('concrete')) {
+      department = 'Logistics'
+      title = 'Material delivery needed'
     } else {
-      department = 'Front Desk'
-      title = 'General guest request'
+      department = 'General'
+      title = 'General construction task'
     }
     
     // Create request
     const newRequest = {
       id: requests.length > 0 ? Math.max(...requests.map(r => r.id)) + 1 : 1,
-      guestName: 'Voice Command Guest',
-      roomNumber,
+      workerName: 'Voice Command Worker',
+      siteNumber,
       title,
       department,
       priority: 'MEDIUM',
@@ -87,13 +104,11 @@ export default function VoiceCommands() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-800">Voice Commands</h2>
-          <p className="text-slate-600">Hands-free request logging for hotel staff</p>
+          <p className="text-slate-600">Hands-free task logging for construction site supervisors</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -115,7 +130,7 @@ export default function VoiceCommands() {
                   <table className="min-w-full divide-y divide-slate-200">
                     <thead className="bg-slate-50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Guest & Room</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Worker & Site/Area</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Request</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Time</th>
@@ -125,8 +140,8 @@ export default function VoiceCommands() {
                       {requests.map((request) => (
                         <tr key={request.id} className="hover:bg-slate-50 transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-slate-900">{request.guestName}</div>
-                            <div className="text-sm text-slate-500">Room {request.roomNumber}</div>
+                            <div className="text-sm font-medium text-slate-900">{request.workerName}</div>
+                            <div className="text-sm text-slate-500">Site/Area {request.siteNumber}</div>
                           </td>
                           <td className="px-6 py-4">
                             <div className="text-sm font-medium text-slate-900">{request.title}</div>
@@ -194,25 +209,25 @@ export default function VoiceCommands() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="ml-2 text-sm text-slate-700">Include room numbers when possible</span>
+                  <span className="ml-2 text-sm text-slate-700">Include site/area numbers when possible</span>
                 </li>
                 <li className="flex items-start">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="ml-2 text-sm text-slate-700">Use specific keywords like "towels", "maintenance", "checkout"</span>
+                  <span className="ml-2 text-sm text-slate-700">Use specific keywords like "foundation", "framing", "electrical"</span>
                 </li>
                 <li className="flex items-start">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="ml-2 text-sm text-slate-700">Works best in quiet environments</span>
+                  <span className="ml-2 text-sm text-slate-700">Works best in noisy construction environments with noise-canceling headsets</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </main>
-    </div>
+    </UserLayout>
   )
 }

@@ -12,8 +12,8 @@ interface User {
 
 interface Request {
   id: string;
-  guestName: string;
-  roomNumber: string;
+  clientName: string;
+  areaNumber: string;
   title: string;
   description: string;
   department: string;
@@ -47,10 +47,10 @@ export default function MobileRequestDetail({ params }: { params: { id: string }
     // Mock request data
     const mockRequest: Request = {
       id: params.id,
-      guestName: 'Emma Davis',
-      roomNumber: '201',
+      clientName: 'Emma Davis',
+      areaNumber: '201',
       title: 'Extra Pillows',
-      description: 'Guest needs additional pillows for their stay. They mentioned they have allergies and need hypoallergenic options if possible.',
+      description: 'Client needs additional pillows for their stay. They mentioned they have allergies and need hypoallergenic options if possible.',
       department: 'HOUSEKEEPING',
       priority: 'MEDIUM',
       status: 'IN_PROGRESS',
@@ -186,11 +186,11 @@ export default function MobileRequestDetail({ params }: { params: { id: string }
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-center">
               <div className="flex-shrink-0 h-12 w-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">{request.guestName.charAt(0)}</span>
+                <span className="text-white font-bold text-lg">{request.clientName.charAt(0)}</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-base font-medium text-slate-900">{request.guestName}</h3>
-                <p className="text-sm text-slate-500">Room {request.roomNumber}</p>
+                <h3 className="text-base font-medium text-slate-900">{request.clientName}</h3>
+                <p className="text-sm text-slate-500">Area {request.areaNumber}</p>
               </div>
             </div>
             <div className="flex flex-col items-end space-y-2">

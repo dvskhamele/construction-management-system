@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function Departments() {
   const [departments, setDepartments] = useState<any[]>([])
@@ -31,66 +31,66 @@ export default function Departments() {
     const mockDepartments = [
       {
         id: 1,
-        name: 'Housekeeping',
-        description: 'Responsible for maintaining cleanliness and hygiene throughout the hotel',
+        name: 'Foundation',
+        description: 'Responsible for managing foundation work and site preparation throughout the project',
         head: 'Alice Johnson',
         phone: '+1234567890',
-        email: 'housekeeping@hotel.com',
+        email: 'foundation@buildmate.com',
         staffCount: 12,
         openRequests: 8,
         completedToday: 15
       },
       {
         id: 2,
-        name: 'Maintenance',
-        description: 'Handles all repair and maintenance tasks throughout the property',
+        name: 'Framing',
+        description: 'Handles all structural framing and support installation tasks throughout the project',
         head: 'David Wilson',
         phone: '+1234567891',
-        email: 'maintenance@hotel.com',
+        email: 'framing@buildmate.com',
         staffCount: 6,
         openRequests: 5,
         completedToday: 7
       },
       {
         id: 3,
-        name: 'Food & Beverage',
-        description: 'Manages all dining services including restaurants and room service',
+        name: 'Electrical',
+        description: 'Manages all electrical installation and system setup throughout the project',
         head: 'Frank Miller',
         phone: '+1234567892',
-        email: 'f&b@hotel.com',
+        email: 'electrical@buildmate.com',
         staffCount: 18,
         openRequests: 12,
         completedToday: 28
       },
       {
         id: 4,
-        name: 'Front Desk',
-        description: 'Handles guest check-ins, check-outs, and general inquiries',
+        name: 'Project Management',
+        description: 'Handles project scheduling, coordination, and general management tasks',
         head: 'Kate Williams',
         phone: '+1234567893',
-        email: 'frontdesk@hotel.com',
+        email: 'project-management@buildmate.com',
         staffCount: 8,
         openRequests: 3,
         completedToday: 22
       },
       {
         id: 5,
-        name: 'Concierge',
-        description: 'Assists guests with reservations, recommendations, and special requests',
+        name: 'Plumbing',
+        description: 'Assists with installations, repairs, and special requests related to plumbing systems',
         head: 'Michael Brown',
         phone: '+1234567894',
-        email: 'concierge@hotel.com',
+        email: 'plumbing@construction.com',
         staffCount: 4,
         openRequests: 7,
         completedToday: 9
       },
       {
         id: 6,
-        name: 'Security',
-        description: 'Ensures the safety and security of guests and property',
+        name: 'Safety',
+        description: 'Ensures the safety and security of workers and construction site',
         head: 'Robert Taylor',
         phone: '+1234567895',
-        email: 'security@hotel.com',
+        email: 'safety@construction.com',
         staffCount: 6,
         openRequests: 1,
         completedToday: 3
@@ -139,14 +139,12 @@ export default function Departments() {
     : departments
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-800">Department Coordination</h2>
-            <p className="text-slate-600">Manage and coordinate between hotel departments</p>
+            <h2 className="text-2xl font-bold text-slate-800">Crew Coordination</h2>
+            <p className="text-slate-600">Manage and coordinate between construction crews</p>
           </div>
           <button 
             className="bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
@@ -260,7 +258,7 @@ export default function Departments() {
         {/* Department Coordination Matrix */}
         <div className="bg-white rounded-2xl shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-slate-800">Department Coordination Matrix</h3>
+            <h3 className="text-lg font-semibold text-slate-800">Crew Coordination Matrix</h3>
             <button className="text-sm text-teal-600 hover:text-teal-800 font-medium">View Communication Log</button>
           </div>
           
@@ -269,17 +267,17 @@ export default function Departments() {
               <thead className="bg-slate-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Housekeeping</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Maintenance</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Food & Beverage</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Front Desk</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Concierge</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Security</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Foundation</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Framing</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Electrical</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project Management</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Plumbing</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Safety</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-slate-200">
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Housekeeping</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Foundation</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">-</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
@@ -308,7 +306,7 @@ export default function Departments() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Maintenance</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Framing</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
                       High
@@ -337,7 +335,7 @@ export default function Departments() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Food & Beverage</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Electrical</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
                       Medium
@@ -366,7 +364,7 @@ export default function Departments() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Front Desk</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Project Management</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
                       High
@@ -395,7 +393,7 @@ export default function Departments() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Concierge</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Plumbing</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
                       Medium
@@ -424,7 +422,7 @@ export default function Departments() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Security</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Safety</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
                       Medium
@@ -460,17 +458,17 @@ export default function Departments() {
         {/* Interdepartmental Communication */}
         <div className="mt-8 bg-white rounded-2xl shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-slate-800">Recent Communications</h3>
+            <h3 className="text-lg font-semibold text-slate-800">Recent Crew Communications</h3>
             <button className="text-sm text-teal-600 hover:text-teal-800 font-medium">View All</button>
           </div>
           
           <div className="space-y-4">
             <div className="border border-slate-200 rounded-lg p-4">
               <div className="flex justify-between">
-                <h4 className="font-medium text-slate-800">Housekeeping → Front Desk</h4>
+                <h4 className="font-medium text-slate-800">Foundation → Project Management</h4>
                 <span className="text-xs text-slate-500">2 hours ago</span>
               </div>
-              <p className="text-sm text-slate-600 mt-2">Room 205 is now clean and ready for check-in.</p>
+              <p className="text-sm text-slate-600 mt-2">Foundation for Building A is now complete and ready for framing inspection.</p>
               <div className="mt-3 flex justify-between items-center">
                 <span className="text-xs text-slate-500">From: Alice Johnson</span>
                 <button className="text-xs text-teal-600 hover:text-teal-800">Reply</button>
@@ -479,10 +477,10 @@ export default function Departments() {
             
             <div className="border border-slate-200 rounded-lg p-4">
               <div className="flex justify-between">
-                <h4 className="font-medium text-slate-800">Maintenance → Housekeeping</h4>
+                <h4 className="font-medium text-slate-800">Framing → Foundation</h4>
                 <span className="text-xs text-slate-500">5 hours ago</span>
               </div>
-              <p className="text-sm text-slate-600 mt-2">AC unit in Room 302 has been repaired. Please inspect and confirm.</p>
+              <p className="text-sm text-slate-600 mt-2">Framing for Level 2 has been completed. Please inspect and confirm foundation stability.</p>
               <div className="mt-3 flex justify-between items-center">
                 <span className="text-xs text-slate-500">From: David Wilson</span>
                 <button className="text-xs text-teal-600 hover:text-teal-800">Reply</button>
@@ -491,10 +489,10 @@ export default function Departments() {
             
             <div className="border border-slate-200 rounded-lg p-4">
               <div className="flex justify-between">
-                <h4 className="font-medium text-slate-800">Front Desk → Food & Beverage</h4>
+                <h4 className="font-medium text-slate-800">Project Management → Electrical</h4>
                 <span className="text-xs text-slate-500">1 day ago</span>
               </div>
-              <p className="text-sm text-slate-600 mt-2">Guest in Room 108 has requested late checkout until 2pm. Please adjust room service timing.</p>
+              <p className="text-sm text-slate-600 mt-2">Foundation work for Building C has been approved. Please prepare for electrical installation.</p>
               <div className="mt-3 flex justify-between items-center">
                 <span className="text-xs text-slate-500">From: Kate Williams</span>
                 <button className="text-xs text-teal-600 hover:text-teal-800">Reply</button>
@@ -672,6 +670,6 @@ export default function Departments() {
           </div>
         </div>
       )}
-    </div>
+    </UserLayout>
   )
 }

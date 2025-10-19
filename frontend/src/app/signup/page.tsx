@@ -11,7 +11,7 @@ export default function SignupPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    companyName: '', // Changed from hotelName
+    companyName: '', // Changed from siteName
     phoneNumber: ''
   })
   const [isLoading, setIsLoading] = useState(false)

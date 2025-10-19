@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function EnhancedDashboard() {
   const [stats, setStats] = useState<any>({})
@@ -30,10 +30,10 @@ export default function EnhancedDashboard() {
         inProgressRequests: 8,
         completedRequests: 45,
         urgentRequests: 3,
-        dirtyRooms: 15,
-        cleanRooms: 35,
-        inspectedRooms: 8,
-        outOfOrderRooms: 2,
+        dirtyAreas: 15,
+        cleanAreas: 35,
+        inspectedAreas: 8,
+        outOfOrderAreas: 2,
         activeStaff: 24,
         onBreakStaff: 4
       }
@@ -42,7 +42,7 @@ export default function EnhancedDashboard() {
         {
           id: 1,
           name: 'Housekeeping',
-          description: 'Room cleaning and maintenance',
+          description: 'Area cleaning and maintenance',
           head: 'Alice Johnson',
           staffCount: 8,
           pendingRequests: 5,
@@ -64,7 +64,7 @@ export default function EnhancedDashboard() {
         {
           id: 3,
           name: 'Food & Beverage',
-          description: 'Room service and dining',
+          description: 'Area service and dining',
           head: 'Emily Davis',
           staffCount: 12,
           pendingRequests: 7,
@@ -75,7 +75,7 @@ export default function EnhancedDashboard() {
         {
           id: 4,
           name: 'Front Office',
-          description: 'Guest services and check-in/check-out',
+          description: 'Client services and check-in/check-out',
           head: 'Michael Brown',
           staffCount: 6,
           pendingRequests: 2,
@@ -89,16 +89,16 @@ export default function EnhancedDashboard() {
         {
           id: 1,
           type: 'request',
-          title: 'New guest request',
-          description: 'John Doe - Extra towels (Room 205)',
+          title: 'New client request',
+          description: 'John Doe - Extra towels (Area 205)',
           timestamp: new Date().toISOString(),
           status: 'PENDING'
         },
         {
           id: 2,
-          type: 'room',
-          title: 'Room status updated',
-          description: 'Room 102 marked as DIRTY',
+          type: 'area',
+          title: 'Area status updated',
+          description: 'Area 102 marked as DIRTY',
           timestamp: new Date(Date.now() - 3600000).toISOString(),
           status: 'DIRTY'
         },
@@ -106,15 +106,15 @@ export default function EnhancedDashboard() {
           id: 3,
           type: 'request',
           title: 'Request completed',
-          description: 'Jane Smith - Leaky faucet (Room 108)',
+          description: 'Jane Smith - Leaky faucet (Area 108)',
           timestamp: new Date(Date.now() - 7200000).toISOString(),
           status: 'COMPLETED'
         },
         {
           id: 4,
-          type: 'room',
-          title: 'Room status updated',
-          description: 'Room 201 marked as CLEAN',
+          type: 'area',
+          title: 'Area status updated',
+          description: 'Area 201 marked as CLEAN',
           timestamp: new Date(Date.now() - 10800000).toISOString(),
           status: 'CLEAN'
         },
@@ -122,7 +122,7 @@ export default function EnhancedDashboard() {
           id: 5,
           type: 'request',
           title: 'Request assigned',
-          description: 'Robert Johnson - Breakfast order (Room 302) assigned to Mike Thompson',
+          description: 'Robert Johnson - Breakfast order (Area 302) assigned to Mike Thompson',
           timestamp: new Date(Date.now() - 14400000).toISOString(),
           status: 'IN_PROGRESS'
         }
@@ -131,36 +131,36 @@ export default function EnhancedDashboard() {
       const mockTasks = [
         {
           id: 1,
-          title: 'Clean Room 205',
-          description: 'Standard cleaning for occupied room',
+          title: 'Clean Area 205',
+          description: 'Standard cleaning for occupied area',
           department: 'Housekeeping',
           priority: 'HIGH',
           status: 'PENDING',
           assignedTo: 1,
           dueDate: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
-          roomNumber: '205'
+          areaNumber: '205'
         },
         {
           id: 2,
-          title: 'Inspect Room 108',
-          description: 'Final inspection before guest arrival',
+          title: 'Inspect Area 108',
+          description: 'Final inspection before client arrival',
           department: 'Housekeeping',
           priority: 'MEDIUM',
           status: 'IN_PROGRESS',
           assignedTo: 1,
           dueDate: new Date(Date.now() + 172800000).toISOString(), // In 2 days
-          roomNumber: '108'
+          areaNumber: '108'
         },
         {
           id: 3,
-          title: 'Replace towels in Room 302',
-          description: 'Guest requested fresh towels',
+          title: 'Replace towels in Area 302',
+          description: 'Client requested fresh towels',
           department: 'Housekeeping',
           priority: 'URGENT',
           status: 'PENDING',
           assignedTo: 1,
           dueDate: new Date(Date.now() + 3600000).toISOString(), // In 1 hour
-          roomNumber: '302'
+          areaNumber: '302'
         }
       ]
       
@@ -246,7 +246,7 @@ export default function EnhancedDashboard() {
             <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
           </svg>
         )
-      case 'room':
+      case 'area':
         return (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -275,13 +275,11 @@ export default function EnhancedDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
-
+    <UserLayout user={user} onLogout={handleLogout}>
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-800">Enhanced Dashboard</h2>
-          <p className="text-slate-600">Overview of hotel operations and department coordination</p>
+          <p className="text-slate-600">Overview of construction projects and department coordination</p>
         </div>
 
         {error && (
@@ -395,7 +393,7 @@ export default function EnhancedDashboard() {
                     </div>
                     <p className="text-sm text-slate-600 mb-2">{task.description}</p>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-500">Room {task.roomNumber}</span>
+                      <span className="text-sm text-slate-500">Area {task.areaNumber}</span>
                       <span className={`px-2 py-1 text-xs rounded-full ${getStatusClass(task.status)}`}>
                         {task.status}
                       </span>
@@ -451,6 +449,6 @@ export default function EnhancedDashboard() {
           </div>
         </div>
       </main>
-    </div>
+    </UserLayout>
   )
 }

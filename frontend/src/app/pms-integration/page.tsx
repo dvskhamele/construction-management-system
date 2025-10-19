@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
+import UserLayout from '../../components/UserLayout'
 
 export default function PMSIntegration() {
   const [user, setUser] = useState<any>(null)
   const [syncStatus, setSyncStatus] = useState('')
   const [syncProgress, setSyncProgress] = useState(0)
   const [lastSync, setLastSync] = useState('')
-  const [rooms, setRooms] = useState<any[]>([])
+  const [areas, setAreas] = useState<any[]>([])
   const [requests, setRequests] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -26,7 +26,7 @@ export default function PMSIntegration() {
       setLoading(true)
       
       // Mock data for prototype
-      const mockRooms = [
+      const mockAreas = [
         { id: 1, number: '101', status: 'CLEAN', pmsStatus: 'CLEAN', synced: true },
         { id: 2, number: '102', status: 'DIRTY', pmsStatus: 'DIRTY', synced: true },
         { id: 3, number: '103', status: 'INSPECTED', pmsStatus: 'CLEAN', synced: false },
@@ -36,8 +36,8 @@ export default function PMSIntegration() {
       const mockRequests = [
         { 
           id: 1, 
-          guestName: 'John Doe', 
-          roomNumber: '205', 
+          clientName: 'John Doe', 
+          areaNumber: '205', 
           title: 'Extra towels needed', 
           status: 'PENDING',
           pmsStatus: 'PENDING',
@@ -45,8 +45,8 @@ export default function PMSIntegration() {
         },
         { 
           id: 2, 
-          guestName: 'Jane Smith', 
-          roomNumber: '108', 
+          clientName: 'Jane Smith', 
+          areaNumber: '108', 
           title: 'Breakfast order', 
           status: 'IN_PROGRESS',
           pmsStatus: 'IN_PROGRESS',
@@ -54,8 +54,8 @@ export default function PMSIntegration() {
         },
         { 
           id: 3, 
-          guestName: 'Robert Johnson', 
-          roomNumber: '210', 
+          clientName: 'Robert Johnson', 
+          areaNumber: '210', 
           title: 'Leaky faucet', 
           status: 'PENDING',
           pmsStatus: 'COMPLETED',
@@ -63,7 +63,7 @@ export default function PMSIntegration() {
         }
       ]
       
-      setRooms(mockRooms)
+      setAreas(mockAreas)
       setRequests(mockRequests)
       setLastSync(new Date().toLocaleString())
       
@@ -96,7 +96,7 @@ export default function PMSIntegration() {
       await new Promise(resolve => setTimeout(resolve, 2000))
       
       // Update mock data to show synced status
-      setRooms(rooms.map(room => ({ ...room, synced: true })))
+      setAreas(areas.map(area => ({ ...area, synced: true })))
       setRequests(requests.map(request => ({ ...request, synced: true })))
       setLastSync(new Date().toLocaleString())
       
@@ -150,13 +150,12 @@ export default function PMSIntegration() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Header user={user} onLogout={handleLogout} />
+    <UserLayout user={user} onLogout={handleLogout}>
 
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-800">PMS Integration</h2>
-          <p className="text-slate-600">Manage integration with Property Management System</p>
+          <p className="text-slate-600">Manage integration with Site Management System</p>
         </div>
 
         {error && (
@@ -202,38 +201,38 @@ export default function PMSIntegration() {
           </div>
         </div>
 
-        {/* Room Status Sync */}
+        {/* Area Status Sync */}
         <div className="bg-white rounded-xl shadow p-6 mb-8">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Room Status Synchronization</h3>
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Area Status Synchronization</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Room</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Area</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Local Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">PMS Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Sync Status</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-slate-200">
-                {rooms.map((room: any) => (
-                  <tr key={room.id} className="hover:bg-slate-50">
+                {areas.map((area: any) => (
+                  <tr key={area.id} className="hover:bg-slate-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
-                      Room {room.number}
+                      Area {area.number}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(room.status)}`}>
-                        {room.status}
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(area.status)}`}>
+                        {area.status}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(room.pmsStatus)}`}>
-                        {room.pmsStatus}
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(area.pmsStatus)}`}>
+                        {area.pmsStatus}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getSyncStatusClass(room.synced)}`}>
-                        {room.synced ? 'Synced' : 'Not Synced'}
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getSyncStatusClass(area.synced)}`}>
+                        {area.synced ? 'Synced' : 'Not Synced'}
                       </span>
                     </td>
                   </tr>
@@ -245,14 +244,14 @@ export default function PMSIntegration() {
 
         {/* Request Sync */}
         <div className="bg-white rounded-xl shadow p-6">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Guest Request Synchronization</h3>
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Client Request Synchronization</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Request</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Guest</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Room</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Client</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Area</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Local Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">PMS Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Sync Status</th>
@@ -265,10 +264,10 @@ export default function PMSIntegration() {
                       {request.title}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                      {request.guestName}
+                      {request.clientName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                      {request.roomNumber}
+                      {request.areaNumber}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(request.status)}`}>
@@ -292,6 +291,6 @@ export default function PMSIntegration() {
           </div>
         </div>
       </main>
-    </div>
+    </UserLayout>
   )
 }

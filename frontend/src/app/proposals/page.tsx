@@ -1,0 +1,533 @@
+'use client'
+
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import UserLayout from '../../components/UserLayout'
+
+export default function ProposalManagement() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [user, setUser] = useState<any>({ name: 'Sales Executive', role: 'ADMIN' })
+  const [proposals, setProposals] = useState<any[]>([
+    {
+      id: 1,
+      title: 'Downtown Office Complex Construction',
+      client: 'Meridian Properties',
+      value: 850000,
+      status: 'Sent',
+      sentDate: '2025-03-10',
+      dueDate: '2025-03-25',
+      viewed: true,
+      responded: false,
+      type: 'New Construction',
+      projectManager: 'You',
+      template: 'Commercial Office'
+    },
+    {
+      id: 2,
+      title: 'Residential Apartment Block B',
+      client: 'Urban Developments',
+      value: 1200000,
+      status: 'Draft',
+      sentDate: null,
+      dueDate: null,
+      viewed: false,
+      responded: false,
+      type: 'Residential',
+      projectManager: 'Sarah Johnson',
+      template: 'High-Rise Residential'
+    },
+    {
+      id: 3,
+      title: 'Retail Center Renovation',
+      client: 'City Retail Group',
+      value: 450000,
+      status: 'Viewed',
+      sentDate: '2025-02-28',
+      dueDate: '2025-03-15',
+      viewed: true,
+      responded: true,
+      type: 'Renovation',
+      projectManager: 'Mike Chen',
+      template: 'Commercial Renovation'
+    },
+    {
+      id: 4,
+      title: 'Industrial Warehouse Construction',
+      client: 'Tech Storage Solutions',
+      value: 2100000,
+      status: 'Accepted',
+      sentDate: '2025-02-20',
+      dueDate: '2025-03-10',
+      viewed: true,
+      responded: true,
+      type: 'Industrial',
+      projectManager: 'Emily Rodriguez',
+      template: 'Industrial Facility'
+    },
+    {
+      id: 5,
+      title: 'Mixed-Use Development',
+      client: 'Downtown Developers LLC',
+      value: 3200000,
+      status: 'Rejected',
+      sentDate: '2025-02-15',
+      dueDate: '2025-03-05',
+      viewed: true,
+      responded: true,
+      type: 'Mixed-Use',
+      projectManager: 'David Kim',
+      template: 'Mixed-Use Complex'
+    }
+  ])
+  const [templates, setTemplates] = useState<any[]>([
+    {
+      id: 1,
+      name: 'Commercial Office',
+      category: 'New Construction',
+      usage: 12,
+      lastUsed: '2025-03-10'
+    },
+    {
+      id: 2,
+      name: 'High-Rise Residential',
+      category: 'Residential',
+      usage: 8,
+      lastUsed: '2025-03-05'
+    },
+    {
+      id: 3,
+      name: 'Commercial Renovation',
+      category: 'Renovation',
+      usage: 15,
+      lastUsed: '2025-02-28'
+    },
+    {
+      id: 4,
+      name: 'Industrial Facility',
+      category: 'Industrial',
+      usage: 5,
+      lastUsed: '2025-02-20'
+    }
+  ])
+  const [stats, setStats] = useState({
+    totalProposals: 42,
+    drafts: 8,
+    sent: 24,
+    viewed: 18,
+    responded: 12,
+    accepted: 7,
+    rejected: 5,
+    averageResponseTime: 3.2,
+    acceptanceRate: 29
+  })
+  const [filter, setFilter] = useState('all')
+  const [timeRange, setTimeRange] = useState('30d')
+
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUser(null)
+    router.push('/login')
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Draft':
+        return 'bg-gray-100 text-gray-800'
+      case 'Sent':
+        return 'bg-blue-100 text-blue-800'
+      case 'Viewed':
+        return 'bg-amber-100 text-amber-800'
+      case 'Accepted':
+        return 'bg-emerald-100 text-emerald-800'
+      case 'Rejected':
+        return 'bg-rose-100 text-rose-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const filteredProposals = proposals.filter(proposal => {
+    if (filter === 'all') return true
+    if (filter === 'draft') return proposal.status === 'Draft'
+    if (filter === 'sent') return ['Sent', 'Viewed'].includes(proposal.status)
+    if (filter === 'responded') return ['Accepted', 'Rejected'].includes(proposal.status)
+    return true
+  })
+
+  return (
+    <UserLayout user={user} onLogout={handleLogout}>
+
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">Proposal Management</h1>
+              <p className="text-slate-600">Create, send, and track professional construction proposals</p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
+                onClick={() => router.push('/proposals/create')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                New Proposal
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-gray-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('all')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Total Proposals</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.totalProposals}</p>
+              </div>
+              <div className="bg-gray-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Drafts: {stats.drafts}</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('sent')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Sent Proposals</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.sent}</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Viewed: {stats.viewed}</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => setFilter('responded')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Responded</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.responded}</p>
+              </div>
+              <div className="bg-emerald-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-emerald-500">Acceptance: {stats.acceptanceRate}%</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1" onClick={() => router.push('/analytics')}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Avg Response Time</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{stats.averageResponseTime}d</p>
+              </div>
+              <div className="bg-amber-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="text-xs text-slate-500">Industry avg: 5.2 days</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Filter Controls */}
+        <div className="flex flex-wrap items-center justify-between mb-6 bg-white rounded-2xl shadow-md p-4">
+          <div className="flex flex-wrap space-x-2 mb-2 sm:mb-0">
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'all' 
+                  ? 'bg-teal-100 text-teal-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('all')}
+            >
+              All Proposals
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'draft' 
+                  ? 'bg-gray-100 text-gray-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('draft')}
+            >
+              Drafts
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'sent' 
+                  ? 'bg-blue-100 text-blue-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('sent')}
+            >
+              Sent
+            </button>
+            <button 
+              className={`px-3 py-1 text-sm rounded-lg ${
+                filter === 'responded' 
+                  ? 'bg-emerald-100 text-emerald-800 font-medium' 
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+              onClick={() => setFilter('responded')}
+            >
+              Responded
+            </button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-slate-600">Time Range:</span>
+            <select 
+              className="border border-slate-300 rounded-lg px-2 py-1 text-sm"
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+            >
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+              <option value="1y">Last year</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Proposals List */}
+          <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 card">
+            <h2 className="text-xl font-semibold text-slate-800 mb-4">
+              {filter === 'all' ? 'All Proposals' : 
+               filter === 'draft' ? 'Draft Proposals' : 
+               filter === 'sent' ? 'Sent Proposals' : 'Responded Proposals'}
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Title</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Client</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Value</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Sent Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-200">
+                  {filteredProposals.map((proposal) => (
+                    <tr 
+                      key={proposal.id} 
+                      className="hover:bg-slate-50 transition cursor-pointer"
+                      onClick={() => router.push(`/proposals/${proposal.id}`)}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-slate-900">{proposal.title}</div>
+                        <div className="text-sm text-slate-500">{proposal.type} • {proposal.template}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-900">{proposal.client}</div>
+                        <div className="text-sm text-slate-500">PM: {proposal.projectManager}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                        ₹{Math.round(proposal.value / 1000)}k
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(proposal.status)}`}>
+                            {proposal.status}
+                          </span>
+                          {proposal.viewed && (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-emerald-500 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          )}
+                          {proposal.responded && (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-500 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                        {proposal.sentDate || '-'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button 
+                          className="text-teal-600 hover:text-teal-900 mr-3"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/proposals/${proposal.id}/edit`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button 
+                          className="text-blue-600 hover:text-blue-900"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/proposals/${proposal.id}/send`);
+                          }}
+                        >
+                          Send
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Proposal Templates */}
+          <div className="bg-white rounded-2xl shadow-md p-6 card">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-slate-800">Proposal Templates</h2>
+              <button 
+                className="text-sm text-teal-600 hover:text-teal-800 font-medium"
+                onClick={() => router.push('/templates')}
+              >
+                Manage
+              </button>
+            </div>
+            <div className="space-y-4">
+              {templates.map((template) => (
+                <div 
+                  key={template.id} 
+                  className="border border-slate-200 rounded-lg p-4 hover:bg-slate-50 transition cursor-pointer"
+                  onClick={() => router.push(`/templates/${template.id}`)}
+                >
+                  <div className="flex justify-between">
+                    <h3 className="font-medium text-slate-800">{template.name}</h3>
+                    <span className="text-xs text-slate-500">{template.usage}</span>
+                  </div>
+                  <p className="text-sm text-slate-600 mt-1">{template.category}</p>
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>Last used: {template.lastUsed}</span>
+                  </div>
+                </div>
+              ))}
+              <button 
+                className="w-full border-2 border-dashed border-slate-300 rounded-lg p-4 text-slate-500 hover:border-teal-400 hover:text-teal-600 transition flex items-center justify-center"
+                onClick={() => router.push('/templates/create')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Create New Template
+              </button>
+            </div>
+            
+            {/* Proposal Analytics */}
+            <div className="mt-8">
+              <h3 className="text-lg font-semibold text-slate-800 mb-4">Proposal Performance</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-slate-600">Acceptance Rate by Template</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center">
+                      <span className="w-24 text-xs text-slate-600">Commercial</span>
+                      <div className="flex-1 ml-2">
+                        <div className="w-full bg-slate-200 rounded-full h-2">
+                          <div className="bg-emerald-500 h-2 rounded-full" style={{ width: '72%' }}></div>
+                        </div>
+                      </div>
+                      <span className="w-8 text-xs text-slate-600 text-right">72%</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-24 text-xs text-slate-600">Residential</span>
+                      <div className="flex-1 ml-2">
+                        <div className="w-full bg-slate-200 rounded-full h-2">
+                          <div className="bg-amber-500 h-2 rounded-full" style={{ width: '45%' }}></div>
+                        </div>
+                      </div>
+                      <span className="w-8 text-xs text-slate-600 text-right">45%</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-24 text-xs text-slate-600">Industrial</span>
+                      <div className="flex-1 ml-2">
+                        <div className="w-full bg-slate-200 rounded-full h-2">
+                          <div className="bg-rose-500 h-2 rounded-full" style={{ width: '28%' }}></div>
+                        </div>
+                      </div>
+                      <span className="w-8 text-xs text-slate-600 text-right">28%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Proposal Features */}
+        <div className="bg-white rounded-2xl shadow-md p-6 card">
+          <h2 className="text-xl font-semibold text-slate-800 mb-4">Proposal Management Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Professional Templates</h3>
+              <p className="text-sm text-slate-600">Industry-specific templates for all construction project types</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5v-2a3 3 0 00-5.356-1.857M15 17H7m8 0v-2c0-.656-.126-1.283-.356-1.857M7 17H2v-2a3 3 0 015.356-1.857M7 17v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Automated Tracking</h3>
+              <p className="text-sm text-slate-600">Real-time tracking of proposal views, downloads, and responses</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Analytics & Reporting</h3>
+              <p className="text-sm text-slate-600">Detailed reports on proposal performance and conversion rates</p>
+            </div>
+            
+            <div className="border border-slate-200 rounded-lg p-4 text-center hover:shadow-md transition">
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-slate-800 mb-2">Integration</h3>
+              <p className="text-sm text-slate-600">Seamless integration with estimating, project management, and CRM</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </UserLayout>
+  )
+}
