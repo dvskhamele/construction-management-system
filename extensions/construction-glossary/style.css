@@ -1,0 +1,37 @@
+
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 18px;
+    text-align: center;
+}
+
+#search-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#results {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.term {
+    margin-bottom: 10px;
+}
+
+.term h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.term p {
+    font-size: 14px;
+    margin: 0;
+}

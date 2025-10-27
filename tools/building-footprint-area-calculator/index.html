@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Footprint Area Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Building Footprint Area Calculator</h1>
+        <p>Calculate the area of a building footprint based on its vertices.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="coordinates">Enter Coordinates (x,y pairs, one per line)</label>
+                <textarea id="coordinates" rows="10" placeholder="e.g.,
+0,0
+10,0
+10,10
+0,10"></textarea>
+            </div>
+            <button id="calculate-area">Calculate Area</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

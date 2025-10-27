@@ -1,0 +1,35 @@
+{
+  "tool_slug": "flooring-tile-calculator",
+  "audit_date": "2025-10-21T23:35:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Flooring & Tiling Calculator",
+      "status": "pass",
+      "recommendation": "Title is clear and targets a common DIY and contractor query."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Tiles & Cost",
+      "status": "pass",
+      "recommendation": "CTA is highly specific and action-oriented."
+    },
+    "lead_capture": {
+      "offer": "Get our 2025 Flooring Trends guide sent to your email.",
+      "status": "pass",
+      "recommendation": "Excellent lead magnet that appeals to both aesthetic and practical interests of the user."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 8,
+      "status": "pass",
+      "recommendation": "Form is logically separated into Room and Tile dimensions, making it easy to follow."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are simple and clear. The inclusion of a 'Pro Tip' about buying extra tiles adds significant value and builds trust."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Shrinkage Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Shrinkage Calculator</h1>
+        <form id="shrinkage-form">
+            <div class="input-group">
+                <label for="water-cement-ratio">Water-Cement Ratio (e.g., 0.5):</label>
+                <input type="number" id="water-cement-ratio" step="0.01" value="0.5" required>
+            </div>
+            <div class="input-group">
+                <label for="aggregate-content">Aggregate Content (% by volume):</label>
+                <input type="number" id="aggregate-content" value="70" required>
+            </div>
+            <div class="input-group">
+                <label for="relative-humidity">Average Relative Humidity (%):</label>
+                <input type="number" id="relative-humidity" value="70" required>
+            </div>
+            <div class="input-group">
+                <label for="concrete-age">Concrete Age (days):</label>
+                <input type="number" id="concrete-age" value="28" required>
+            </div>
+            <button type="submit">Calculate Shrinkage</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

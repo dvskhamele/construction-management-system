@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit Converter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Unit Converter</h1>
+    <div class="input-group">
+        <input type="number" id="value-input" placeholder="Enter value">
+        <select id="from-unit">
+            <option value="feet">Feet</option>
+            <option value="meters">Meters</option>
+            <option value="sq_feet">Square Feet</option>
+            <option value="sq_meters">Square Meters</option>
+            <option value="cubic_yards">Cubic Yards</option>
+            <option value="cubic_meters">Cubic Meters</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <button onclick="convert()">Convert</button>
+        <select id="to-unit">
+            <option value="meters">Meters</option>
+            <option value="feet">Feet</option>
+            <option value="sq_meters">Square Meters</option>
+            <option value="sq_feet">Square Feet</option>
+            <option value="cubic_meters">Cubic Meters</option>
+            <option value="cubic_yards">Cubic Yards</option>
+        </select>
+    </div>
+    <div id="result" class="result"></div>
+    <script src="popup.js"></script>
+</body>
+</html>

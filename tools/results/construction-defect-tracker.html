@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Defect Report</title>
+    <meta name="description" content="Your construction defect report. Summary of logged defects and their status.">
+    <meta property="og:title" content="Construction Defect Report">
+    <meta property="og:description" content="Your construction defect report. Summary of logged defects and their status.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Analytics placeholder
+        function trackEvent(eventName, eventData) {
+            console.log(`Analytics: ${eventName}`, eventData);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('ToolResultViewed', { toolName: 'Construction Defect Tracker' });
+            const defects = JSON.parse(localStorage.getItem('constructionDefects') || '[]');
+            if (defects.length > 0) {
+                const totalDefects = defects.length;
+                const resolvedDefects = defects.filter(d => d.resolved).length;
+                const pendingDefects = totalDefects - resolvedDefects;
+
+                const severityCounts = defects.reduce((acc, d) => {
+                    acc[d.severity] = (acc[d.severity] || 0) + 1;
+                    return acc;
+                }, {});
+
+                document.getElementById('totalDefects').innerText = totalDefects;
+                document.getElementById('resolvedDefects').innerText = resolvedDefects;
+                document.getElementById('pendingDefects').innerText = pendingDefects;
+                document.getElementById('lowSeverity').innerText = severityCounts['Low'] || 0;
+                document.getElementById('mediumSeverity').innerText = severityCounts['Medium'] || 0;
+                document.getElementById('highSeverity').innerText = severityCounts['High'] || 0;
+
+                const defectList = document.getElementById('defectListSummary');
+                defects.forEach(defect => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.innerHTML = "`
+                        <strong>Description:</strong> ${defect.description}<br>
+                        <strong>Location:</strong> ${defect.location}<br>
+                        <strong>Severity:</strong> ${defect.severity}<br>
+                        <strong>Assigned To:</strong> ${defect.assignedTo}<br>
+                        <strong>Due Date:</strong> ${defect.dueDate}<br>
+                        <strong>Status:</strong> ${defect.resolved ? 'Resolved' : 'Pending'}
+                    ";
+                    defectList.appendChild(li);
+                });
+
+            } else {
+                document.getElementById('resultsContainer').innerHTML = '<p class="text-center">No defects found. Please log defects using the tracker first.</p>';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div id="resultsContainer">
+            <h1 class="text-center">Construction Defect Report</h1>
+            <div class="card text-center mt-4">
+                <div class="card-header">
+                    <h2>Defect Summary</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Total Defects Logged: <strong id="totalDefects"></strong></p>
+                    <p class="lead">Resolved Defects: <strong id="resolvedDefects"></strong></p>
+                    <p class="lead">Pending Defects: <strong id="pendingDefects"></strong></p>
+                    <hr>
+                    <p class="lead">Low Severity: <strong id="lowSeverity"></strong></p>
+                    <p class="lead">Medium Severity: <strong id="mediumSeverity"></strong></p>
+                    <p class="lead">High Severity: <strong id="highSeverity"></strong></p>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Detailed Defect List</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" id="defectListSummary">
+                        <!-- Detailed defects will be loaded here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                <h3 class="card-title">Get Your Detailed Defect Report</h3>
+                <p class="card-text">Enter your email address to receive a comprehensive report of your project's defects and their status.</p>
+                <form id="leadCaptureForm">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Send My Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('leadCaptureForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            trackEvent('LeadCaptured', { toolName: 'Construction Defect Tracker', email: email });
+
+            const leadData = { email: email, tool: 'Construction Defect Tracker', timestamp: new Date().toISOString() };
+            
+            console.log('Lead captured:', leadData);
+            alert('Your detailed report has been sent to your email address.');
+
+            // The following is a placeholder for the file writing operation.
+            // It is not possible to directly write to the filesystem from the browser.
+            // This will be handled by a separate process or a backend.
+            const dataToSave = JSON.stringify(leadData) + '\n';
+            // fs.appendFileSync('/Users/test/startups/constructionmanagement/data/prelogin_leads/leads.json', dataToSave);
+        });
+    </script>
+</body>
+</html>

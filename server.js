@@ -161,15 +161,15 @@ app.get('/api/dashboard/stats', (req, res) => {
   const avgResponseTime = ReportingService.calculateAverageResponseTime(data.requests);
   
   const stats = {
-    pendingRequests: data.requests.filter(r => r.status === 'PENDING').length,
-    occupiedRooms: data.rooms.filter(r => r.status === 'DIRTY' || r.status === 'INSPECTED').length,
-    availableRooms: data.rooms.filter(r => r.status === 'CLEAN').length,
-    staffActive: data.staff.filter(s => s.status === 'Active').length,
-    maintenanceRequests: data.requests.filter(r => r.department === 'Maintenance').length,
+    pendingTasks: data.requests.filter(r => r.status === 'PENDING').length,
+    activeSites: data.rooms.filter(r => r.status === 'ACTIVE' || r.status === 'INSPECTED').length,
+    completedSites: data.rooms.filter(r => r.status === 'COMPLETED').length,
+    crewActive: data.staff.filter(s => s.status === 'Active').length,
+    maintenanceTasks: data.requests.filter(r => r.department === 'Maintenance').length,
     avgResponseTime: avgResponseTime,
-    guestSatisfaction: 94,
+    projectSatisfaction: 94,
     revenueToday: 12500,
-    occupancyRate: 65
+    projectCompletionRate: 78
   };
   
   res.json(stats);
@@ -182,7 +182,8 @@ app.get('/api/dashboard/activity', (req, res) => {
 });
 
 app.get('/api/dashboard/rooms', (req, res) => {
-  // Return first 4 rooms for dashboard preview
+  // In construction context, rooms represent projects/sites
+  // Return first 4 projects for dashboard preview
   res.json(data.rooms.slice(0, 4));
 });
 
@@ -192,182 +193,186 @@ app.get('/api/dashboard/requests', (req, res) => {
 
 app.get('/api/dashboard/performance', (req, res) => {
   const performance = {
-    housekeeping: 92,
-    maintenance: 87,
-    foodService: 95
+    foundation: 92,
+    framing: 87,
+    electrical: 95
   };
   
   res.json(performance);
 });
 
-// Room routes
+// Project/Site routes
 app.get('/api/rooms', (req, res) => {
+  // In construction context, rooms represent construction sites/projects
   res.json(data.rooms);
 });
 
 app.put('/api/rooms/:id/status', (req, res) => {
-  const roomId = parseInt(req.params.id);
+  const projectId = parseInt(req.params.id);
   const { status } = req.body;
   
-  const room = data.rooms.find(r => r.id === roomId);
-  if (room) {
-    room.status = status;
-    room.updatedAt = new Date().toISOString();
+  const project = data.rooms.find(r => r.id === projectId);
+  if (project) {
+    project.status = status;
+    project.updatedAt = new Date().toISOString();
     
     // Add activity log
     const activity = {
       id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-      type: 'room',
-      title: 'Room status updated',
-      description: `Room ${room.number} marked as ${status}`,
+      type: 'project',
+      title: 'Project status updated',
+      description: `Project ${project.number} marked as ${status}`,
       timestamp: new Date().toISOString(),
       status: status
     };
     data.activity.push(activity);
     
     saveData();
-    res.json(room);
+    res.json(project);
   } else {
-    // For prototype, we'll be more permissive and create a room if it doesn't exist
-    const newRoom = {
-      id: roomId,
-      number: roomId.toString(),
-      floor: Math.floor(roomId / 100),
-      type: 'Standard',
+    // For prototype, we'll be more permissive and create a project if it doesn't exist
+    const newProject = {
+      id: projectId,
+      number: projectId.toString(),
+      phase: Math.floor(projectId / 100), // Renamed from floor to phase for construction
+      type: 'Construction',
       status: status,
       updatedAt: new Date().toISOString()
     };
-    data.rooms.push(newRoom);
+    data.rooms.push(newProject); // Still using rooms array as it contains project data
     
     // Add activity log
     const activity = {
       id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-      type: 'room',
-      title: 'Room status updated',
-      description: `Room ${newRoom.number} marked as ${status}`,
+      type: 'project',
+      title: 'Project status updated',
+      description: `Project ${newProject.number} marked as ${status}`,
       timestamp: new Date().toISOString(),
       status: status
     };
     data.activity.push(activity);
     
     saveData();
-    res.json(newRoom);
+    res.json(newProject);
   }
 });
 
-// Staff routes
+// Crew/Team routes
 app.get('/api/staff', (req, res) => {
+  // In construction context, staff represents construction crews/teams
   res.json(data.staff);
 });
 
 app.put('/api/staff/:id/status', (req, res) => {
-  const staffId = parseInt(req.params.id);
+  const crewMemberId = parseInt(req.params.id);
   const { status } = req.body;
   
-  const staff = data.staff.find(s => s.id === staffId);
-  if (staff) {
-    staff.status = status;
+  const crewMember = data.staff.find(s => s.id === crewMemberId);
+  if (crewMember) {
+    crewMember.status = status;
     saveData();
-    res.json(staff);
+    res.json(crewMember);
   } else {
-    // For prototype, we'll be more permissive and create a staff member if not found
-    const newStaff = {
-      id: staffId,
-      name: `Staff ${staffId}`,
-      department: 'General',
-      position: 'Staff',
+    // For prototype, we'll be more permissive and create a crew member if not found
+    const newCrewMember = {
+      id: crewMemberId,
+      name: `Crew ${crewMemberId}`,
+      department: 'Construction',
+      position: 'Worker',
       status: status,
-      email: `staff${staffId}@hotelops.com`,
+      email: `crew${crewMemberId}@buildmate.com`,
       phone: '+1234567890',
       hireDate: new Date().toISOString(),
       performance: 85,
-      schedule: '9:00 AM - 5:00 PM'
+      schedule: '7:00 AM - 3:00 PM'
     };
-    data.staff.push(newStaff);
+    data.staff.push(newCrewMember);
     saveData();
-    res.json(newStaff);
+    res.json(newCrewMember);
   }
 });
 
-// Request routes
+// Task routes
 app.get('/api/requests', (req, res) => {
+  // In construction context, requests represent construction tasks
   res.json(data.requests);
 });
 
 app.put('/api/requests/:id/status', (req, res) => {
-  const requestId = parseInt(req.params.id);
+  const taskId = parseInt(req.params.id);
   const { status } = req.body;
   
-  const request = data.requests.find(r => r.id === requestId);
-  if (request) {
-    request.status = status;
+  const task = data.requests.find(r => r.id === taskId);
+  if (task) {
+    task.status = status;
     
-    // If request is being completed, add completedAt timestamp
+    // If task is being completed, add completedAt timestamp
     if (status === 'COMPLETED') {
-      request.completedAt = new Date().toISOString();
+      task.completedAt = new Date().toISOString();
     }
     
     // Add activity log
     const activity = {
       id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-      type: 'request',
-      title: `Request ${status.toLowerCase()}`,
-      description: `${request.guestName} - ${request.title} (${request.department})`,
+      type: 'task',
+      title: `Task ${status.toLowerCase()}`,
+      description: `${task.contractorName || task.workerName} - ${task.title} (${task.department})`,
       timestamp: new Date().toISOString(),
       status: status
     };
     data.activity.push(activity);
     
     saveData();
-    res.json(request);
+    res.json(task);
   } else {
-    // For prototype, we'll be more permissive and create a request if not found
-    const newRequest = {
-      id: requestId,
-      guestName: 'Guest ' + requestId,
-      roomNumber: '100',
-      title: 'Sample Request',
+    // For prototype, we'll be more permissive and create a task if not found
+    const newTask = {
+      id: taskId,
+      contractorName: 'Contractor ' + taskId,
+      siteNumber: 'S100',
+      title: 'Sample Task',
+      description: '',
       department: 'General',
       priority: 'MEDIUM',
       status: status,
       createdAt: new Date().toISOString()
     };
-    data.requests.push(newRequest);
+    data.requests.push(newTask);
     
     // Add activity log
     const activity = {
       id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-      type: 'request',
-      title: `Request ${status.toLowerCase()}`,
-      description: `${newRequest.guestName} - ${newRequest.title} (${newRequest.department})`,
+      type: 'task',
+      title: `Task ${status.toLowerCase()}`,
+      description: `${newTask.contractorName} - ${newTask.title} (${newTask.department})`,
       timestamp: new Date().toISOString(),
       status: status
     };
     data.activity.push(activity);
     
     saveData();
-    res.json(newRequest);
+    res.json(newTask);
   }
 });
 
-// Enhanced request management routes
+// Enhanced task management routes
 app.get('/api/requests', (req, res) => {
   res.json(data.requests);
 });
 
 app.post('/api/requests', (req, res) => {
-  const { guestName, roomNumber, title, description } = req.body;
+  const { contractorName, siteNumber, title, description } = req.body;
   
-  // Auto-route the request to the appropriate department
+  // Auto-route the task to the appropriate department
   const department = RequestRoutingService.routeRequest(title, description);
   const priority = RequestRoutingService.getPriority(title, description);
   const estimatedResponseTime = RequestRoutingService.getEstimatedResponseTime(department, priority);
   
-  // Create new request
-  const newRequest = {
+  // Create new task
+  const newTask = {
     id: data.requests.length > 0 ? Math.max(...data.requests.map(r => r.id)) + 1 : 1,
-    guestName,
-    roomNumber,
+    contractorName,
+    siteNumber,
     title,
     description: description || '',
     department,
@@ -377,14 +382,14 @@ app.post('/api/requests', (req, res) => {
     estimatedResponseTime // in minutes
   };
   
-  data.requests.push(newRequest);
+  data.requests.push(newTask);
   
   // Add activity log
   const activity = {
     id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-    type: 'request',
-    title: 'New guest request',
-    description: `${guestName} - ${title} (${department})`,
+    type: 'task',
+    title: 'New construction task',
+    description: `${contractorName} - ${title} (${department})`,
     timestamp: new Date().toISOString(),
     status: 'PENDING'
   };
@@ -394,7 +399,7 @@ app.post('/api/requests', (req, res) => {
   const notifications = NotificationService.notifyDepartment(
     department, 
     data.staff, 
-    `New request: ${title} for room ${roomNumber}`
+    `New task: ${title} for site ${siteNumber}`
   );
   
   // Add notification activities
@@ -403,37 +408,37 @@ app.post('/api/requests', (req, res) => {
   });
   
   saveData();
-  res.json(newRequest);
+  res.json(newTask);
 });
 
 app.put('/api/requests/:id/assign', (req, res) => {
-  const requestId = parseInt(req.params.id);
-  const { staffId } = req.body;
+  const taskId = parseInt(req.params.id);
+  const { crewMemberId } = req.body;
   
-  const request = data.requests.find(r => r.id === requestId);
-  const staffMember = data.staff.find(s => s.id === staffId);
+  const task = data.requests.find(r => r.id === taskId);
+  const crewMember = data.staff.find(s => s.id === crewMemberId);
   
-  if (request && staffMember) {
-    request.assignedTo = staffId;
-    request.status = 'IN_PROGRESS';
-    request.assignedAt = new Date().toISOString();
+  if (task && crewMember) {
+    task.assignedTo = crewMemberId;
+    task.status = 'IN_PROGRESS';
+    task.assignedAt = new Date().toISOString();
     
     // Add activity log
     const activity = {
       id: data.activity.length > 0 ? Math.max(...data.activity.map(a => a.id)) + 1 : 1,
-      type: 'request',
-      title: 'Request assigned',
-      description: `${request.guestName} - ${request.title} assigned to ${staffMember.name}`,
+      type: 'task',
+      title: 'Task assigned',
+      description: `${task.contractorName} - ${task.title} assigned to ${crewMember.name}`,
       timestamp: new Date().toISOString(),
       status: 'IN_PROGRESS'
     };
     data.activity.push(activity);
     
-    // Send notification to assigned staff
+    // Send notification to assigned crew member
     const notification = NotificationService.notifyStaffById(
-      staffId, 
+      crewMemberId, 
       data.staff, 
-      `You have been assigned request: ${request.title} for room ${request.roomNumber}`
+      `You have been assigned task: ${task.title} for site ${task.siteNumber}`
     );
     
     if (notification) {
@@ -441,9 +446,9 @@ app.put('/api/requests/:id/assign', (req, res) => {
     }
     
     saveData();
-    res.json(request);
+    res.json(task);
   } else {
-    res.status(404).json({ error: 'Request or staff member not found' });
+    res.status(404).json({ error: 'Task or crew member not found' });
   }
 });
 
@@ -465,40 +470,42 @@ app.get('/api/reports/staff-performance', (req, res) => {
   res.json(performanceMetrics);
 });
 
-// Inventory routes
+// Materials routes
 app.get('/api/inventory', (req, res) => {
+  // In construction context, inventory represents construction materials
   res.json(data.inventory);
 });
 
 app.put('/api/inventory/:id/quantity', (req, res) => {
-  const inventoryId = parseInt(req.params.id);
+  const materialId = parseInt(req.params.id);
   const { quantity } = req.body;
   
-  const item = data.inventory.find(i => i.id === inventoryId);
+  const item = data.inventory.find(i => i.id === materialId);
   if (item) {
     item.quantity = quantity;
     saveData();
     res.json(item);
   } else {
-    // For prototype, we'll be more permissive and create an item if not found
-    const newItem = {
-      id: inventoryId,
-      name: 'Item ' + inventoryId,
-      category: 'General',
+    // For prototype, we'll be more permissive and create a material if not found
+    const newMaterial = {
+      id: materialId,
+      name: 'Material ' + materialId,
+      category: 'Construction',
       quantity: quantity,
       minStock: 10,
       supplier: 'Supplier',
       price: 10.00,
       lastOrdered: new Date().toISOString()
     };
-    data.inventory.push(newItem);
+    data.inventory.push(newMaterial);
     saveData();
-    res.json(newItem);
+    res.json(newMaterial);
   }
 });
 
-// Department routes
+// Crew routes
 app.get('/api/departments', (req, res) => {
+  // In construction context, departments represent construction crews/teams
   res.json(data.departments);
 });
 
@@ -519,25 +526,25 @@ app.get('*', (req, res) => {
   } else {
     // Fallback to API response if frontend files are not found
     res.json({ 
-      message: 'Hotel Operations Management API', 
+      message: 'BuildMate Construction Management API', 
       version: '1.0.0',
-      description: 'This is the backend API for HotelOps. For the frontend, please visit the deployed frontend URL.',
+      description: 'This is the backend API for BuildMate. For the frontend, please visit the deployed frontend URL.',
       available_endpoints: [
         'GET /api/dashboard/stats',
         'GET /api/dashboard/activity',
-        'GET /api/rooms',
-        'PUT /api/rooms/:id/status',
-        'GET /api/staff',
-        'PUT /api/staff/:id/status',
-        'GET /api/requests',
-        'POST /api/requests',
-        'PUT /api/requests/:id/status',
-        'PUT /api/requests/:id/assign',
-        'GET /api/reports/request-metrics',
-        'GET /api/reports/staff-performance',
-        'GET /api/inventory',
-        'PUT /api/inventory/:id/quantity',
-        'GET /api/departments'
+        'GET /api/rooms', // Construction sites/projects
+        'PUT /api/rooms/:id/status', // Update project status
+        'GET /api/staff', // Construction crews/teams
+        'PUT /api/staff/:id/status', // Update crew member status
+        'GET /api/requests', // Construction tasks
+        'POST /api/requests', // Create new task
+        'PUT /api/requests/:id/status', // Update task status
+        'PUT /api/requests/:id/assign', // Assign task to crew member
+        'GET /api/reports/request-metrics', // Task metrics
+        'GET /api/reports/staff-performance', // Crew performance
+        'GET /api/inventory', // Construction materials
+        'PUT /api/inventory/:id/quantity', // Update material quantity
+        'GET /api/departments' // Construction crews
       ]
     });
   }

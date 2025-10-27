@@ -1,0 +1,130 @@
+
+"use client";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+
+const PaintCoverageCalculator = () => {
+  const [area, setArea] = useState("");
+  const [coats, setCoats] = useState("2"); // Default 2 coats
+  const [paintType, setPaintType] = useState("emulsion");
+  const [paintLiters, setPaintLiters] = useState(null);
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Typical coverage rates (sq.m per liter per coat)
+  const coverageRates = {
+    emulsion: 12, // e.g., Asian Paints Apex Ultima: 10-12 sq.m/liter/coat
+    enamel: 14,   // e.g., Asian Paints Apcolite Premium Gloss Enamel: 12-14 sq.m/liter/coat
+    primer: 10,   // e.g., Asian Paints TruCare Interior Wall Primer: 9-11 sq.m/liter/coat
+    distemper: 6, // e.g., Asian Paints Tractor Uno Distemper: 5-7 sq.m/liter/coat
+  };
+
+  const calculatePaint = () => {
+    const paintedArea = parseFloat(area);
+    const numCoats = parseFloat(coats);
+    const rate = coverageRates[paintType];
+
+    if (paintedArea > 0 && numCoats > 0 && rate > 0) {
+      const totalPaintNeeded = (paintedArea * numCoats) / rate;
+      setPaintLiters(totalPaintNeeded.toFixed(2));
+      localStorage.setItem("paintCoverageCalculator", JSON.stringify({ area, coats, paintType, paintLiters: totalPaintNeeded.toFixed(2) }));
+      logAnalyticsEvent("Paint_Coverage_Estimation", { paintedArea, numCoats, paintType });
+    }
+  };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      console.log("Lead captured:", email);
+      saveLead(email);
+      setIsSubmitted(true);
+      setEmail("");
+    }
+  };
+
+  const saveLead = (leadEmail) => {
+    const existingLeads = JSON.parse(localStorage.getItem("paint_coverage_leads")) || [];
+    const newLeads = [...existingLeads, { email: leadEmail, timestamp: new Date().toISOString() }];
+    localStorage.setItem("paint_coverage_leads", JSON.stringify(newLeads));
+  };
+
+  const logAnalyticsEvent = (eventName: string, eventData: any) => {
+    const existingEvents = JSON.parse(localStorage.getItem("analytics_events")) || [];
+    const newEvent = { name: eventName, data: eventData, timestamp: new Date().toISOString() };
+    const newEvents = [...existingEvents, newEvent];
+    localStorage.setItem("analytics_events", JSON.stringify(newEvents));
+  };
+
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("paintCoverageCalculator"));
+    if (savedData) {
+      setArea(savedData.area);
+      setCoats(savedData.coats);
+      setPaintType(savedData.paintType);
+      setPaintLiters(savedData.paintLiters);
+    }
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>Paint Coverage Calculator | BuildMate</title>
+        <meta name="description" content="Estimate the quantity of paint required based on area, number of coats, and paint type (emulsion, enamel, primer, distemper) with our free online calculator. Essential for Indian contractors."/>
+        <meta property="og:title" content="Paint Coverage Calculator | BuildMate" />
+        <meta property="og:description" content="A free tool for Indian contractors to accurately estimate paint quantity based on paint type and coverage." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://constructioncrm.vercel.app/tools/paint-coverage-calculator" />
+        <meta property="og:image" content="https://constructioncrm.vercel.app/og-image-paint-coverage-calculator.png" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <div className="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Paint Coverage Calculator</h1>
+          <p className="text-center text-gray-600 mb-8">Estimate the quantity of paint required based on area, coats, and paint type.</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="form-group">
+              <label htmlFor="area" className="block text-sm font-medium text-gray-700 mb-1">Area to be Painted (sq. m)</label>
+              <input type="number" id="area" value={area} onChange={(e) => setArea(e.target.value)} placeholder="e.g., 100" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="coats" className="block text-sm font-medium text-gray-700 mb-1">Number of Coats</label>
+              <input type="number" id="coats" value={coats} onChange={(e) => setCoats(e.target.value)} placeholder="e.g., 2" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="paintType" className="block text-sm font-medium text-gray-700 mb-1">Paint Type</label>
+              <select id="paintType" value={paintType} onChange={(e) => setPaintType(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                {Object.keys(coverageRates).map(type => <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <button onClick={calculatePaint} className="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors">Calculate</button>
+          </div>
+
+          {paintLiters && (
+            <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
+              <h2 className="text-2xl font-semibold text-gray-800">Estimated Paint Quantity</h2>
+              <p className="text-4xl font-bold text-blue-600 mt-4">{paintLiters} Liters</p>
+            </div>
+          )}
+
+          <div className="mt-10 text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Get More Tools & Insights</h3>
+            <p className="text-gray-600 mb-6">Join our newsletter for more free tools, industry news, and tips for construction professionals in India.</p>
+            {isSubmitted ? (
+              <p className="text-green-600 font-semibold">Thank you for subscribing!</p>
+            ) : (
+              <form onSubmit={handleEmailSubmit} className="flex flex-col md:flex-row justify-center items-center gap-4">
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required className="w-full md:w-80 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+                <button type="submit" className="w-full md:w-auto bg-green-600 text-white font-bold py-2 px-6 rounded-md hover:bg-green-700 transition-colors">Subscribe</button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default PaintCoverageCalculator;

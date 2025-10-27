@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Plastering Area Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wall Plastering Area Calculator</h1>
+        <form id="plastering-form">
+            <div class="input-group">
+                <label for="room-length">Room Length (feet)</label>
+                <input type="number" id="room-length" required>
+            </div>
+            <div class="input-group">
+                <label for="room-width">Room Width (feet)</label>
+                <input type="number" id="room-width" required>
+            </div>
+            <div class="input-group">
+                <label for="room-height">Room Height (feet)</label>
+                <input type="number" id="room-height" required>
+            </div>
+            <div class="input-group">
+                <label for="door-width">Door Width (feet)</label>
+                <input type="number" id="door-width" value="0">
+            </div>
+            <div class="input-group">
+                <label for="door-height">Door Height (feet)</label>
+                <input type="number" id="door-height" value="0">
+            </div>
+            <div class="input-group">
+                <label for="num-doors">Number of Doors</label>
+                <input type="number" id="num-doors" value="0">
+            </div>
+            <div class="input-group">
+                <label for="window-width">Window Width (feet)</label>
+                <input type="number" id="window-width" value="0">
+            </div>
+            <div class="input-group">
+                <label for="window-height">Window Height (feet)</label>
+                <input type="number" id="window-height" value="0">
+            </div>
+            <div class="input-group">
+                <label for="num-windows">Number of Windows</label>
+                <input type="number" id="num-windows" value="0">
+            </div>
+            <button type="submit">Calculate Area</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 10px;
+  background-color: #f4f7f6;
+  color: #333;
+}
+
+h1 {
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group,
+.result-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="number"],
+input[type="email"],
+select,
+button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+input[type="number"],
+input[type="email"],
+select {
+  flex-grow: 1;
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+#result {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.lead-capture {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.lead-capture h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  text-align: center;
+}

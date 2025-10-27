@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Beam Rebar Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Beam Rebar Calculator</h1>
+        <form id="rebar-beam-form">
+            <div class="input-group">
+                <label for="beam-length">Beam Length (feet)</label>
+                <input type="number" id="beam-length" required>
+            </div>
+            <div class="input-group">
+                <label for="beam-depth">Beam Depth (inches)</label>
+                <input type="number" id="beam-depth" required>
+            </div>
+            <div class="input-group">
+                <label for="beam-width">Beam Width (inches)</label>
+                <input type="number" id="beam-width" required>
+            </div>
+
+            <h2>Main Rebar</h2>
+            <div class="input-group">
+                <label for="main-rebar-size">Main Rebar Size (e.g., #4)</label>
+                <select id="main-rebar-size">
+                    <option value="0.376">#3 (0.376 lbs/ft)</option>
+                    <option value="0.668">#4 (0.668 lbs/ft)</option>
+                    <option value="1.043">#5 (1.043 lbs/ft)</option>
+                    <option value="1.502">#6 (1.502 lbs/ft)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="num-main-rebars-top">Number of Main Rebar Bars (Top)</label>
+                <input type="number" id="num-main-rebars-top" value="2" required>
+            </div>
+            <div class="input-group">
+                <label for="num-main-rebars-bottom">Number of Main Rebar Bars (Bottom)</label>
+                <input type="number" id="num-main-rebars-bottom" value="2" required>
+            </div>
+
+            <h2>Stirrups (Ties)</h2>
+            <div class="input-group">
+                <label for="stirrup-rebar-size">Stirrup Rebar Size (e.g., #2)</label>
+                <select id="stirrup-rebar-size">
+                    <option value="0.167">#2 (0.167 lbs/ft)</option>
+                    <option value="0.376">#3 (0.376 lbs/ft)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="stirrup-spacing">Stirrup Spacing (inches)</label>
+                <input type="number" id="stirrup-spacing" value="12" required>
+            </div>
+
+            <button type="submit">Calculate Rebar</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

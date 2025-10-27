@@ -1,937 +1,881 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
-  const router = useRouter()
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState('template')
-
-  const features = [
-    {
-      title: "Project Management",
-      description: "Comprehensive project management tools to plan, track, and deliver construction projects on time and within budget.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-        </svg>
-      )
-    },
-    {
-      title: "Resource Planning",
-      description: "Advanced planning tools for crew management, equipment allocation, and material tracking across all your construction sites.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      )
-    },
-    {
-      title: "Site Documentation",
-      description: "Digital documentation tools for progress tracking, daily logs, and photo documentation of your construction sites.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      title: "Quality Management",
-      description: "Tools to track compliance, inspections, and quality control measures across all construction phases.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      )
-    },
-    {
-      title: "Progress Analytics",
-      description: "Real-time analytics and reporting on project metrics, team performance, and construction progress.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      )
-    },
-    {
-      title: "Communication Hub",
-      description: "Integrated communication tools to keep all stakeholders informed throughout the construction process.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-        </svg>
-      )
-    }
-  ]
-
-  const pricingPlans = [
-    {
-      id: 'basic',
-      name: 'BuildMate Basic',
-      price: '₹20,000',
-      description: 'Essential construction management features for small contractors',
-      features: [
-        'Project tracking with milestone management',
-        'Basic crew and equipment tracking',
-        'Simple reporting and analytics',
-        'Mobile-responsive interface',
-        'Email notifications',
-        'Up to 5 projects',
-        'Basic progress tracking'
-      ],
-      cta: 'Start Free Trial'
-    },
-    {
-      id: 'professional',
-      name: 'BuildMate Professional',
-      price: '₹45,000',
-      description: 'Comprehensive solution for growing construction businesses',
-      features: [
-        'All Basic features',
-        'Advanced resource management',
-        'Quality control and inspection tools',
-        'WhatsApp notifications',
-        'Progress analytics dashboard',
-        'Up to 20 projects',
-        'Priority support',
-        'Custom project templates'
-      ],
-      cta: 'Start 14-Day Trial',
-      popular: true
-    },
-    {
-      id: 'enterprise',
-      name: 'BuildMate Enterprise',
-      price: '₹85,000',
-      description: 'Complete construction management platform',
-      features: [
-        'All Professional features',
-        'Unlimited projects',
-        'API access for custom integrations',
-        'Advanced reporting & analytics',
-        'Custom reporting & analytics',
-        'Dedicated account manager',
-        'Custom training sessions',
-        'White-label options',
-        'Unlimited storage for documentation'
-      ],
-      cta: 'Contact Sales'
-    }
-  ]
-
-  const benefits = [
-    "Increase project efficiency and complete jobs faster",
-    "Streamline your construction workflow and reduce delays",
-    "Enhance project presentation with real-time progress tracking",
-    "Generate more efficient workflows and improve team coordination",
-    "Provides 100% transparency with real-time updates",
-    "Affordable rates at par with industry standard"
-  ]
-
-  const useCases = [
-    "General contractors managing multiple construction sites",
-    "Construction companies overseeing project portfolios",
-    "Project managers coordinating complex builds",
-    "Construction firms tracking progress and quality",
-    "Contractors expanding their digital project management",
-    "Civil engineers monitoring construction phases"
-  ]
-
-  const technologies = [
-    { name: "Next.js 15+", category: "Frontend Framework" },
-    { name: "TypeScript", category: "Language" },
-    { name: "Tailwind CSS", category: "Styling" },
-    { name: "React", category: "UI Library" },
-    { name: "Node.js", category: "Backend Runtime" },
-    { name: "Express", category: "Backend Framework" },
-    { name: "MongoDB", category: "Database" },
-    { name: "Google Maps API", category: "Location Services" },
-    { name: "Vercel", category: "Deployment" },
-    { name: "Recharts", category: "Data Visualization" }
-  ]
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-x-hidden">
-      {/* Header */}
-      <header className="bg-white shadow-sm w-full">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Navigation */}
+      <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6 flex-wrap">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.617 1.842 3.683a1 1 0 01-.213 1.106l-1.317 1.318a1 1 0 01-.944.29l-1.817-.545L10 13l-3.78 1.26a1 1 0 01-.945-.29l-1.317-1.317a1 1 0 01-.213-1.106l1.842-3.683-1.233-.617a1 1 0 01.894-1.789l1.599.799L9 5.405V3a1 1 0 011-1zm0 16a3 3 0 100-6 3 3 0 000 6z" />
-                  </svg>
-                </div>
-                <span className="ml-2 text-xl font-bold text-slate-800">BuildMate</span>
+          <div className="flex justify-between items-center py-4">
+            <Link href="/" className="text-xl font-bold text-slate-800 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-teal-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span>BuildMate</span>
+            </Link>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              <Link href="/features" className="text-slate-600 hover:text-teal-600 font-medium">Features</Link>
+              <Link href="/pricing" className="text-slate-600 hover:text-teal-600 font-medium">Pricing</Link>
+              <Link href="/demo" className="text-slate-600 hover:text-teal-600 font-medium">Demo</Link>
+              <Link href="/login" className="text-slate-600 hover:text-teal-600 font-medium">Login</Link>
+            </nav>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden text-slate-600 hover:text-slate-900"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden py-4 border-t border-slate-200">
+              <div className="flex flex-col space-y-4">
+                <Link href="/features" className="text-slate-600 hover:text-teal-600 font-medium">Features</Link>
+                <Link href="/pricing" className="text-slate-600 hover:text-teal-600 font-medium">Pricing</Link>
+                <Link href="/demo" className="text-slate-600 hover:text-teal-600 font-medium">Demo</Link>
+                <Link href="/login" className="text-slate-600 hover:text-teal-600 font-medium">Login</Link>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-10 flex-wrap">
-              <a href="#features" className="text-slate-600 hover:text-teal-600 font-medium">Features</a>
-              <a href="#pricing" className="text-slate-600 hover:text-teal-600 font-medium">Pricing</a>
-              <a href="#benefits" className="text-slate-600 hover:text-teal-600 font-medium">Benefits</a>
-              <a href="#tech" className="text-slate-600 hover:text-teal-600 font-medium">Technology</a>
-            </nav>
-            <div className="flex items-center space-x-4 flex-wrap">
-              <button 
-                onClick={() => router.push('/login')}
-                className="text-slate-600 hover:text-teal-600 font-medium"
-              >
-                Sign In
-              </button>
-              <button 
-                onClick={() => router.push('/dashboard')}
-                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300"
-              >
-                Live Demo
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-12 sm:py-16 md:py-20">
+      <section className="py-16 md:py-24 bg-gradient-to-r from-teal-500 to-teal-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-4 sm:mb-6">
-              BuildMate: Delhi's Premier Construction Management Platform
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Tired of Losing Days on Chaos?
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto mb-6 sm:mb-10">
-              A meticulously engineered platform designed to streamline construction workflows and improve project delivery. Plan, track, and manage every phase of your construction projects with unparalleled clarity and transparency.
+            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+              Most builders waste 20–30% of their month chasing updates, managing WhatsApp chaos, and fixing preventable errors.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-              <button 
-                onClick={() => router.push('/dashboard')}
-                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/signup" 
+                className="bg-white text-teal-600 hover:bg-slate-100 font-bold py-4 px-8 rounded-lg text-lg shadow-lg hover:shadow-xl transition duration-300"
               >
-                Explore Projects
-              </button>
-              <button 
-                onClick={() => setIsPreviewOpen(true)}
-                className="bg-white text-teal-600 border border-teal-500 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-50 transition duration-300"
+                Try Free for 45 Days
+              </Link>
+              <Link 
+                href="/demo" 
+                className="bg-transparent border-2 border-white text-white hover:bg-teal-700 font-bold py-4 px-8 rounded-lg text-lg transition duration-300"
               >
-                Preview Features
-              </button>
+                See Live Demo
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Design Illustration Section */}
-      <section id="design" className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Competitor Comparison Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Strategic Construction Management</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Why BuildMate is Better</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our unique approach to construction project management through innovative tools and Delhi market expertise
+              Compare BuildMate with other construction management platforms
             </p>
           </div>
           
-          <div className="flex flex-col md:flex-row gap-6 sm:gap-8 md:gap-12 items-center">
-            <div className="w-full md:w-1/2 space-y-4 sm:space-y-6">
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200">
-                <h3 className="text-xl font-semibold text-slate-800 mb-3">Project Management Excellence</h3>
-                <p className="text-slate-600 mb-4">
-                  Our platform manages construction projects effectively with unparalleled clarity and transparency, providing detailed information that today's construction industry demands when managing projects in Delhi.
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded-lg overflow-hidden">
+              <thead className="bg-slate-100">
+                <tr>
+                  <th className="py-4 px-6 text-left text-slate-800 font-bold">Feature</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">BuildMate</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">Buildern</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">Houzz Pro</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">Contractor Foreman</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">Bluebeam</th>
+                  <th className="py-4 px-6 text-center text-slate-800 font-bold">Buildup</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200">
+                <tr>
+                  <td className="py-4 px-6 text-slate-700 font-medium">Monthly Price</td>
+                  <td className="py-4 px-6 text-center text-teal-600 font-bold">₹999</td>
+                  <td className="py-4 px-6 text-center text-red-500 font-bold">$250</td>
+                  <td className="py-4 px-6 text-center text-red-500 font-bold">$250</td>
+                  <td className="py-4 px-6 text-center text-red-500 font-bold">$99</td>
+                  <td className="py-4 px-6 text-center text-red-500 font-bold">$260</td>
+                  <td className="py-4 px-6 text-center text-red-500 font-bold">$149.99</td>
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="py-4 px-6 text-slate-700 font-medium">Auto Task Flow</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 text-slate-700 font-medium">Crew View</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="py-4 px-6 text-slate-700 font-medium">Client Dashboard</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 text-slate-700 font-medium">Auto Reports</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="py-4 px-6 text-slate-700 font-medium">Vastu Guidance</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 text-slate-700 font-medium">WhatsApp Integration</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                  <td className="py-4 px-6 text-center text-green-500">✓</td>
+                  <td className="py-4 px-6 text-center text-red-500">✗</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Pain Points Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">The Real Pain</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Builders face the same problems every day. BuildMate solves them automatically.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-rose-500 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Workers Don't Update Progress</h3>
+              <p className="text-slate-700">Daily confusion + client complaints</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-amber-500 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Material Tracking is Messy</h3>
+              <p className="text-slate-700">Delays, cash stuck, rework</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-emerald-500 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Clients Keep Calling for Updates</h3>
+              <p className="text-slate-700">You lose credibility</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Engineers Forget Tasks</h3>
+              <p className="text-slate-700">Small mistakes → big cost</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-purple-500 lg:col-span-2 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Data Scattered Across Platforms</h3>
+              <p className="text-slate-700">No clarity, no control — WhatsApp, Excel, PDFs everywhere</p>
+            </div>
+          </div>
+          
+          <div className="mt-12 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-8 text-white">
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-2/3 mb-6 md:mb-0">
+                <p className="text-xl italic">
+                  "Before BuildMate, I spent 3 hours every morning just checking WhatsApp for updates. Now I just open the dashboard — everything's already synced."
                 </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Comprehensive project tracking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Transparent progress and quality metrics</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Advanced resource allocation</span>
-                  </li>
-                </ul>
+                <p className="mt-4 font-bold">— Ramesh, Contractor, Mumbai</p>
               </div>
+              <div className="md:w-1/3 flex justify-center">
+                <div className="bg-white bg-opacity-20 rounded-full p-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">BuildMate Solution</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Your construction projects self-manage.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <ul className="space-y-6">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-bold text-slate-800">Auto-creates milestones and tasks based on real actions</h3>
+                  </div>
+                </li>
+                
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-bold text-slate-800">Auto-updates progress & client dashboards</h3>
+                  </div>
+                </li>
+                
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-bold text-slate-800">Auto-generates reports, invoices, and reminders</h3>
+                  </div>
+                </li>
+                
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-bold text-slate-800">Works with minimal internet, low tech, zero management</h3>
+                  </div>
+                </li>
+              </ul>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200">
-                <h3 className="text-xl font-semibold text-slate-800 mb-3">Project Delivery Excellence</h3>
-                <p className="text-slate-600 mb-4">
-                  Designed meticulously to facilitate project coordination and robust delivery management, effectively transitioning your offline success to the digital realm and securing a significant share of the construction market.
+              <div className="mt-8 bg-slate-50 p-6 rounded-2xl shadow-sm">
+                <p className="italic text-slate-700">
+                  "It's like having a site manager who never sleeps. Everything flows naturally, and my team actually follows it."
                 </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Efficient project coordination system</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Automated progress tracking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Delivery optimization tools</span>
-                  </li>
-                </ul>
+                <p className="mt-4 font-bold text-slate-800">— Amit Patel, Builder, Indore</p>
               </div>
             </div>
             
-            <div className="flex justify-center">
-              <div className="relative">
-                <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center">
-                  <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-gradient-to-br from-teal-200 to-teal-300 rounded-full flex items-center justify-center">
-                    <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 bg-gradient-to-br from-teal-300 to-teal-400 rounded-full flex items-center justify-center">
-                      <div className="text-center p-2 sm:p-3 md:p-4">
-                        <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg mb-2 sm:mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-teal-600 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>
-                        </div>
-                        <h3 className="text-base sm:text-lg font-bold text-white">Construction Process</h3>
-                        <p className="text-white text-xs sm:text-sm mt-1 sm:mt-2">Automated Project Management</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="absolute -top-4 -right-2 sm:-right-4 bg-white rounded-lg shadow-lg p-2 sm:p-4 w-32 sm:w-40">
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mr-1 sm:mr-2"></div>
-                    <span className="text-xs sm:text-sm font-medium">Active</span>
-                  </div>
-                  <p className="text-xs text-slate-600 mt-1">Projects Online</p>
-                </div>
-                
-                <div className="absolute -bottom-4 -left-2 sm:-left-4 bg-white rounded-lg shadow-lg p-2 sm:p-4 w-32 sm:w-40">
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full mr-1 sm:mr-2"></div>
-                    <span className="text-xs sm:text-sm font-medium">Synced</span>
-                  </div>
-                  <p className="text-xs text-slate-600 mt-1">Real-time Updates</p>
+            <div className="bg-slate-50 rounded-2xl shadow-md p-8">
+              <div className="flex justify-center mb-6">
+                <div className="bg-gradient-to-br from-teal-400 to-teal-600 rounded-full p-4 w-24 h-24 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
               </div>
+              <h3 className="text-2xl font-bold text-center text-slate-800 mb-4">Results We Deliver</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-700">Daily progress visibility</span>
+                    <span className="font-bold text-slate-800">100% clarity</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-teal-500 h-2.5 rounded-full" style={{width: '100%'}}></div>
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">was 20–30% unknown</div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-700">Project delays</span>
+                    <span className="font-bold text-slate-800">↓ 8%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-teal-500 h-2.5 rounded-full" style={{width: '78%'}}></div>
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">was 22% avg</div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-700">Site rework</span>
+                    <span className="font-bold text-slate-800">↓ 4%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-teal-500 h-2.5 rounded-full" style={{width: '73%'}}></div>
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">was 15%</div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-700">Client follow-ups</span>
+                    <span className="font-bold text-slate-800">1/day</span>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2.5">
+                    <div className="bg-teal-500 h-2.5 rounded-full" style={{width: '90%'}}></div>
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">was 7–10/day</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Social Proof</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Trusted by builders across India - Delhi, Mumbai, Indore, and more
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-teal-600">150+</div>
+              <div className="text-lg text-slate-600">Active construction companies</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl font-bold text-teal-600">1500+</div>
+              <div className="text-lg text-slate-600">Projects tracked</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl font-bold text-teal-600">4.9/5</div>
+              <div className="text-lg text-slate-600">Average rating</div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "I was skeptical, but BuildMate replaced 3 Excel sheets and 5 WhatsApp groups in one app. My life is easier."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Raj Sharma, Builder, Noida</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "My clients now get updates without calling me every day. BuildMate basically runs itself."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Neha Gupta, Project Manager, Delhi</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "Even my supervisors with zero tech experience can use it. I can finally focus on bigger projects."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Manoj Singh, Contractor, Gurgaon</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "We completed 3 residential projects 2 months ahead of schedule using BuildMate. I literally stopped chasing engineers every morning."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Suresh Kumar, Contractor, Mumbai</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "Honestly, I thought software like this would be complicated. My 19-year-old supervisor runs it daily. No training needed."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Neha Gupta, PM, Indore</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-2xl shadow-sm">
+              <p className="italic text-slate-700">
+                "My clients actually comment on how clear and professional my reports look. Even they feel the discipline."
+              </p>
+              <p className="mt-4 font-bold text-slate-800">— Manoj Singh, Builder, Pune</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              BuildMate Features
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-              Everything you need to efficiently manage and deliver construction projects in Delhi's dynamic market
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-gradient-to-br from-white to-slate-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-lg transition duration-300 border border-slate-100">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-3 sm:mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm sm:text-base text-slate-600">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section id="benefits" className="py-12 sm:py-16 md:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              Key Benefits
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-              Transform your construction operations with measurable improvements in Delhi market
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <p className="ml-2 sm:ml-3 text-sm sm:text-base text-slate-700">{benefit}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Construction Market Insights */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              Construction Market Insights
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-              The construction segment is experiencing unprecedented growth, driven by infrastructure development
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-emerald-200">
-              <div className="text-2xl sm:text-3xl font-bold text-emerald-700 mb-1 sm:mb-2">12%</div>
-              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Construction Output Growth</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">Year-on-year increase in construction sector output</p>
-            </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-amber-200">
-              <div className="text-2xl sm:text-3xl font-bold text-amber-700 mb-1 sm:mb-2">8%</div>
-              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Project Efficiency</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">Average efficiency improvement with digital tools</p>
-            </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-blue-200">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-700 mb-1 sm:mb-2">35%</div>
-              <h3 className="text-base sm:text-lg font-semibold text-slate-800">Time Savings</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">Average project delivery time reduction</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Curated Digital Experience */}
-      <section className="py-12 sm:py-16 md:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              Curated Digital Experience
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto mb-6 sm:mb-8">
-              Architecting essential pages and sections for optimal project management and coordination
-            </p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
-                  <span className="text-base sm:text-lg font-bold">01</span>
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Project Overview</h3>
-                <p className="text-xs sm:text-sm text-slate-600">Comprehensive project information and milestone tracking</p>
-              </div>
-              
-              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
-                  <span className="text-base sm:text-lg font-bold">02</span>
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Site Management</h3>
-                <p className="text-xs sm:text-sm text-slate-600">Comprehensive site management with detailed information</p>
-              </div>
-              
-              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
-                  <span className="text-base sm:text-lg font-bold">03</span>
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Team Coordination</h3>
-                <p className="text-xs sm:text-sm text-slate-600">Dynamic interfaces for seamless team communication</p>
-              </div>
-              
-              <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-slate-200 transform transition duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 flex items-center justify-center mx-auto mb-2 sm:mb-4">
-                  <span className="text-base sm:text-lg font-bold">04</span>
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-2">Progress Tracking</h3>
-                <p className="text-xs sm:text-sm text-slate-600">Detailed progress reporting and analytics</p>
-              </div>
-            </div>
-            
-            <div className="mt-8 sm:mt-12 bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 text-white max-w-md sm:max-w-lg md:max-w-4xl mx-auto">
-              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Ready to Transform Your Construction Business?</h3>
-              <p className="text-teal-100 text-sm sm:text-base mb-4 sm:mb-6">
-                Join successful construction companies already using our platform to streamline operations and improve delivery times.
-              </p>
-              <button 
-                onClick={() => router.push('/dashboard')}
-                className="bg-white text-teal-600 px-6 py-2 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-100 transition duration-300 shadow-lg w-full sm:w-auto"
-              >
-                Start Growing Today
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Compatible Tools Section */}
-      <section className="py-20 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Seamless Integrations</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Powerful Features</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Works seamlessly with design tools, equipment systems, and project management platforms you already use
+              Built for lazy thekedars, distracted clients, and low attention spans
             </p>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-6">
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">AutoCAD</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Auto Task Flow</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Creates next tasks automatically
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "I don't touch project plans manually. BuildMate does it for me." — Vikram Joshi, Builder
+              </p>
             </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Project Management Tools</span>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Crew View</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Shows only today's tasks to workers
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "Even my untrained site supervisors use it flawlessly." — Anita Sharma, Builder
+              </p>
             </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Equipment Tracking</span>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Client Dashboard</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Gives instant progress to clients
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "Clients stopped calling me 10x a day." — Ramesh, Contractor
+              </p>
             </div>
-            <div className="bg-slate-100 rounded-lg px-6 py-4 flex items-center">
-              <div className="bg-green-500 w-3 h-3 rounded-full mr-3"></div>
-              <span className="font-medium text-slate-700">Google Maps</span>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Auto Reports & Invoices</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Instant, accurate, no Excel
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "I saved ~15 hours/month on reporting alone." — Amit Patel, Builder
+              </p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Predictive Reminders</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Suggests actions before delays
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "It's like the system thinks ahead for me. No rework anymore." — Suresh Kumar, Contractor
+              </p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="bg-teal-100 p-3 rounded-lg mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800">Vastu Guidance</h3>
+              </div>
+              <p className="text-slate-700 mb-4">
+                Site alignment recommendations
+              </p>
+              <p className="italic text-sm text-slate-600">
+                "My clients love the Vastu-aligned reports." — Manoj Singh, Builder
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-slate-50">
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Simple Pricing</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Choose the plan that fits your construction business needs and budget
+              All plans come with self-managing logic built-in — zero manual setup. 45-day risk-free trial.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {pricingPlans.map((plan) => (
-              <div 
-                key={plan.id} 
-                className={`rounded-2xl shadow-lg overflow-hidden ${
-                  plan.popular 
-                    ? 'ring-2 ring-teal-500 transform scale-105 z-10 bg-white' 
-                    : 'bg-white'
-                }`}
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Basic Plan */}
+            <div className="border border-slate-200 rounded-2xl p-8 bg-white shadow-sm">
+              <h3 className="text-2xl font-bold text-slate-800 mb-2">Basic</h3>
+              <div className="text-4xl font-bold text-slate-800 mb-6">₹999<span className="text-lg font-normal text-slate-600">/month</span></div>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Core project + crew tracking</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Auto task flow</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Vastu guidance</span>
+                </li>
+              </ul>
+              <p className="text-sm text-slate-600 mb-6">Used by contractors in Delhi, Mumbai, Indore, and other cities</p>
+              <Link 
+                href="/signup" 
+                className="block w-full bg-slate-800 text-white text-center py-3 px-4 rounded-lg font-medium hover:bg-slate-700 transition"
               >
-                {plan.popular && (
-                  <div className="bg-teal-500 text-white text-center py-2">
-                    <span className="text-sm font-semibold">MOST POPULAR</span>
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-                  <div className="mb-4">
-                    <span className="text-4xl font-extrabold text-slate-900">{plan.price}</span>
-                    <span className="text-slate-600">/year</span>
-                  </div>
-                  <p className="text-slate-600 mb-6">{plan.description}</p>
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="ml-2 text-slate-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button 
-                    onClick={() => {
-                      setSelectedPlan(plan.id)
-                      if (plan.id === 'basic') {
-                        // Handle basic plan
-                        alert(`Getting started with ${plan.name}`)
-                      } else {
-                        // Handle other plans
-                        alert(`${plan.name} trial would be implemented here`)
-                      }
-                    }}
-                    className={`w-full py-3 px-4 rounded-lg font-medium transition duration-300 ${
-                      plan.popular
-                        ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:from-teal-600 hover:to-teal-700 shadow-md'
-                        : 'bg-slate-100 text-slate-800 hover:bg-slate-200'
-                    }`}
-                  >
-                    {plan.cta}
-                  </button>
-                </div>
+                Start Free Trial
+              </Link>
+            </div>
+            
+            {/* Professional Plan - Popular */}
+            <div className="border-2 border-teal-500 rounded-2xl p-8 relative bg-white shadow-md">
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-500 text-white text-sm font-bold px-4 py-1 rounded-full">
+                MOST POPULAR
               </div>
-            ))}
+              <h3 className="text-2xl font-bold text-slate-800 mb-2">Professional</h3>
+              <div className="text-4xl font-bold text-slate-800 mb-6">₹12,000<span className="text-lg font-normal text-slate-600">/year</span></div>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>All Basic features</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Auto reports & resource management</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>WhatsApp integration</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Advanced Vastu templates</span>
+                </li>
+              </ul>
+              <p className="text-sm text-slate-600 mb-6">Used by builders across India, avg. 30% faster completion</p>
+              <Link 
+                href="/signup" 
+                className="block w-full bg-teal-600 text-white text-center py-3 px-4 rounded-lg font-medium hover:bg-teal-700 transition"
+              >
+                Start Free Trial
+              </Link>
+            </div>
+            
+            {/* Enterprise Plan */}
+            <div className="border border-slate-200 rounded-2xl p-8 bg-white shadow-sm">
+              <h3 className="text-2xl font-bold text-slate-800 mb-2">Enterprise</h3>
+              <div className="text-4xl font-bold text-slate-800 mb-6">₹24,000<span className="text-lg font-normal text-slate-600">/year</span></div>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>All Professional features</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Unlimited projects</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>White-label customization</span>
+                </li>
+                <li className="flex items-center text-slate-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Priority support</span>
+                </li>
+              </ul>
+              <p className="text-sm text-slate-600 mb-6">For large construction firms across India</p>
+              <Link 
+                href="/signup" 
+                className="block w-full bg-slate-800 text-white text-center py-3 px-4 rounded-lg font-medium hover:bg-slate-700 transition"
+              >
+                Start Free Trial
+              </Link>
+            </div>
+            
+            {/* Special Offer */}
+            <div className="mt-8 text-center">
+              <p className="text-xl text-slate-700 font-semibold">Or pay annually upfront to save significantly!</p>
+              <p className="text-lg text-slate-600">₹8,999 per year when paid annually (₹899.92/month average)</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Technology Stack */}
-      <section id="tech" className="py-12 sm:py-16 md:py-20 bg-white">
+      {/* Why Builders Love BuildMate */}
+      <section className="py-16 bg-gradient-to-r from-slate-800 to-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              Modern Technology Stack
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-              Built with cutting-edge technologies for optimal performance and mobile-first architecture
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Builders Love BuildMate</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              Stop losing time, money, and credibility.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            {technologies.map((tech, index) => (
-              <div key={index} className="bg-slate-50 rounded-lg p-3 sm:p-4 text-center hover:bg-slate-100 transition duration-300">
-                <h3 className="font-semibold text-sm sm:text-base text-slate-800">{tech.name}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1">{tech.category}</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="text-center">
+              <div className="bg-slate-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
               </div>
-            ))}
+              <h3 className="text-xl font-bold mb-2">Stop chasing workers</h3>
+              <p className="text-slate-300">System auto-updates progress</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-slate-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Stop answering repeat calls</h3>
+              <p className="text-slate-300">Clients get auto-updates</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-slate-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Stop opening 10 Excel sheets/day</h3>
+              <p className="text-slate-300">Everything in one place</p>
+            </div>
+          </div>
+          
+          <div className="bg-slate-700 rounded-2xl p-8 text-center">
+            <p className="text-xl italic mb-4">
+              "Honestly, I thought software like this would be complicated. My 19-year-old supervisor runs it daily. No training needed."
+            </p>
+            <p className="font-bold">— Neha Gupta, PM, Delhi</p>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-teal-500 to-teal-600">
+      {/* Vastu Ready Templates */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Vastu-Ready Templates</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Optional vastu alignment for your projects
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm text-center">
+              <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">East-facing Initiation</h3>
+              <p className="text-slate-700">New projects start with prosperity energy</p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">North-aligned Reports</h3>
+              <p className="text-slate-700">Growth & knowledge direction</p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm text-center">
+              <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 4.016M5.618 7.944A11.955 11.955 0 0112 3.988c.618 0 1.227.092 1.807.267M12 7.988v4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">South-end Delivery</h3>
+              <p className="text-slate-700">Completion energy alignment</p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-2xl shadow-sm text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Grid-aligned Interface</h3>
+              <p className="text-slate-700">Natural energy balance in UI</p>
+            </div>
+          </div>
+          
+          <div className="mt-12 bg-slate-50 rounded-2xl p-8 text-center">
+            <p className="text-xl italic text-slate-700 mb-4">
+              "My clients actually comment on how clear and professional my reports look. Even they feel the discipline."
+            </p>
+            <p className="font-bold text-slate-800">— Manoj Singh, Builder, Gurgaon</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-gradient-to-r from-teal-500 to-teal-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
-            Ready to Transform Your Construction Business?
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-teal-100 max-w-md sm:max-w-xl md:max-w-3xl mx-auto mb-6 sm:mb-10">
-            Join successful construction companies already using our platform to streamline operations and improve project delivery in Delhi.
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Stop Losing Time, Money, and Credibility</h2>
+          <p className="text-xl mb-10 max-w-3xl mx-auto">
+            BuildMate runs your construction project like a disciplined assistant — without you managing the software.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <button 
-              onClick={() => router.push('/dashboard')}
-              className="bg-white text-teal-600 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-slate-100 transition duration-300 shadow-lg w-full sm:w-auto"
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link 
+              href="/signup" 
+              className="bg-white text-teal-600 hover:bg-slate-100 font-bold py-4 px-8 rounded-lg text-lg shadow-lg hover:shadow-xl transition duration-300"
             >
-              View Live Demo
-            </button>
-            <button 
-              onClick={() => setIsPreviewOpen(true)}
-              className="bg-teal-700 text-white border border-teal-300 px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-medium text-base sm:text-lg hover:bg-teal-800 transition duration-300 w-full sm:w-auto mt-2 sm:mt-0"
+              Start Free Trial
+            </Link>
+            <Link 
+              href="/demo" 
+              className="bg-transparent border-2 border-white text-white hover:bg-teal-700 font-bold py-4 px-8 rounded-lg text-lg transition duration-300"
             >
               Schedule a Demo
-            </button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* FAQS Section */}
-      <section id="faqs" className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Construction professionals from Delhi and beyond are successfully using our platform.
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">What is BuildMate and how does it help in construction project management?</h3>
-              <p className="text-slate-600">BuildMate is a meticulously engineered platform designed to streamline construction workflows and improve project delivery. Our sophisticated platform connects your expertise in managing construction projects in Delhi with modern tools that enhance coordination, tracking, and quality control.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does the project tracking system work?</h3>
-              <p className="text-slate-600">Our project tracking system enables you to manage all phases of construction from foundation to completion. This comprehensive management approach helps you understand project progress better, leading to more efficient workflows and faster project delivery.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">What compatibility does BuildMate offer with existing tools?</h3>
-              <p className="text-slate-600">BuildMate is compatible with most design software, equipment tracking systems, and project management platforms like AutoCAD, Procore, and PlanGrid. This allows for smooth integration with your existing workflows without disrupting your current processes.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How does project management work?</h3>
-              <p className="text-slate-600">Our platform provides an efficient project management system that tracks progress from initial planning through to completion. You can manage schedules, resources, quality checks, and team communication all within our intuitive interface, ensuring no aspect of your project falls through the cracks.</p>
-            </div>
-            
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">How can BuildMate help me deliver projects more efficiently?</h3>
-              <p className="text-slate-600">Our platform is optimized for project efficiency and team collaboration, ensuring your construction projects get maximum visibility among stakeholders. With advanced tracking, resource management, and progress analytics, you can deliver projects on time while our management tools help you maintain quality standards in the Delhi market.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 sm:mb-4">
-              Contact Us
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-              Have questions? Get in touch with our team to learn how BuildMate can transform your construction project management.
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-            <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
-              <div className="w-full md:w-1/2">
-                <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-3 sm:mb-4">
-                  Signimus Technologies Private Limited
-                </h3>
-                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm md:text-base text-slate-600">
-                  <p>23, PU4, Behind C21 Mall, Scheme 54 PU4, Indore, Madhya Pradesh 452011</p>
-                  <p>Phone: +91 98765 43210</p>
-                  <p>Email: contact@buildmate.com</p>
-                  <p>Website: www.buildmate.com</p>
-                </div>
-                
-                <div className="mt-6 sm:mt-8">
-                  <h4 className="text-base sm:text-lg font-semibold text-slate-800 mb-2 sm:mb-3">
-                    Our Values
-                  </h4>
-                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm md:text-base text-slate-600">
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>Affordable: We promise to offer you the best rate we can - at par with the industry standard</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>Quality: Enhance your project management with comprehensive digital tools</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-teal-500 mt-0.5 mr-1.5 sm:mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>Reliability: Provides consistent performance and 24/7 availability</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="w-full md:w-1/2">
-                <form className="space-y-3 sm:space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
-                      Name
-                    </label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
-                      placeholder="Your Name"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
-                      Email
-                    </label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="company" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
-                      Company
-                    </label>
-                    <input 
-                      type="text" 
-                      id="company" 
-                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
-                      placeholder="Company Name"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-slate-700 mb-1">
-                      Message
-                    </label>
-                    <textarea 
-                      id="message" 
-                      rows={4}
-                      className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm sm:text-base"
-                      placeholder="How can we help you?"
-                    ></textarea>
-                  </div>
-                  
-                  <button 
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-2.5 sm:px-6 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:from-teal-600 hover:to-teal-700 transition duration-300"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 sm:py-12">
+      <footer className="bg-slate-800 text-slate-300 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center">
-                <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.617 1.842 3.683a1 1 0 01-.213 1.106l-1.317 1.318a1 1 0 01-.944.29l-1.817-.545L10 13l-3.78 1.26a1 1 0 01-.945-.29l-1.317-1.317a1 1 0 01-.213-1.106l1.842-3.683-1.233-.617a1 1 0 01.894-1.789l1.599.799L9 5.405V3a1 1 0 011-1zm0 16a3 3 0 100-6 3 3 0 000 6z" />
-                  </svg>
-                </div>
-                <span className="ml-2 text-lg sm:text-xl font-bold text-white">BuildMate</span>
-              </div>
-              <p className="mt-3 sm:mt-4 text-xs sm:text-sm">
-                Delhi's premier construction management platform for construction professionals.
+              <Link href="/" className="text-xl font-bold text-white flex items-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-teal-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.857L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>BuildMate</span>
+              </Link>
+              <p className="text-sm">
+                India's premier construction management platform for construction professionals across Delhi, Mumbai, Indore, Pune, and other cities.
               </p>
             </div>
+            
             <div>
-              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Product</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Features</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Templates</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Releases</a></li>
+              <h3 className="text-white font-bold mb-4">Product</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/features" className="hover:text-white transition">Features</Link></li>
+                <li><Link href="/pricing" className="hover:text-white transition">Pricing</Link></li>
+                <li><Link href="/demo" className="hover:text-white transition">Demo</Link></li>
+                <li><Link href="/integrations" className="hover:text-white transition">Integrations</Link></li>
               </ul>
             </div>
+            
             <div>
-              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#about" className="hover:text-white transition text-xs sm:text-sm">About</a></li>
-                <li><a href="#contact" className="hover:text-white transition text-xs sm:text-sm">Contact</a></li>
-                <li><a href="#faqs" className="hover:text-white transition text-xs sm:text-sm">FAQs</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Privacy Policy</a></li>
+              <h3 className="text-white font-bold mb-4">Resources</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
+                <li><Link href="/guides" className="hover:text-white transition">Guides</Link></li>
+                <li><Link href="/support" className="hover:text-white transition">Support</Link></li>
+                <li><Link href="/community" className="hover:text-white transition">Community</Link></li>
               </ul>
             </div>
+            
             <div>
-              <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Support</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">API Reference</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Status</a></li>
-                <li><a href="#" className="hover:text-white transition text-xs sm:text-sm">Help Center</a></li>
+              <h3 className="text-white font-bold mb-4">Company</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/about" className="hover:text-white transition">About</Link></li>
+                <li><Link href="/careers" className="hover:text-white transition">Careers</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
+                <li><Link href="/privacy" className="hover:text-white transition">Privacy</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-6 sm:mt-12 pt-6 sm:pt-8 text-xs sm:text-sm text-center">
-            <p>© 2025 BuildMate by Signimus Technologies. All rights reserved.</p>
+          
+          <div className="border-t border-slate-700 mt-8 pt-8 text-sm text-center">
+            <p>© {new Date().getFullYear()} BuildMate Construction Management. All rights reserved.</p>
           </div>
         </div>
       </footer>
-
-      {/* Preview Modal */}
-      {isPreviewOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto max-w-[calc(100vw-2rem)]">
-            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0 bg-white">
-              <h3 className="text-lg font-semibold text-slate-800">BuildMate Feature Preview</h3>
-              <button 
-                onClick={() => setIsPreviewOpen(false)}
-                className="text-slate-400 hover:text-slate-500"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="p-6">
-              <div className="aspect-video bg-slate-100 rounded-lg mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="bg-gradient-to-br from-teal-500 to-teal-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-xl font-semibold text-slate-800 mb-2">Interactive Construction Dashboard</h4>
-                  <p className="text-slate-600 max-w-md mx-auto">
-                    Experience the full BuildMate dashboard with real-time analytics, project management, 
-                    and progress tracking.
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-4 border border-slate-100">
-                  <div className="text-3xl font-bold text-teal-600 mb-1">95%</div>
-                  <div className="text-slate-600">Project Completion Rate</div>
-                </div>
-                <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-4 border border-slate-100">
-                  <div className="text-3xl font-bold text-teal-600 mb-1">40%</div>
-                  <div className="text-slate-600">Timeline Improvement</div>
-                </div>
-                <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-4 border border-slate-100">
-                  <div className="text-3xl font-bold text-teal-600 mb-1">2x</div>
-                  <div className="text-slate-600">Project Efficiency</div>
-                </div>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-6">
-                <h4 className="text-lg font-semibold text-slate-800 mb-4">Key Features Included:</h4>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Project Management</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Team Coordination</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Progress Tracking</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Quality Management</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Resource Planning</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Mobile-First Design</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-6 flex justify-end space-x-3">
-                <button 
-                  onClick={() => setIsPreviewOpen(false)}
-                  className="px-4 py-2 text-slate-700 hover:text-slate-900 font-medium rounded-lg"
-                >
-                  Close
-                </button>
-                <button 
-                  onClick={() => {
-                    setIsPreviewOpen(false)
-                    router.push('/dashboard')
-                  }}
-                  className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300"
-                >
-                  View Full Demo
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

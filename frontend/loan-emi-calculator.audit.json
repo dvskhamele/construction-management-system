@@ -1,0 +1,35 @@
+{
+  "tool_slug": "loan-emi-calculator",
+  "audit_date": "2025-10-22T02:25:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Loan EMI Calculator",
+      "status": "pass",
+      "recommendation": "Excellent high-traffic keyword."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate EMI",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get our guide on business loans for contractors.",
+      "status": "pass",
+      "recommendation": "Highly relevant lead magnet for users considering loans."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 3,
+      "status": "pass",
+      "recommendation": "Simple form with standard financial inputs."
+    },
+    "results_clarity": {
+      "visualizations": ["PieChart"],
+      "status": "pass",
+      "recommendation": "Results are clear, and the pie chart visualization of principal vs. interest is very effective."
+    }
+  }
+}

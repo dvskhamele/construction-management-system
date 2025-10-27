@@ -1,0 +1,50 @@
+{
+  "tool_slug": "daily-site-report-generator",
+  "tool_name": "Daily Site Report Generator",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Daily Site Report Generator - BuildMate",
+    "meta_description": "Automates the creation of daily site reports, including weather conditions, work progress, resource allocation, and any issues encountered.",
+    "keywords": "daily, site, report, generator, daily site report generator, construction tool",
+    "h1_tag": "Daily Site Report Generator",
+    "url_structure": "/tools/daily-site-report-generator",
+    "canonical_url": "https://yourdomain.com/tools/daily-site-report-generator",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Daily Site Report Generator",
+      "description": "Automates the creation of daily site reports, including weather conditions, work progress, resource allocation, and any issues encountered.",
+      "url": "https://yourdomain.com/tools/daily-site-report-generator"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Calculate",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": [
+      "Input 1"
+    ],
+    "validation_rules": "Basic validation for numbers.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Calculated result clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": [
+      "Twitter",
+      "LinkedIn",
+      "Facebook"
+    ]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction professionals.",
+    "value_proposition": "Manual and time-consuming report generation, inconsistent reporting, difficulty in tracking daily activities.",
+    "content_ideas": [
+      "Blog post: 'How to use Daily Site Report Generator'",
+      "Social media campaign: 'Optimize with Daily Site Report Generator'"
+    ]
+  }
+}

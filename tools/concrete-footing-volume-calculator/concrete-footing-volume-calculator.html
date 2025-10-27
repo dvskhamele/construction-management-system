@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Footing Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Footing Volume Calculator</h1>
+        <form id="footing-form">
+            <div class="input-group">
+                <label for="footing-length">Footing Length (feet)</label>
+                <input type="number" id="footing-length" required>
+            </div>
+            <div class="input-group">
+                <label for="footing-width">Footing Width (feet)</label>
+                <input type="number" id="footing-width" required>
+            </div>
+            <div class="input-group">
+                <label for="footing-depth">Footing Depth (inches)</label>
+                <input type="number" id="footing-depth" required>
+            </div>
+            <div class="input-group">
+                <label for="num-footings">Number of Footings</label>
+                <input type="number" id="num-footings" value="1" required>
+            </div>
+            <button type="submit">Calculate Volume</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

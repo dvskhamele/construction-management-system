@@ -1,0 +1,50 @@
+{
+  "tool_slug": "construction-profit-calculator",
+  "audit_date": "2025-10-21T22:15:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Project Profitability Calculator",
+      "status": "pass",
+      "recommendation": "Title is clear, keyword-rich, and within optimal length."
+    },
+    "meta_description": {
+      "value": "Estimate the potential profit and margin of your next construction project before you even lay the foundation.",
+      "status": "pass",
+      "recommendation": "Description is compelling and includes relevant keywords."
+    },
+    "h1_tag": {
+      "value": "Construction Project Profitability Calculator",
+      "status": "pass",
+      "recommendation": "H1 is present and matches the page title."
+    },
+    "structured_data": {
+      "value": "Not implemented",
+      "status": "fail",
+      "recommendation": "Implement 'HowTo' or 'SoftwareApplication' Schema.org markup to be eligible for rich snippets."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Profitability",
+      "status": "pass",
+      "recommendation": "CTA is clear, action-oriented, and prominently displayed."
+    },
+    "lead_capture": {
+      "offer": "Get a detailed cost breakdown and a free project budget template sent to your email.",
+      "status": "pass",
+      "recommendation": "Lead magnet is high-value and directly related to the tool's purpose."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 7,
+      "status": "pass",
+      "recommendation": "Form is concise. All fields have clear labels. Real-time validation provides immediate feedback."
+    },
+    "results_clarity": {
+      "visualizations": ["BarChart"],
+      "status": "pass",
+      "recommendation": "Results are presented clearly with both raw numbers and a visual chart. Key metrics are highlighted."
+    }
+  }
+}

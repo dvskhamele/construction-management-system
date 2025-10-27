@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Harness</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Roof Truss Calculator</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="roofSpan">Roof Span (feet)</label>
+                <input type="number" id="roofSpan" placeholder="Enter roof span" value="20">
+            </div>
+            <div class="input-group">
+                <label for="roofPitch">Roof Pitch (e.g., 4 for 4/12)</label>
+                <input type="number" id="roofPitch" placeholder="Enter roof pitch" value="4">
+            </div>
+            <div class="input-group">
+                <label for="trussSpacing">Truss Spacing (inches)</label>
+                <input type="number" id="trussSpacing" placeholder="Enter truss spacing" value="24">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('calculateBtn').click();
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Wider for checklist content */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.checklist-section {
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+}
+
+.checklist-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.checklist-section input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2); /* Make checkboxes a bit larger */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Green for save */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#results {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    text-align: center;
+}

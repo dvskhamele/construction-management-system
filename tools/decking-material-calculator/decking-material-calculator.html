@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decking Material Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Decking Material Calculator</h1>
+        <form id="decking-form">
+            <div class="input-group">
+                <label for="deck-width">Deck Width (feet)</label>
+                <input type="number" id="deck-width" required>
+            </div>
+            <div class="input-group">
+                <label for="deck-length">Deck Length (feet)</label>
+                <input type="number" id="deck-length" required>
+            </div>
+            <div class="input-group">
+                <label for="board-width">Deck Board Width (inches)</label>
+                <input type="number" id="board-width" value="5.5" required>
+            </div>
+            <div class="input-group">
+                <label for="board-length">Deck Board Length (feet)</label>
+                <input type="number" id="board-length" value="12" required>
+            </div>
+            <div class="input-group">
+                <label for="joist-spacing">Joist Spacing (inches)</label>
+                <input type="number" id="joist-spacing" value="16" required>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

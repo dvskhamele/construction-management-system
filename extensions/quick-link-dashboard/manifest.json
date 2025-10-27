@@ -1,0 +1,18 @@
+
+{
+    "manifest_version": 3,
+    "name": "Quick Link Dashboard",
+    "version": "1.0",
+    "description": "A customizable dashboard for quick access to frequently used links.",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    }
+}

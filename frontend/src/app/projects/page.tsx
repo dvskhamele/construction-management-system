@@ -3,25 +3,43 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 import { useRouter } from 'next/navigation'
 
 export default function Projects() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
-  const [user, setUser] = useState<any>({ name: 'Project Manager', role: 'ADMIN' })
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const [projects, setProjects] = useState<any[]>([])
+  const [filteredProjects, setFilteredProjects] = useState<any[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
 
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setIsLoggedIn(false)
     setUser(null)
     router.push('/login')
   }
 
+  // Check authentication on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    
+    if (token && userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser(parsedUser);
+      setIsLoggedIn(true);
+    } else {
+      // For prototype, we could set a default user, but better to redirect
+      router.push('/login');
+    }
+  }, []);
+
   useEffect(() => {
     // Mock data for prototype - Projects
-    const mockProjects = [
+    const allProjects = [
       { 
         id: 1, 
         name: 'Downtown Office Complex', 
@@ -146,11 +164,64 @@ export default function Projects() {
         phase: 'Design',
         department: 'Development',
         riskLevel: 'LOW'
+      },
+      { 
+        id: 6, 
+        name: 'Client Exclusive Project', 
+        client: 'Meridian Properties', 
+        value: 5000000, 
+        status: 'ACTIVE', 
+        progress: 60, 
+        startDate: '2025-03-01', 
+        endDate: '2025-08-30', 
+        location: 'Premium Location, Mumbai', 
+        projectManager: 'James Wilson', 
+        teamSize: 10, 
+        budgetSpent: 3000000, 
+        budgetRemaining: 2000000, 
+        issues: 1, 
+        safetyIncidents: 0, 
+        qualityRating: 95, 
+        lastUpdate: '2025-03-18', 
+        nextMilestone: 'Electrical Work', 
+        nextMilestoneDate: '2025-05-15',
+        type: 'Commercial',
+        phase: 'Electrical',
+        department: 'Construction',
+        riskLevel: 'LOW'
       }
     ]
     
-    setProjects(mockProjects)
-  }, [])
+    // Filter projects based on user role
+    const userProjects = user?.role === 'CLIENT' 
+      ? allProjects.filter(project => 
+          project.client.toLowerCase().includes('meridian') || 
+          project.name.toLowerCase().includes('exclusive')
+        )
+      : allProjects;
+    
+    setProjects(userProjects)
+    setFilteredProjects(userProjects) // Initialize filtered projects as well
+  }, [user])
+  
+  // Filter projects based on search term
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredProjects(projects)
+    } else {
+      const searchLower = searchTerm.toLowerCase()
+      const filtered = projects.filter(project => 
+        project.name.toLowerCase().includes(searchLower) ||
+        project.client.toLowerCase().includes(searchLower) ||
+        project.location.toLowerCase().includes(searchLower) ||
+        project.projectManager.toLowerCase().includes(searchLower) ||
+        project.type.toLowerCase().includes(searchLower) ||
+        project.phase.toLowerCase().includes(searchLower) ||
+        project.department.toLowerCase().includes(searchLower)
+      )
+      setFilteredProjects(filtered)
+    }
+  }, [searchTerm, projects])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -201,7 +272,7 @@ export default function Projects() {
   }
 
   return (
-    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="projects">
       <div className="px-4 py-6">
         {/* Page Header */}
         <div className="mb-8">
@@ -239,7 +310,7 @@ export default function Projects() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Total Projects</p>
-                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.length}</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{filteredProjects.length}</p>
               </div>
               <div className="bg-amber-100 p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -248,7 +319,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="mt-4">
-              <span className="text-xs text-slate-500">Active: {projects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</span>
+              <span className="text-xs text-slate-500">Active: {filteredProjects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</span>
             </div>
           </div>
 
@@ -256,7 +327,7 @@ export default function Projects() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Active Projects</p>
-                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{filteredProjects.filter(p => ['ACTIVE', 'ON_TRACK'].includes(p.status)).length}</p>
               </div>
               <div className="bg-blue-100 p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -265,7 +336,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="mt-4">
-              <span className="text-xs text-emerald-500">↑ {projects.filter(p => p.status === 'DELAYED').length} delayed</span>
+              <span className="text-xs text-emerald-500">↑ {filteredProjects.filter(p => p.status === 'DELAYED').length} delayed</span>
             </div>
           </div>
 
@@ -273,7 +344,7 @@ export default function Projects() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Completed Projects</p>
-                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => p.status === 'COMPLETED').length}</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{filteredProjects.filter(p => p.status === 'COMPLETED').length}</p>
               </div>
               <div className="bg-emerald-100 p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,7 +353,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="mt-4">
-              <span className="text-xs text-slate-500">Value: ₹{Math.round(projects.filter(p => p.status === 'COMPLETED').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
+              <span className="text-xs text-slate-500">Value: ₹{Math.round(filteredProjects.filter(p => p.status === 'COMPLETED').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
             </div>
           </div>
 
@@ -290,7 +361,7 @@ export default function Projects() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm font-medium text-slate-500">Planning Projects</p>
-                <p className="text-3xl font-bold text-slate-800 mt-1">{projects.filter(p => p.status === 'PLANNING').length}</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{filteredProjects.filter(p => p.status === 'PLANNING').length}</p>
               </div>
               <div className="bg-indigo-100 p-3 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -299,17 +370,28 @@ export default function Projects() {
               </div>
             </div>
             <div className="mt-4">
-              <span className="text-xs text-slate-500">Future value: ₹{Math.round(projects.filter(p => p.status === 'PLANNING').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
+              <span className="text-xs text-slate-500">Future value: ₹{Math.round(filteredProjects.filter(p => p.status === 'PLANNING').reduce((sum, p) => sum + p.value, 0) / 100000)}L</span>
             </div>
           </div>
         </div>
 
         {/* Project List */}
         <div className="bg-white rounded-2xl shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-slate-800">Project Portfolio</h2>
-            <div className="text-sm text-slate-500">
-              Showing {projects.length} projects
+          <div className="px-6 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold text-slate-800">Project Portfolio</h2>
+              <div className="text-sm text-slate-500 mt-1">
+                Showing {filteredProjects.length} projects
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="text"
+                placeholder="Search projects..."
+                className="px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
           <div className="overflow-x-auto">
@@ -334,7 +416,7 @@ export default function Projects() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-slate-200">
-                {projects.map((project: any) => (
+                {filteredProjects.map((project: any) => (
                   <tr 
                     key={project.id} 
                     className="hover:bg-slate-50 transition cursor-pointer"
@@ -486,6 +568,6 @@ export default function Projects() {
           </div>
         </div>
       </div>
-    </ResponsiveSidebarLayout>
+    </HeaderResponsiveLayout>
   )
 }

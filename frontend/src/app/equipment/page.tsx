@@ -3,7 +3,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 import { useRouter } from 'next/navigation'
 
 export default function Equipment() {
@@ -92,7 +92,7 @@ export default function Equipment() {
   }
 
   return (
-    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="equipment">
       <div className="px-4 py-6">
         {/* Header */}
         <div className="mb-8">
@@ -200,6 +200,6 @@ export default function Equipment() {
           </div>
         </div>
       </div>
-    </ResponsiveSidebarLayout>
+    </HeaderResponsiveLayout>
   )
 }

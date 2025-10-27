@@ -1,0 +1,35 @@
+{
+  "tool_slug": "excavation-volume-calculator",
+  "audit_date": "2025-10-21T23:55:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Excavation Volume Calculator",
+      "status": "pass",
+      "recommendation": "Title is specific and targets a common query for site engineers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Volume",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get a guide on soil types and their swell factors for accurate excavation planning.",
+      "status": "pass",
+      "recommendation": "Excellent, highly relevant lead magnet that provides additional value."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 4,
+      "status": "pass",
+      "recommendation": "Very simple and easy-to-use form."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are displayed clearly in both cubic meters and cubic feet, which is very helpful for the user."
+    }
+  }
+}

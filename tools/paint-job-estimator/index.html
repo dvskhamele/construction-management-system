@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Job Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Paint Job Estimator</h1>
+        <p>Estimate the amount of paint and the cost for your next painting project.</p>
+        <div class="estimator">
+            <div class="input-group">
+                <label for="wall-area">Total Wall Area (in square feet)</label>
+                <input type="number" id="wall-area" placeholder="e.g., 400">
+            </div>
+            <div class="input-group">
+                <label for="coats">Number of Coats</label>
+                <input type="number" id="coats" value="2">
+            </div>
+            <div class="input-group">
+                <label for="paint-price">Price per Gallon of Paint</label>
+                <input type="number" id="paint-price" placeholder="e.g., 30">
+            </div>
+            <button id="estimate-paint">Estimate</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

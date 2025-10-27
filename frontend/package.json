@@ -1,47 +1,29 @@
 {
   "name": "buildmate-construction-management",
   "version": "1.0.0",
-  "private": true,
-  "description": "BuildMate is a comprehensive construction management platform for planning, deploying, tracking & managing end to end project development",
-  "keywords": [
-    "construction",
-    "project-management",
-    "building",
-    "renovation",
-    "construction-management",
-    "site-management",
-    "crew-management"
-  ],
+  "description": "Comprehensive Construction Management System for Indian Contractors",
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-icons": "node scripts/generate-icons.js"
+    "test": "jest",
+    "verify": "node ./scripts/verify-deployment.js"
   },
   "dependencies": {
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.1",
-    "@headlessui/react": "^2.1.2",
-    "@heroicons/react": "^2.1.5",
-    "@mui/icons-material": "7.3.4",
-    "@mui/material": "7.0.0-rc.0",
-    "@types/node": "22.10.10",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "bootstrap": "5.3.8",
-    "lucide-react": "0.544.0",
-    "next": "15.1.0",
-    "react": "19.0.0",
-    "react-bootstrap": "2.10.10",
-    "react-dom": "19.0.0",
-    "recharts": "3.2.1",
-    "typescript": "5.7.3"
+    "lucide-react": "0.546.0",
+    "next": "13.4.12",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "recharts": "3.3.0",
+    "tailwindcss": "^3.3.0"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
-    "autoprefixer": "10.4.20",
-    "postcss": "8.5.1",
-    "tailwindcss": "3.4.17"
+    "@types/node": "20.1.0",
+    "@types/react": "18.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "typescript": "^5.0.0"
   }
 }

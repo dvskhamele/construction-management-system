@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Profitability Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Profitability Calculator</h1>
+        <form id="profitability-form">
+            <div class="input-group">
+                <label for="project-revenue">Total Project Revenue ($)</label>
+                <input type="number" id="project-revenue" required>
+            </div>
+            <div class="input-group">
+                <label for="material-costs">Material Costs ($)</label>
+                <input type="number" id="material-costs" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="labor-costs">Labor Costs ($)</label>
+                <input type="number" id="labor-costs" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="equipment-costs">Equipment Costs ($)</label>
+                <input type="number" id="equipment-costs" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="overhead-costs">Overhead Costs ($)</label>
+                <input type="number" id="overhead-costs" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="other-costs">Other Costs ($)</label>
+                <input type="number" id="other-costs" value="0" required>
+            </div>
+            <button type="submit">Calculate Profitability</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

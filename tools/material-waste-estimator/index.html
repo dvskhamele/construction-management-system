@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Waste Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Material Waste Estimator</h1>
+        <div class="input-group">
+            <label for="total-material">Total Material Needed (units):</label>
+            <input type="number" id="total-material" placeholder="e.g., 100 sq ft">
+        </div>
+        <div class="input-group">
+            <label for="waste-percentage">Estimated Waste Percentage (%):</label>
+            <input type="number" id="waste-percentage" placeholder="e.g., 10">
+        </div>
+        <button onclick="calculateWaste()">Calculate Total Material to Order</button>
+        <div class="result" id="result">
+            The estimated total material to order will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

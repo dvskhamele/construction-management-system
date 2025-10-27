@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Cost Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Paint Cost Estimator</h1>
+        <form id="paint-cost-form">
+            <div class="input-group">
+                <label for="paintable-area">Total Paintable Area (sq ft)</label>
+                <input type="number" id="paintable-area" required>
+            </div>
+            <div class="input-group">
+                <label for="num-coats">Number of Coats</label>
+                <input type="number" id="num-coats" value="2" required>
+            </div>
+            <div class="input-group">
+                <label for="coverage-per-gallon">Paint Coverage per Gallon (sq ft)</label>
+                <input type="number" id="coverage-per-gallon" value="350" required>
+            </div>
+            <div class="input-group">
+                <label for="cost-per-gallon">Cost per Gallon ($)</label>
+                <input type="number" id="cost-per-gallon" step="0.01" required>
+            </div>
+            <button type="submit">Estimate Paint Cost</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

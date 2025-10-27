@@ -1,0 +1,35 @@
+{
+  "tool_slug": "project-phase-visualizer",
+  "audit_date": "2025-10-22T01:25:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Simple Project Phase Visualizer",
+      "status": "pass",
+      "recommendation": "Good keyword targeting for users looking for simple timeline or Gantt chart alternatives."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Visualize Timeline",
+      "status": "pass",
+      "recommendation": "Clear, benefit-driven CTA."
+    },
+    "lead_capture": {
+      "offer": "Save this timeline as a PDF and add it to your proposal documents.",
+      "status": "pass",
+      "recommendation": "Excellent lead magnet that provides a direct utility for sales and project management."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 1,
+      "status": "pass",
+      "recommendation": "A single textarea input is extremely simple, with clear instructions on how to format the data."
+    },
+    "results_clarity": {
+      "visualizations": ["Custom Timeline"],
+      "status": "pass",
+      "recommendation": "The visual timeline is clean, colorful, and effectively communicates the project schedule at a glance."
+    }
+  }
+}

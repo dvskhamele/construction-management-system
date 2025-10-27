@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embodied Carbon Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Embodied Carbon Calculator</h1>
+        <p>Estimate the embodied carbon of your construction materials.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="material">Material</label>
+                <select id="material">
+                    <option value="concrete">Concrete (3000 psi)</option>
+                    <option value="steel">Steel (rebar)</option>
+                    <option value="wood">Wood (dimensional lumber)</option>
+                    <option value="brick">Brick</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" placeholder="Enter quantity">
+                <select id="unit">
+                    <option value="m3">m³</option>
+                    <option value="kg">kg</option>
+                </select>
+            </div>
+            <button id="calculate">Calculate</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

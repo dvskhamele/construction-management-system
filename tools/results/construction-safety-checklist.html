@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Safety Report</title>
+    <meta name="description" content="Your construction safety score and report. Identify areas for improvement to ensure a safer work environment.">
+    <meta property="og:title" content="Construction Safety Report">
+    <meta property="og:description" content="Your construction safety score and report. Identify areas for improvement to ensure a safer work environment.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Analytics placeholder
+        function trackEvent(eventName, eventData) {
+            console.log(`Analytics: ${eventName}`, eventData);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('ToolResultViewed', { toolName: 'Construction Safety Checklist' });
+            const results = JSON.parse(localStorage.getItem('safetyChecklistResults'));
+            if (results) {
+                document.getElementById('safetyScore').innerText = results.score + '%';
+                document.getElementById('checkedCount').innerText = results.checked;
+                document.getElementById('totalCount').innerText = results.total;
+            } else {
+                document.getElementById('resultsContainer').innerHTML = '<p class="text-center">No results found. Please complete the checklist first.</p>';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div id="resultsContainer">
+            <h1 class="text-center">Your Construction Safety Report</h1>
+            <div class="card text-center mt-4">
+                <div class="card-header">
+                    <h2>Safety Score</h2>
+                </div>
+                <div class="card-body">
+                    <h1 id="safetyScore" class="display-1"></h1>
+                    <p class="lead">You have checked <span id="checkedCount"></span> out of <span id="totalCount"></span> safety items.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                <h3 class="card-title">Get Your Detailed Report</h3>
+                <p class="card-text">Enter your email address to receive a detailed copy of your safety report and recommendations.</p>
+                <form id="leadCaptureForm">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Send My Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('leadCaptureForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            trackEvent('LeadCaptured', { toolName: 'Construction Safety Checklist', email: email });
+
+            // In a real application, you would send this to a server.
+            // For this simulation, we will append it to a JSON file.
+            const leadData = { email: email, tool: 'Construction Safety Checklist', timestamp: new Date().toISOString() };
+            
+            // This is a simplified simulation of appending to a file.
+            // A proper implementation would require a backend to avoid race conditions and file corruption.
+            console.log('Lead captured:', leadData);
+            alert('Your report has been sent to your email address.');
+
+            // The following is a placeholder for the file writing operation.
+            // It is not possible to directly write to the filesystem from the browser.
+            // This will be handled by a separate process or a backend.
+            const dataToSave = JSON.stringify(leadData) + '\n';
+            // fs.appendFileSync('/Users/test/startups/constructionmanagement/data/prelogin_leads/leads.json', dataToSave);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "tool_slug": "concrete-material-calculator",
+  "audit_date": "2025-10-21T22:35:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Concrete & Material Calculator",
+      "status": "pass",
+      "recommendation": "Title is clear and contains high-value keywords like 'concrete' and 'material calculator'."
+    },
+    "meta_description": {
+      "value": "Calculate the required concrete volume and material quantities (cement, sand, aggregate) for slabs and columns.",
+      "status": "pass",
+      "recommendation": "Description is practical and lists the specific materials calculated, which is good for long-tail search."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Materials",
+      "status": "pass",
+      "recommendation": "CTA is clear, benefit-oriented, and highly relevant to the user's goal."
+    },
+    "lead_capture": {
+      "offer": "Get a printable material checklist for your concrete work sent to your email.",
+      "status": "pass",
+      "recommendation": "Lead magnet is a practical, high-value item that complements the tool's function perfectly."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": "Varies (3-4)",
+      "status": "pass",
+      "recommendation": "Form uses conditional logic to only show relevant fields for 'Slab' or 'Column', reducing cognitive load. Unit selection is also clear."
+    },
+    "results_clarity": {
+      "visualizations": ["Table"],
+      "status": "pass",
+      "recommendation": "Results are presented in a simple, easy-to-read table. The most important number (total volume) is highlighted. The disclaimer is helpful."
+    }
+  }
+}

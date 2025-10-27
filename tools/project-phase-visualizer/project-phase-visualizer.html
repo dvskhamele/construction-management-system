@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Phase Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Project Phase Visualizer</h1>
+        <form id="phase-form">
+            <div class="input-group">
+                <label for="phase-name">Phase Name:</label>
+                <input type="text" id="phase-name" required>
+            </div>
+            <div class="input-group">
+                <label for="phase-duration">Duration (days):</label>
+                <input type="number" id="phase-duration" required>
+            </div>
+            <div class="input-group">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date" required>
+            </div>
+            <button type="submit">Add Phase</button>
+        </form>
+        <div id="results">
+            <h2>Project Timeline</h2>
+            <div id="timeline-display"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

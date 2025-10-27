@@ -1,0 +1,164 @@
+
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Head from 'next/head';
+
+const {{ToolComponentName}}ResultPage = () => {
+    const router = useRouter();
+    const { id } = router.query;
+    const [resultData, setResultData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [email, setEmail] = useState('');
+    const [leadCaptureMessage, setLeadCaptureMessage] = useState('');
+
+    const logEvent = async (eventName: string, properties: object = {}) => {
+        try {
+            await fetch('/api/log-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: eventName,
+                    tool_slug: '{{tool_slug}}',
+                    timestamp: new Date().toISOString(),
+                    ...properties,
+                }),
+            });
+        } catch (error) {
+            console.error(`Failed to log event ${eventName}:`, error);
+        }
+    };
+
+    useEffect(() => {
+        if (id) {
+            const fetchResult = async () => {
+                try {
+                    const response = await fetch(`/api/get-{{tool_slug}}-result/${id}`);
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    setResultData(data);
+                    logEvent('ToolResultViewed', { result_id: id });
+                } catch (err) {
+                    setError(err.message);
+                    logEvent('ErrorEvent', { error_code: 'FETCH_RESULT_FAILED', message: err.message, result_id: id });
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchResult();
+        }
+    }, [id]);
+
+    const handleLeadCapture = async (e) => {
+        e.preventDefault();
+        setLeadCaptureMessage('');
+
+        try {
+            const response = await fetch('/api/save-lead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    tool_slug: '{{tool_slug}}',
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setLeadCaptureMessage('Thank you! Your report will be sent to your email.');
+                setEmail('');
+                logEvent('LeadCaptured', { email: email, lead_source: '{{tool_slug}}-result-page', result_id: id });
+            } else {
+                setLeadCaptureMessage(`Error: ${data.message}`);
+                logEvent('ErrorEvent', { error_code: 'LEAD_CAPTURE_FAILED', message: data.message, email: email });
+            }
+        } catch (error) {
+            console.error('Failed to capture lead:', error);
+            setLeadCaptureMessage('An error occurred while capturing your lead.');
+            logEvent('ErrorEvent', { error_code: 'LEAD_CAPTURE_EXCEPTION', message: error.message, email: email });
+        }
+    };
+
+    if (loading) {
+        return <div className="container mx-auto p-4">Loading results...</div>;
+    }
+
+    if (error) {
+        return <div className="container mx-auto p-4 text-red-500">Error: {error}</div>;
+    }
+
+    if (!resultData) {
+        return <div className="container mx-auto p-4">Result not found.</div>;
+    }
+
+    const { inputs, results } = resultData;
+
+    const pageTitle = `{{tool_title}} Result for ${id}`;
+    const pageDescription = `View the detailed calculation for project ID ${id}.`;
+    const pageUrl = `https://yourdomain.com/tools/results/{{tool_slug}}/${id}`;
+
+    return (
+        <div className="container mx-auto p-4">
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="description" content={pageDescription} />
+                <meta property="og:title" content={pageTitle} />
+                <meta property="og:description" content={pageDescription} />
+                <meta property="og:url" content={pageUrl} />
+                <meta property="og:type" content="website" />
+            </Head>
+
+            <h1 className="text-3xl font-bold mb-4">{{tool_title}} Results</h1>
+
+            <div className="mb-6">
+                <h2 className="text-2xl font-semibold mb-2">Inputs:</h2>
+                {Object.entries(inputs).map(([key, value]) => (
+                    <p key={key}><strong>{key}:</strong> {String(value)}</p>
+                ))}
+            </div>
+
+            <div className="mb-6 p-4 border rounded bg-gray-100">
+                <h2 className="text-2xl font-semibold mb-2">Results:</h2>
+                {Object.entries(results).map(([key, value]) => (
+                    <p key={key}><strong>{key}:</strong> {String(value)}</p>
+                ))}
+            </div>
+
+            <div className="mt-8 p-6 border rounded bg-blue-50 shadow-md">
+                <h2 className="text-xl font-bold mb-3">Get a Detailed Report!</h2>
+                <p className="mb-4">Enter your email to receive a comprehensive PDF report of your calculation.</p>
+                <form className="flex flex-col sm:flex-row gap-2" onSubmit={handleLeadCapture}>
+                    <input
+                        type="email"
+                        placeholder="Your Email Address"
+                        className="flex-grow p-2 border rounded"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Send Report
+                    </button>
+                </form>
+                {leadCaptureMessage && <p className="mt-2 text-sm text-green-600">{leadCaptureMessage}</p>}
+            </div>
+
+            <div className="mt-8">
+                <h2 className="text-xl font-bold mb-3">Share Your Results:</h2>
+                <div className="flex gap-4">
+                    <button className="bg-blue-400 text-white px-4 py-2 rounded">Share on Twitter</button>
+                    <button className="bg-blue-800 text-white px-4 py-2 rounded">Share on LinkedIn</button>
+                    <button className="bg-red-600 text-white px-4 py-2 rounded">Share on Facebook</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default {{ToolComponentName}}ResultPage;

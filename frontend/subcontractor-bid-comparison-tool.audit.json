@@ -1,0 +1,50 @@
+{
+  "tool_slug": "subcontractor-bid-comparison-tool",
+  "tool_name": "Subcontractor Bid Comparison Tool",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Subcontractor Bid Comparison Tool - BuildMate",
+    "meta_description": "Compares bids from multiple subcontractors side-by-side based on various criteria (cost, timeline, experience, scope) to identify the best value.",
+    "keywords": "subcontractor, bid, comparison, tool, subcontractor bid comparison tool, construction tool",
+    "h1_tag": "Subcontractor Bid Comparison Tool",
+    "url_structure": "/tools/subcontractor-bid-comparison-tool",
+    "canonical_url": "https://yourdomain.com/tools/subcontractor-bid-comparison-tool",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Subcontractor Bid Comparison Tool",
+      "description": "Compares bids from multiple subcontractors side-by-side based on various criteria (cost, timeline, experience, scope) to identify the best value.",
+      "url": "https://yourdomain.com/tools/subcontractor-bid-comparison-tool"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Calculate",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": [
+      "Input 1"
+    ],
+    "validation_rules": "Basic validation for numbers.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Calculated result clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": [
+      "Twitter",
+      "LinkedIn",
+      "Facebook"
+    ]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction professionals.",
+    "value_proposition": "Time-consuming bid evaluation, difficulty in objectively comparing subcontractor proposals.",
+    "content_ideas": [
+      "Blog post: 'How to use Subcontractor Bid Comparison Tool'",
+      "Social media campaign: 'Optimize with Subcontractor Bid Comparison Tool'"
+    ]
+  }
+}

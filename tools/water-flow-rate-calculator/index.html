@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Flow Rate Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .calculator {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Flow Rate Calculator</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="pipeDiameter">Pipe Diameter (inches)</label>
+                <input type="number" id="pipeDiameter" placeholder="Enter pipe diameter">
+            </div>
+            <div class="input-group">
+                <label for="velocity">Water Velocity (feet per second)</label>
+                <input type="number" id="velocity" placeholder="Enter water velocity">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const pipeDiameter = parseFloat(document.getElementById('pipeDiameter').value);
+            const velocity = parseFloat(document.getElementById('velocity').value);
+
+            if (isNaN(pipeDiameter) || isNaN(velocity)) {
+                document.getElementById('result').innerHTML = 'Please enter valid numbers.';
+                return;
+            }
+
+            const radius = pipeDiameter / 2 / 12; // Convert inches to feet
+            const area = Math.PI * Math.pow(radius, 2);
+            const flowRate = area * velocity * 7.48052; // Convert cubic feet per second to gallons per minute
+
+            const resultHTML = `
+                <h3>Flow Rate Calculation Results:</h3>
+                <p>Flow Rate: ${flowRate.toFixed(2)} GPM (Gallons Per Minute)</p>
+            `;
+
+            document.getElementById('result').innerHTML = resultHTML;
+        });
+    </script>
+</body>
+</html>

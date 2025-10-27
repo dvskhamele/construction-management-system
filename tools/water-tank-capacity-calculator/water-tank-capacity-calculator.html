@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Tank Capacity Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Water Tank Capacity Calculator</h1>
+        <form id="tank-form">
+            <div class="input-group">
+                <label for="tank-type">Tank Type:</label>
+                <select id="tank-type">
+                    <option value="rectangular">Rectangular</option>
+                    <option value="cylindrical">Cylindrical</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="dimension-unit">Dimension Unit:</label>
+                <select id="dimension-unit">
+                    <option value="feet">Feet</option>
+                    <option value="meters">Meters</option>
+                </select>
+            </div>
+
+            <div id="rectangular-inputs">
+                <div class="input-group">
+                    <label for="rect-length">Length</label>
+                    <input type="number" id="rect-length" required>
+                </div>
+                <div class="input-group">
+                    <label for="rect-width">Width</label>
+                    <input type="number" id="rect-width" required>
+                </div>
+            </div>
+
+            <div id="cylindrical-inputs" style="display: none;">
+                <div class="input-group">
+                    <label for="cyl-diameter">Diameter</label>
+                    <input type="number" id="cyl-diameter">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="tank-height">Height</label>
+                <input type="number" id="tank-height" required>
+            </div>
+            <button type="submit">Calculate Capacity</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

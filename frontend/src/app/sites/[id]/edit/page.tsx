@@ -5,7 +5,13 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import UserLayout from '../../../../components/UserLayout'
 
-export default function EditSite() {
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+export default function EditSite({ params }: Props) {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [user, setUser] = useState<any>({ name: 'Site Manager', role: 'ADMIN' })
   const [formData, setFormData] = useState({
@@ -22,7 +28,6 @@ export default function EditSite() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
   
-  const params = useParams()
   const router = useRouter()
   const siteId = params.id
 

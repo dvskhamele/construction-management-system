@@ -1,0 +1,102 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function PaintEstimator() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    totalArea: '1000',
+    units: 'Square Feet',
+    coatsOfPaint: '2',
+    paintCoverage: '350',
+    costPerUnit: '2000',
+    includePrimer: true,
+    primerCoverage: '200',
+    costPerUnitPrimer: '1500',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/tools/paint-cost-estimator/result?${query}`);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Paint Quantity & Cost Estimator
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Calculate the amount of paint and primer you need for your project and estimate the total cost.
+          </p>
+        </div>
+
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="totalArea" className="block text-sm font-medium text-slate-700">Total Wall Area</label>
+                    <input type="number" name="totalArea" value={formData.totalArea} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="units" className="block text-sm font-medium text-slate-700">Units</label>
+                    <select name="units" value={formData.units} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md">
+                        <option>Square Feet</option>
+                        <option>Square Meters</option>
+                    </select>
+                </div>
+            </div>
+            <div className="border-t pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label htmlFor="coatsOfPaint" className="block text-sm font-medium text-slate-700">Coats of Paint</label>
+                    <input type="number" name="coatsOfPaint" value={formData.coatsOfPaint} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="paintCoverage" className="block text-sm font-medium text-slate-700">Paint Coverage ({formData.units} / Gallon)</label>
+                    <input type="number" name="paintCoverage" value={formData.paintCoverage} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div className="md:col-span-2">
+                    <label htmlFor="costPerUnit" className="block text-sm font-medium text-slate-700">Cost per Gallon of Paint (INR)</label>
+                    <input type="number" name="costPerUnit" value={formData.costPerUnit} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+            </div>
+            <div className="border-t pt-6 space-y-6">
+                <div className="relative flex items-start">
+                    <div className="flex items-center h-5">
+                        <input id="includePrimer" name="includePrimer" type="checkbox" checked={formData.includePrimer} onChange={handleInputChange} className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded" />
+                    </div>
+                    <div className="ml-3 text-sm">
+                        <label htmlFor="includePrimer" className="font-medium text-gray-700">Include Primer Calculation</label>
+                    </div>
+                </div>
+                {formData.includePrimer && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label htmlFor="primerCoverage" className="block text-sm font-medium text-slate-700">Primer Coverage ({formData.units} / Gallon)</label>
+                            <input type="number" name="primerCoverage" value={formData.primerCoverage} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                        </div>
+                        <div>
+                            <label htmlFor="costPerUnitPrimer" className="block text-sm font-medium text-slate-700">Cost per Gallon of Primer (INR)</label>
+                            <input type="number" name="costPerUnitPrimer" value={formData.costPerUnitPrimer} onChange={handleInputChange} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                        </div>
+                    </div>
+                )}
+            </div>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Estimate Paint & Cost
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

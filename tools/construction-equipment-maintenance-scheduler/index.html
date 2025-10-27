@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Equipment Maintenance Scheduler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .scheduler-form {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #maintenanceList {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        #equipmentList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #equipmentList li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .due-soon {
+            background-color: #fff3cd; /* light yellow */
+            border-color: #ffeeba;
+        }
+
+        .overdue {
+            background-color: #f8d7da; /* light red */
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Equipment Maintenance Scheduler</h1>
+        <div class="scheduler-form">
+            <div class="input-group">
+                <label for="equipmentName">Equipment Name</label>
+                <input type="text" id="equipmentName" placeholder="e.g., Excavator #1">
+            </div>
+            <div class="input-group">
+                <label for="lastMaintenanceDate">Last Maintenance Date</label>
+                <input type="date" id="lastMaintenanceDate">
+            </div>
+            <div class="input-group">
+                <label for="maintenanceInterval">Maintenance Interval (days)</label>
+                <input type="number" id="maintenanceInterval" placeholder="e.g., 90">
+            </div>
+            <button id="addEquipmentBtn">Add Equipment</button>
+        </div>
+        <div id="maintenanceList">
+            <h2>Scheduled Maintenance</h2>
+            <ul id="equipmentList"></ul>
+        </div>
+    </div>
+    <script>
+        const equipment = [];
+
+        document.getElementById('addEquipmentBtn').addEventListener('click', function() {
+            const equipmentName = document.getElementById('equipmentName').value;
+            const lastMaintenanceDate = document.getElementById('lastMaintenanceDate').value;
+            const maintenanceInterval = parseFloat(document.getElementById('maintenanceInterval').value);
+
+            if (!equipmentName || !lastMaintenanceDate || isNaN(maintenanceInterval)) {
+                alert('Please fill in all equipment details.');
+                return;
+            }
+
+            equipment.push({ equipmentName, lastMaintenanceDate, maintenanceInterval });
+            renderEquipmentList();
+            clearInputs();
+        });
+
+        function renderEquipmentList() {
+            const equipmentListUl = document.getElementById('equipmentList');
+            equipmentListUl.innerHTML = '';
+            const today = new Date();
+
+            equipment.forEach((item, index) => {
+                const lastDate = new Date(item.lastMaintenanceDate);
+                const nextMaintenance = new Date(lastDate);
+                nextMaintenance.setDate(lastDate.getDate() + item.maintenanceInterval);
+
+                let statusClass = '';
+                let statusText = `Due: ${nextMaintenance.toDateString()}`;
+
+                const diffTime = nextMaintenance - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays <= 7 && diffDays >= 0) {
+                    statusClass = 'due-soon';
+                    statusText += ' (Due Soon)';
+                } else if (diffDays < 0) {
+                    statusClass = 'overdue';
+                    statusText += ' (OVERDUE)';
+                }
+
+                const li = document.createElement('li');
+                li.className = statusClass;
+                li.innerHTML = `
+                    <span><strong>${item.equipmentName}</strong> - ${statusText}</span>
+                    <button onclick="removeEquipment(${index})">Remove</button>
+                `;
+                equipmentListUl.appendChild(li);
+            });
+        }
+
+        function removeEquipment(index) {
+            equipment.splice(index, 1);
+            renderEquipmentList();
+        }
+
+        function clearInputs() {
+            document.getElementById('equipmentName').value = '';
+            document.getElementById('lastMaintenanceDate').value = '';
+            document.getElementById('maintenanceInterval').value = '';
+        }
+    </script>
+</body>
+</html>

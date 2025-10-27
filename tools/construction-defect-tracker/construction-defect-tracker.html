@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Defect Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Defect Tracker</h1>
+        <form id="defect-form">
+            <div class="input-group">
+                <label for="defect-description">Defect Description:</label>
+                <input type="text" id="defect-description" required>
+            </div>
+            <div class="input-group">
+                <label for="defect-location">Location:</label>
+                <input type="text" id="defect-location" required>
+            </div>
+            <div class="input-group">
+                <label for="defect-severity">Severity:</label>
+                <select id="defect-severity">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <button type="submit">Add Defect</button>
+        </form>
+        <div id="results">
+            <h2>Current Defects</h2>
+            <ul id="defect-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "tool_slug": "cost-escalation-calculator",
+  "audit_date": "2025-10-22T02:45:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Cost Escalation Calculator",
+      "status": "pass",
+      "recommendation": "Excellent long-tail keyword for project estimators and managers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Future Cost",
+      "status": "pass",
+      "recommendation": "Clear and benefit-driven CTA."
+    },
+    "lead_capture": {
+      "offer": "Get our annual report on construction cost trends in India.",
+      "status": "pass",
+      "recommendation": "A very strong, data-driven lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 3,
+      "status": "pass",
+      "recommendation": "Simple form with clear inputs."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear, showing both the final cost and the total increase, which is useful."
+    }
+  }
+}

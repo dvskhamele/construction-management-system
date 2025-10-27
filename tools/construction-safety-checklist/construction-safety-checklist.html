@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Safety Checklist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Safety Checklist</h1>
+        <form id="safety-checklist-form">
+            <div class="checklist-section">
+                <h2>General Site Safety</h2>
+                <label><input type="checkbox" id="ppe-worn"> All personnel wearing appropriate PPE (hard hats, safety glasses, high-vis vests, safety footwear)</label>
+                <label><input type="checkbox" id="site-secured"> Site secured and unauthorized access prevented</label>
+                <label><input type="checkbox" id="first-aid"> First aid station clearly marked and stocked</label>
+                <label><input type="checkbox" id="emergency-exits"> Emergency exits clear and accessible</label>
+            </div>
+
+            <div class="checklist-section">
+                <h2>Working at Heights</h2>
+                <label><input type="checkbox" id="fall-protection"> Fall protection systems (guardrails, nets, harnesses) in place and inspected</label>
+                <label><input type="checkbox" id="ladders-secured"> Ladders and scaffolding inspected and secured</label>
+            </div>
+
+            <div class="checklist-section">
+                <h2>Electrical Safety</h2>
+                <label><input type="checkbox" id="cables-protected"> Electrical cables protected from damage and tripping hazards</label>
+                <label><input type="checkbox" id="power-isolated"> Power isolated before maintenance or repair work</label>
+            </div>
+
+            <div class="checklist-section">
+                <h2>Equipment & Machinery</h2>
+                <label><input type="checkbox" id="equipment-inspected"> All equipment and machinery inspected before use</label>
+                <label><input type="checkbox" id="operators-certified"> Operators certified and authorized</label>
+            </div>
+
+            <button type="submit">Save Checklist State</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Milestone Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Project Milestone Tracker</h1>
+        <form id="milestone-form">
+            <div class="input-group">
+                <label for="milestone-name">Milestone Name:</label>
+                <input type="text" id="milestone-name" required>
+            </div>
+            <div class="input-group">
+                <label for="due-date">Due Date:</label>
+                <input type="date" id="due-date" required>
+            </div>
+            <div class="input-group">
+                <label for="status">Status:</label>
+                <select id="status">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <button type="submit">Add Milestone</button>
+        </form>
+        <div id="results">
+            <h2>Project Milestones</h2>
+            <ul id="milestone-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

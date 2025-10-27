@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Slab Flexural Reinforcement Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Slab Flexural Reinforcement Calculator</h1>
+        <form id="slab-flexural-form">
+            <div class="input-group">
+                <label for="slab-thickness">Slab Thickness (h, inches):</label>
+                <input type="number" id="slab-thickness" required>
+            </div>
+            <div class="input-group">
+                <label for="effective-depth">Effective Depth of Slab (d, inches):</label>
+                <input type="number" id="effective-depth" required>
+            </div>
+            <div class="input-group">
+                <label for="compressive-strength">Concrete Compressive Strength (f'c, psi):</label>
+                <input type="number" id="compressive-strength" value="4000" required>
+            </div>
+            <div class="input-group">
+                <label for="yield-strength-steel">Yield Strength of Steel (fy, psi):</label>
+                <input type="number" id="yield-strength-steel" value="60000" required>
+            </div>
+            <div class="input-group">
+                <label for="factored-moment">Factored Moment per Unit Width (Mu, kip-ft/ft):</label>
+                <input type="number" id="factored-moment" required>
+            </div>
+            <div class="input-group">
+                <label for="rebar-bar-size">Select Rebar Bar Size:</label>
+                <select id="rebar-bar-size">
+                    <option value="0.11">#3 (0.11 in²)</option>
+                    <option value="0.20">#4 (0.20 in²)</option>
+                    <option value="0.31">#5 (0.31 in²)</option>
+                    <option value="0.44">#6 (0.44 in²)</option>
+                </select>
+            </div>
+            <button type="submit">Calculate Reinforcement</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

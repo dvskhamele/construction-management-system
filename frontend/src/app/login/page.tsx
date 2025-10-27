@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+
 export default function Login() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -87,16 +88,19 @@ export default function Login() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-6 text-center">
-            <div className="flex items-center justify-center">
-              <div className="h-12 w-12 rounded-lg bg-white bg-opacity-20 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
+          <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-6">
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center">
+                <div className="h-12 w-12 rounded-lg bg-white bg-opacity-20 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <h1 className="ml-3 text-2xl font-bold text-white">BuildMate</h1>
               </div>
-              <h1 className="ml-3 text-2xl font-bold text-white">BuildMate</h1>
+              {/* <LanguageSelector /> */}
             </div>
-            <p className="text-teal-100 mt-2">Construction Management Portal</p>
+            <p className="text-teal-100 text-center">Construction Management Portal</p>
           </div>
           
           {/* Main Content */}
@@ -134,7 +138,7 @@ export default function Login() {
               </div>
               
               {/* Remember Me */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -180,33 +184,32 @@ export default function Login() {
                   </>
                 ) : 'Sign In'}
               </button>
-            </form>
-            
-            {/* Quick Credentials Section */}
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-slate-500">Quick Login</span>
-                </div>
-              </div>
               
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                {quickCredentials.map((cred, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    onClick={() => applyCredentials({ email: cred.email, password: cred.password })}
-                    className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg transition text-center"
-                  >
-                    <span className="font-medium">{cred.role}</span>
-                    <span className="block text-xs text-slate-500">{cred.email.split('@')[0]}</span>
-                  </button>
-                ))}
+              {/* Quick Login Buttons */}
+              <div className="mt-6">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-slate-200"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white text-slate-500">Quick Login (Demo)</span>
+                  </div>
+                </div>
+                
+                <div className="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {quickCredentials.map((cred, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => applyCredentials({ email: cred.email, password: cred.password })}
+                      className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg transition text-center truncate"
+                    >
+                      <span className="font-medium">{cred.role}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            </form>
             
             {/* Sign Up Link */}
             <div className="mt-6 text-center">
@@ -214,6 +217,16 @@ export default function Login() {
                 Don't have an account?{' '}
                 <Link href="/signup" className="font-medium text-teal-600 hover:text-teal-500">
                   Sign up
+                </Link>
+              </p>
+            </div>
+            
+            {/* Client Login Link */}
+            <div className="mt-4 text-center">
+              <p className="text-sm text-slate-600">
+                Are you a client?{' '}
+                <Link href="/client-login" className="font-medium text-teal-600 hover:text-teal-500">
+                  Client Login
                 </Link>
               </p>
             </div>

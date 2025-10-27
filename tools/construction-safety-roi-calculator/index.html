@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Safety ROI Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Safety ROI Calculator</h1>
+        <p>Estimate the return on investment from your safety programs.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="safety-cost">Annual Cost of Safety Program ($)</label>
+                <input type="number" id="safety-cost" placeholder="e.g., 50000">
+            </div>
+            <div class="input-group">
+                <label for="lost-workdays-reduction">Estimated Reduction in Lost Workdays</label>
+                <input type="number" id="lost-workdays-reduction" placeholder="e.g., 10">
+            </div>
+            <div class="input-group">
+                <label for="cost-per-lost-workday">Average Cost Per Lost Workday ($)</label>
+                <input type="number" id="cost-per-lost-workday" placeholder="e.g., 1500">
+            </div>
+            <div class="input-group">
+                <label for="insurance-reduction">Estimated Reduction in Insurance Premiums ($)</label>
+                <input type="number" id="insurance-reduction" placeholder="e.g., 5000">
+            </div>
+            <div class="input-group">
+                <label for="legal-fees-reduction">Estimated Reduction in Legal Fees ($)</label>
+                <input type="number" id="legal-fees-reduction" placeholder="e.g., 2000">
+            </div>
+            <button id="calculate-btn">Calculate ROI</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

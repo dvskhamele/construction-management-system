@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Navbar, Nav, Button, Offcanvas, Card, Badge } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+/* import { Container, Row, Col, Navbar, Nav, Button, Offcanvas, Card, Badge } from 'react-bootstrap'; */
+/* import 'bootstrap/dist/css/bootstrap.min.css'; */
+// COMMENTED OUT DUE TO BUILD ERROR - react-bootstrap module not found
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -64,57 +65,56 @@ const ResponsiveSidebarLayout: React.FC<ResponsiveSidebarLayoutProps> = ({ child
   return (
     <>
       {/* Top Navigation Bar */}
-      <Navbar bg="light" expand="lg" className="py-3 shadow-sm sticky-top">
-        <Container fluid>
-          <Navbar.Brand href="/dashboard" className="d-flex align-items-center">
+      <nav className="bg-light py-3 shadow-sm sticky-top">
+        <div className="container-fluid d-flex justify-content-between align-items-center">
+          <a href="/dashboard" className="d-flex align-items-center text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <span className="fw-bold text-primary">BuildMate</span>
-          </Navbar.Brand>
+          </a>
           
-          <Button 
-            variant="outline-primary" 
-            className="d-lg-none border-0 me-2"
+          <button 
+            className="btn btn-outline-primary d-lg-none border-0 me-2"
             onClick={toggleSidebar}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
               <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
             </svg>
-          </Button>
-        </Container>
-      </Navbar>
+          </button>
+        </div>
+      </nav>
 
-      <Container fluid className="g-0">
-        <Row className="g-0">
+      <div className="container-fluid g-0">
+        <div className="row g-0">
           {/* Sidebar - Hidden on small screens, shown as offcanvas */}
-          <Col lg={2} className="d-none d-lg-block min-vh-100 bg-white border-end">
+          <div className={`${showSidebar ? 'd-block' : 'd-none'} d-lg-block col-lg-2 min-vh-100 bg-white border-end`}>
             <div className="d-flex flex-column h-100 p-3">
-              <Nav className="flex-column mb-4">
+              <ul className="flex-column mb-4 nav">
                 {navItems.map((item) => (
-                  <Nav.Link
-                    key={item.name}
-                    as={Link}
-                    href={item.href}
-                    className={`rounded mb-1 ${
-                      pathname === item.href
-                        ? 'bg-primary text-white active'
-                        : 'text-dark'
-                    }`}
-                  >
-                    <div className="d-flex align-items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                      </svg>
-                      <span>{item.name}</span>
-                    </div>
-                  </Nav.Link>
+                  <li key={item.name} className="nav-item">
+                    <Link
+                      href={item.href}
+                      className={`nav-link rounded mb-1 ${
+                        pathname === item.href
+                          ? 'bg-primary text-white active'
+                          : 'text-dark'
+                      }`}
+                    >
+                      <div className="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                        </svg>
+                        <span>{item.name}</span>
+                      </div>
+                    </Link>
+                  </li>
                 ))}
-              </Nav>
+              </ul>
 
               <div className="mt-auto">
-                <Card className="border-0">
-                  <Card.Body className="p-3">
+                <div className="border-0">
+                  <div className="p-3">
                     <div className="d-flex align-items-center mb-2">
                       <div className="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -126,10 +126,8 @@ const ResponsiveSidebarLayout: React.FC<ResponsiveSidebarLayoutProps> = ({ child
                         <small className="text-muted">{user?.role || 'USER'}</small>
                       </div>
                     </div>
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      className="w-100 mt-2"
+                    <button
+                      className="btn btn-outline-danger btn-sm w-100 mt-2"
                       onClick={onLogout}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="me-1" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -137,105 +135,103 @@ const ResponsiveSidebarLayout: React.FC<ResponsiveSidebarLayoutProps> = ({ child
                         <path d="M4.5 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5h-10z"/>
                       </svg>
                       Logout
-                    </Button>
-                  </Card.Body>
-                </Card>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </Col>
+          </div>
 
           {/* Offcanvas Sidebar for Mobile */}
-          <Offcanvas 
-            show={showSidebar} 
-            onHide={() => setShowSidebar(false)} 
-            className="d-lg-none"
-            placement="start"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title>
+          {showSidebar && (
+            <div className={`d-lg-none offcanvas offcanvas-start ${showSidebar ? 'show' : ''}`}>
+              <div className="offcanvas-header">
                 <div className="d-flex align-items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
                   <span className="fw-bold text-primary">BuildMate</span>
                 </div>
-              </Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className="flex-column">
-                {navItems.map((item) => (
-                  <Nav.Link
-                    key={item.name}
-                    as={Link}
-                    href={item.href}
-                    className={`rounded mb-1 ${
-                      pathname === item.href
-                        ? 'bg-primary text-white active'
-                        : 'text-dark'
-                    }`}
-                    onClick={() => setShowSidebar(false)}  // Close sidebar on mobile after clicking
-                  >
-                    <div className="d-flex align-items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                      </svg>
-                      <span>{item.name}</span>
-                    </div>
-                  </Nav.Link>
-                ))}
-              </Nav>
-
-              <div className="mt-auto">
-                <Card className="border-0">
-                  <Card.Body className="p-3">
-                    <div className="d-flex align-items-center mb-2">
-                      <div className="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.338-.678.678-.83 1.418-.832 1.664h10Z"/>
-                        </svg>
-                      </div>
-                      <div className="ms-2">
-                        <p className="mb-0 fw-semibold">{user?.name || 'User'}</p>
-                        <small className="text-muted">{user?.role || 'USER'}</small>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      className="w-100 mt-2"
-                      onClick={() => {
-                        onLogout();
-                        setShowSidebar(false);
-                      }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="me-1" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M10 3a1 1 0 0 1 1 1v5h1.5a.5.5 0 0 1 0 1h-1.5v1a1 1 0 0 1-2 0v-1h-1v1a1 1 0 0 1-2 0v-1H5V9.5a.5.5 0 0 1 1 0V10v-1z"/>
-                        <path d="M4.5 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5h-10z"/>
-                      </svg>
-                      Logout
-                    </Button>
-                  </Card.Body>
-                </Card>
+                <button 
+                  type="button" 
+                  className="btn-close" 
+                  onClick={() => setShowSidebar(false)}
+                />
               </div>
-            </Offcanvas.Body>
-          </Offcanvas>
+              <div className="offcanvas-body">
+                <ul className="flex-column nav">
+                  {navItems.map((item) => (
+                    <li key={item.name} className="nav-item">
+                      <Link
+                        href={item.href}
+                        className={`nav-link rounded mb-1 ${
+                          pathname === item.href
+                            ? 'bg-primary text-white active'
+                            : 'text-dark'
+                        }`}
+                        onClick={() => setShowSidebar(false)}  // Close sidebar on mobile after clicking
+                      >
+                        <div className="d-flex align-items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                          </svg>
+                          <span>{item.name}</span>
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto">
+                  <div className="border-0">
+                    <div className="p-3">
+                      <div className="d-flex align-items-center mb-2">
+                        <div className="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.338-.678.678-.83 1.418-.832 1.664h10Z"/>
+                          </svg>
+                        </div>
+                        <div className="ms-2">
+                          <p className="mb-0 fw-semibold">{user?.name || 'User'}</p>
+                          <small className="text-muted">{user?.role || 'USER'}</small>
+                        </div>
+                      </div>
+                      <button
+                        className="btn btn-outline-danger btn-sm w-100 mt-2"
+                        onClick={() => {
+                          onLogout();
+                          setShowSidebar(false);
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="me-1" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M10 3a1 1 0 0 1 1 1v5h1.5a.5.5 0 0 1 0 1h-1.5v1a1 1 0 0 1-2 0v-1h-1v1a1 1 0 0 1-2 0v-1H5V9.5a.5.5 0 0 1 1 0V10v-1z"/>
+                          <path d="M4.5 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5h-10z"/>
+                        </svg>
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Main Content Area */}
-          <Col lg={10} className="d-flex flex-column min-vh-100">
-            <main className="flex-grow-1 p-3 p-lg-4 flex-shrink-0">
-              <Container fluid className="px-3">
+          <div className={`${showSidebar ? 'd-none' : ''} d-lg-block col-lg-10 d-flex flex-column min-vh-100`}>
+            <main className="flex-grow-1 p-2 p-lg-3 flex-shrink-0">
+              <div className="container-fluid px-2">
                 {children}
-              </Container>
+              </div>
             </main>
             
             <footer className="py-3 text-center text-muted border-top mt-auto flex-shrink-0">
-              <Container fluid className="px-3">
+              <div className="container-fluid px-3">
                 <p className="mb-0">© 2025 BuildMate Construction Management</p>
-              </Container>
+              </div>
             </footer>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

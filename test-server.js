@@ -1,31 +1,39 @@
-const express = require('express');
-const path = require('path');
+const http = require('http');
 const fs = require('fs');
+const path = require('path');
 
-const app = express();
-const PORT = 3000;
+const server = http.createServer((req, res) => {
+    let filePath = '.' + req.url;
+    if (filePath === './') {
+        filePath = './tools/roof-truss-calculator/index.html';
+    }
 
-// Log the current directory
-console.log('Current directory:', __dirname);
-console.log('Frontend path:', path.join(__dirname, 'frontend/out'));
-console.log('Index file exists:', fs.existsSync(path.join(__dirname, 'frontend/out/index.html')));
+    const extname = String(path.extname(filePath)).toLowerCase();
+    const mimeTypes = {
+        '.html': 'text/html',
+        '.js': 'text/javascript',
+        '.css': 'text/css',
+    };
 
-// Serve static files from the frontend build
-app.use(express.static(path.join(__dirname, 'frontend/out')));
+    const contentType = mimeTypes[extname] || 'application/octet-stream';
 
-// Simple test route
-app.get('/test', (req, res) => {
-  res.json({ message: 'Test route working' });
+    fs.readFile(filePath, (err, content) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                res.writeHead(404, { 'Content-Type': 'text/html' });
+                res.end('404 Not Found');
+            } else {
+                res.writeHead(500);
+                res.end('Sorry, check with the site admin for error: ' + err.code + '..\n');
+            }
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(content, 'utf-8');
+        }
+    });
 });
 
-// Serve frontend for all other routes
-app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, 'frontend/out/index.html');
-  console.log('Serving index file from:', indexPath);
-  console.log('Index file exists:', fs.existsSync(indexPath));
-  res.sendFile(indexPath);
-});
-
-app.listen(PORT, () => {
-  console.log(`Test server running on http://localhost:${PORT}`);
+const port = 8080;
+server.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
 });

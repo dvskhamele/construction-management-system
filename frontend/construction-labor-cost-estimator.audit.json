@@ -1,0 +1,45 @@
+{
+  "tool_slug": "construction-labor-cost-estimator",
+  "audit_date": "2025-10-21T22:25:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Labor Cost Estimator",
+      "status": "pass",
+      "recommendation": "Title is clear, keyword-rich, and targets a specific user need."
+    },
+    "meta_description": {
+      "value": "Accurately estimate the labor costs for your project based on team size, duration, and daily wages.",
+      "status": "pass",
+      "recommendation": "Description is concise and action-oriented."
+    },
+    "h1_tag": {
+      "value": "Construction Labor Cost Estimator",
+      "status": "pass",
+      "recommendation": "H1 is present and matches the page title."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Estimate Labor Cost",
+      "status": "pass",
+      "recommendation": "CTA is clear and uses a strong command verb."
+    },
+    "lead_capture": {
+      "offer": "Download our free Labor Rate guide for major Indian cities.",
+      "status": "pass",
+      "recommendation": "Lead magnet is highly relevant and valuable to the target user."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 7,
+      "status": "pass",
+      "recommendation": "Form fields are logically grouped by labor type, improving clarity and ease of use."
+    },
+    "results_clarity": {
+      "visualizations": ["PieChart"],
+      "status": "pass",
+      "recommendation": "Results are well-structured, showing a total cost, a daily breakdown, and a visual distribution of costs."
+    }
+  }
+}

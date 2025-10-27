@@ -1,0 +1,838 @@
+'use client'
+
+import React, { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import Head from 'next/head'
+
+// This is a new component to handle the scroll animation
+const AnimatedSection = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className={`transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
+      {children}
+    </div>
+  );
+};
+
+export default function HomePage() {
+
+  const features = [
+    { 
+      title: "Project Management", 
+      description: "Plan, track, and deliver projects on time and within budget.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>
+      )
+    },
+    { 
+      title: "Inventory & Material Tracking", 
+      description: "Real-time tracking of materials, equipment, and supplies across all locations.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+      )
+    },
+    { 
+      title: "Financial Control", 
+      description: "Track budgets, expenses, and profitability in real-time.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      )
+    },
+    { 
+      title: "Legal & Compliance", 
+      description: "Ensure full compliance with regulations and manage contracts efficiently.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+      )
+    },
+    { 
+      title: "Quality & Safety", 
+      description: "Ensure compliance with digital inspections and safety reports.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+      )
+    },
+    { 
+      title: "Predictive Analytics", 
+      description: "Leverage data to forecast needs and prevent delays.",
+      icon: (
+        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+      )
+    },
+  ];
+
+  // SEO Meta Tags - These would normally be in the layout component, but for demonstration:
+  return (
+    <div>
+      <Head>
+        <title>BuildMate - Construction CRM & Project Management Software | Free Tools & Calculators</title>
+        <meta name="description" content="BuildMate is India's best construction management software. Manage projects, inventory, legal compliance, and more. Explore our free construction tools like the Concrete Calculator, Roofing Material Calculator, Drywall Calculator, Decking Material Calculator, and more. Free demo available." />
+        <meta name="keywords" content="construction software, project management, CRM, contractor management, India, construction tools, concrete calculator, roofing material calculator, drywall calculator, decking material calculator, free tools, decking estimator" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://constructioncrm.vercel.app" />
+      </Head>
+      {/* SEO-optimized Hero Section */}
+      <section className="relative bg-gradient-to-br from-slate-50 to-teal-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16 md:py-24">
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl md:text-6xl">
+                <span className="block">Streamline Your Construction Business</span>
+                <span className="block text-teal-600">with All-in-One Management</span>
+              </h1>
+              <p className="mt-6 max-w-md mx-auto text-lg text-slate-600 sm:text-xl md:mt-8 md:max-w-3xl lg:mx-0">
+                BuildMate is the comprehensive construction management platform trusted by 10,000+ contractors across India. Manage projects, inventory, legal compliance, and more with our integrated solution.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                <Link href="/demo" className="inline-block bg-gradient-to-r from-teal-600 to-teal-700 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-teal-700 hover:to-teal-800 shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-center">
+                  Start Free Trial
+                </Link>
+                <Link href="#features" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition-all duration-300 text-center">
+                  Explore Features
+                </Link>
+              </div>
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 text-slate-600">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-teal-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
+                  </svg>
+                  <span>No credit card required</span>
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-teal-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
+                  </svg>
+                  <span>14-day free trial</span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full max-w-2xl mx-auto lg:max-w-none">
+               <div className="relative w-full pb-[56.25%] rounded-2xl shadow-2xl overflow-hidden bg-slate-200 flex items-center justify-center">
+                 <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="bg-gradient-to-br from-teal-400 to-teal-600 rounded-xl w-full h-full flex items-center justify-center">
+                     <div className="text-center p-8">
+                       <div className="text-4xl font-bold text-white mb-4">BuildMate Demo</div>
+                       <div className="text-teal-100">Construction Management Software</div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <AnimatedSection>
+        <section id="features" className="py-20 sm:py-28 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <p className="text-base font-semibold text-teal-600 tracking-wider uppercase">Comprehensive Platform</p>
+              <h2 className="mt-4 text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">Everything You Need in One Place</h2>
+              <p className="mt-5 text-xl text-slate-600">
+                Stop juggling dozens of tools. BuildMate combines project management, inventory tracking, legal compliance, and financial control in one intelligent platform.
+              </p>
+            </div>
+            <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature, index) => (
+                <div key={index} className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
+                    <p className="text-lg text-slate-600">{feature.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Tools Section */}
+      <AnimatedSection>
+            <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 6h12l3-6H3zm16 12H5l-3-6h16l-3 6z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Right Angle Calculator</h3>
+                  <p className="text-lg text-slate-600">Ensure perfect 90-degree corners with our easy-to-use Pythagorean theorem calculator.</p>
+                  <Link href="/tools/right-angle-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Calculator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Paint Cost Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate the quantity and cost of paint needed for your room with precision.</p>
+                  <Link href="/tools/paint-cost-estimator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Cost
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Concrete Mix Design Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate material quantities for your desired concrete mix ratio (M20, M15, etc.).</p>
+                  <Link href="/tools/concrete-mix-design-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Mix
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Flooring Material Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the amount of flooring material needed for any room, including waste.</p>
+                  <Link href="/tools/flooring-material-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Flooring
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 9c1.86 0 2.738-1.06 3.464-1.865C13.345 5.973 14.35 5 15 5c1.4 0 2.646 1.18 3.464 2.135C19.738 8.94 20.6 10 21 10c1.4 0 2.646-1.18 3.464-2.135C24.345 5.973 25.35 5 26 5c1.4 0 2.646 1.18 3.464 2.135C30.345 8.94 31.2 10 31.5 10"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">HVAC Load Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate heating and cooling loads to size your HVAC system correctly.</p>
+                  <Link href="/tools/hvac-load-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Load
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Beam Load Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the maximum load a beam can support based on its properties.</p>
+                  <Link href="/tools/beam-load-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Load
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Construction Loan EMI Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate your Equated Monthly Installment (EMI) for a construction loan.</p>
+                  <Link href="/tools/construction-loan-emi-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate EMI
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Construction Project ROI Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the Return on Investment (ROI) for your construction projects.</p>
+                  <Link href="/tools/construction-project-roi-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate ROI
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Construction Risk Calculator</h3>
+                  <p className="text-lg text-slate-600">Assess potential risks in your construction projects based on various factors.</p>
+                  <Link href="/tools/construction-risk-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Risk
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm0 0h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Construction Timeline Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate project duration based on type, size, and complexity for better planning.</p>
+                  <Link href="/tools/construction-timeline-estimator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Timeline
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Material Waste Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate material waste for various construction materials to optimize orders.</p>
+                  <Link href="/tools/material-waste-estimator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Waste
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10h2m2 0h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2m-4 6h4m-4 4h4"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Project Milestone Tracker</h3>
+                  <p className="text-lg text-slate-600">Track project milestones and visualize overall progress for better project management.</p>
+                  <Link href="/tools/project-milestone-tracker" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Tracker
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Project Deadline Countdown</h3>
+                  <p className="text-lg text-slate-600">Keep track of your construction project deadlines with a real-time countdown.</p>
+                  <Link href="/tools/project-deadline-countdown" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Start Countdown
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Project Phase Visualizer</h3>
+                  <p className="text-lg text-slate-600">Visualize project phases and track progress for better project management.</p>
+                  <Link href="/tools/project-phase-visualizer" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Visualize Phases
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Daily Site Report Generator</h3>
+                  <p className="text-lg text-slate-600">Generate quick and comprehensive daily site reports to keep track of progress and conditions.</p>
+                  <Link href="/tools/daily-site-report-generator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Generate Report
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18.75V21m-4.5-4.5H9m0 0h3.75M9 18.75V21M3 12h18M3 6h18M3 18h18"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Equipment Utilization Tracker</h3>
+                  <p className="text-lg text-slate-600">Track equipment usage to optimize deployment, reduce idle time, and improve efficiency.</p>
+                  <Link href="/tools/equipment-utilization-tracker" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Track Utilization
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Excavation Volume Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the volume of earth to be excavated for trenches, foundations, or other earthwork projects.</p>
+                  <Link href="/tools/excavation-volume-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Volume
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Land Area Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the area of a plot of land. Supports rectangular and triangular shapes.</p>
+                  <Link href="/tools/land-area-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Area
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Loan EMI Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate your Equated Monthly Installment (EMI) for any type of loan. Plan your finances with ease.</p>
+                  <Link href="/tools/loan-emi-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate EMI
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Loan EMI Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate your Equated Monthly Installment (EMI) for any type of loan. Plan your finances with ease.</p>
+                  <Link href="/tools/loan-emi-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate EMI
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Excavation Volume Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the volume of earth to be excavated for trenches, foundations, or other earthwork projects.</p>
+                  <Link href="/tools/excavation-volume-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Volume
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Daily Site Report Generator</h3>
+                  <p className="text-lg text-slate-600">Generate quick and comprehensive daily site reports to keep track of progress and conditions.</p>
+                  <Link href="/tools/daily-site-report-generator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Generate Report
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"/></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Material Waste Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate material waste for various construction materials to optimize orders.</p>
+                  <Link href="/tools/material-waste-estimator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Waste
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H17"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Concrete Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the volume and cost of concrete needed for your project. Supports rectangular and circular slabs.</p>
+                  <Link href="/tools/concrete-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Calculator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Roofing Material Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the quantities of shingles, underlayment, and nails for your gable roof project.</p>
+                  <Link href="/tools/roofing-material-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Calculator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Drywall Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the quantities of drywall sheets, joint compound, tape, and screws for your room.</p>
+                  <Link href="/tools/drywall-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Calculator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Decking Material Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the quantities of decking boards, joists, posts, and fasteners for your deck project.</p>
+                  <Link href="/tools/decking-material-calculator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Calculator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Construction Material Estimator</h3>
+                  <p className="text-lg text-slate-600">Accurately estimate quantities of concrete, wood, and paint for your construction projects.</p>
+                  <Link href="/tools/construction-material-estimator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Estimator
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10h2m2 0h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2m-4 6h4m-4 4h4"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Project Progress Tracker</h3>
+                  <p className="text-lg text-slate-600">Track project milestones and visualize overall progress for better project management.</p>
+                  <Link href="/tools/project-progress-tracker" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Use Tracker
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Daily Site Report Generator</h3>
+                  <p className="text-lg text-slate-600">Generate quick and comprehensive daily site reports to keep track of progress and conditions.</p>
+                  <Link href="/daily-site-report-generator" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Generate Report
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Concrete Volume Calculator</h3>
+                  <p className="text-lg text-slate-600">Calculate the volume of concrete needed for your slab projects with precision.</p>
+                  <Link href="/tools/concrete-volume-calculator/concrete-volume-calculator.html" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Volume
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Paint Cost Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate the quantity and cost of paint needed for your room with precision.</p>
+                  <Link href="/tools/paint-cost-estimator/paint-cost-estimator.html" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Cost
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Brick and Mortar Calculator</h3>
+                  <p className="text-lg text-slate-600">Estimate the number of bricks and volume of mortar needed for your wall projects.</p>
+                  <Link href="/tools/brick-and-mortar-calculator/brick-and-mortar-calculator.html" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Calculate Materials
+                  </Link>
+                </div>
+              </div>
+              <div className="p-8 bg-slate-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-teal-200 group">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center bg-teal-100 rounded-full p-4 mb-6 group-hover:bg-teal-200 transition-colors duration-300">
+                    <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"></path></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Slab Rebar Estimator</h3>
+                  <p className="text-lg text-slate-600">Estimate the total length and weight of rebar needed for your concrete slab projects.</p>
+                  <Link href="/tools/slab-rebar-estimator/slab-rebar-estimator.html" className="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-teal-700">
+                    Estimate Rebar
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="text-center mt-16">
+              <Link href="/tools" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition-all duration-300">
+                Explore All Tools
+              </Link>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Stats Section */}
+      <AnimatedSection>
+        <section className="py-20 sm:py-28 bg-gradient-to-r from-teal-600 to-teal-800 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-5xl font-extrabold">10,000+</div>
+                <div className="mt-2 text-lg text-teal-200">Happy Contractors</div>
+              </div>
+              <div>
+                <div className="text-5xl font-extrabold">98%</div>
+                <div className="mt-2 text-lg text-teal-200">Client Retention</div>
+              </div>
+              <div>
+                <div className="text-5xl font-extrabold">40%</div>
+                <div className="mt-2 text-lg text-teal-200">Cost Reduction</div>
+              </div>
+              <div>
+                <div className="text-5xl font-extrabold">35%</div>
+                <div className="mt-2 text-lg text-teal-200">Project Efficiency</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Testimonials Section */}
+      <AnimatedSection>
+        <section className="py-20 sm:py-28 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <p className="text-base font-semibold text-teal-600 tracking-wider uppercase">Trusted by Industry Leaders</p>
+              <h2 className="mt-4 text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">What Our Customers Say</h2>
+              <p className="mt-5 text-xl text-slate-600">
+                Join thousands of construction professionals who have transformed their businesses with BuildMate.
+              </p>
+            </div>
+            
+            <div className="mt-16 grid gap-8 md:grid-cols-3">
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-slate-600 mb-6">
+                  "BuildMate has completely transformed how we manage our construction projects. The inventory tracking alone has saved us 40% on material waste."
+                </p>
+                <div className="flex items-center">
+                  <div className="bg-slate-200 border-2 border-dashed rounded-xl w-16 h-16" />
+                  <div className="ml-4">
+                    <div className="font-bold text-slate-900">Rajesh Sharma</div>
+                    <div className="text-slate-600">Project Manager, BuildTech Solutions</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-slate-600 mb-6">
+                  "The legal compliance features alone are worth the subscription. We've eliminated all our contract and documentation errors."
+                </p>
+                <div className="flex items-center">
+                  <div className="bg-slate-200 border-2 border-dashed rounded-xl w-16 h-16" />
+                  <div className="ml-4">
+                    <div className="font-bold text-slate-900">Priya Patel</div>
+                    <div className="text-slate-600">Operations Director, ConEx India</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-slate-600 mb-6">
+                  "In just 3 months, BuildMate helped us reduce our project delays by 35%. The predictive analytics tool is a game-changer."
+                </p>
+                <div className="flex items-center">
+                  <div className="bg-slate-200 border-2 border-dashed rounded-xl w-16 h-16" />
+                  <div className="ml-4">
+                    <div className="font-bold text-slate-900">Amit Kumar</div>
+                    <div className="text-slate-600">CEO, MetroBuild Construction</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* FAQ Section */}
+      <AnimatedSection>
+        <section id="faqs" className="py-20 sm:py-28 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <p className="text-base font-semibold text-teal-600 tracking-wider uppercase">Quick Answers</p>
+              <h2 className="mt-4 text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">Frequently Asked Questions</h2>
+              <p className="mt-5 text-xl text-slate-600">
+                Have questions? We've got answers. If you have other questions, feel free to reach out to our support team.
+              </p>
+            </div>
+            <div className="mt-16 max-w-4xl mx-auto">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">What is BuildMate?</h3>
+                  <p className="mt-2 text-lg text-slate-600">BuildMate is a comprehensive construction management software designed for contractors and construction professionals in India. It helps you manage projects, inventory, finances, legal compliance, and more, all in one platform.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">How does the Concrete Calculator work?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Our Concrete Calculator helps you estimate the volume of concrete you'll need for a job. Simply enter the dimensions of your slab (length, width, and thickness), and the calculator will provide you with the required volume in cubic yards or cubic meters, including a 5% waste factor. You can also add the cost per unit to get an estimated total cost.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Is the Concrete Calculator free to use?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Yes, our Concrete Calculator is completely free to use, along with our other construction calculators. They are designed to help you with quick estimations for your projects.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Can I use BuildMate on mobile?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Yes, BuildMate is a web-based platform that is fully responsive and works on all devices, including desktops, tablets, and smartphones. You can access your projects and data from anywhere, at any time.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">How does the Roofing Material Calculator work?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Our Roofing Material Calculator helps you estimate the quantities of shingles, underlayment, and nails needed for your gable roof project. You input the roof's length, width, and pitch, and the calculator provides estimated material quantities, including a 10% waste factor, and an optional cost estimate.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">How does the Drywall Calculator work?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Our Drywall Calculator helps you estimate the number of drywall sheets, joint compound, tape, and screws needed for a room. You input the room's length, width, and height, along with the number of doors and windows, and the calculator provides estimated material quantities, including a 10% waste factor, and an optional cost estimate.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">How does the Decking Material Calculator work?</h3>
+                  <p className="mt-2 text-lg text-slate-600">Our Decking Material Calculator helps you estimate the quantities of decking boards, joists, posts, and fasteners needed for your deck project. You input the deck's length, width, height from ground, joist spacing, and decking board width, and the calculator provides estimated material quantities, including a 10% waste factor, and an optional cost estimate.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Blog Link Section */}
+      <AnimatedSection>
+        <section className="py-20 sm:py-28 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-gradient-to-br from-slate-50 to-teal-50 rounded-2xl p-12">
+              <div className="text-center max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Insights for Construction Leaders</h2>
+                <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+                  Get expert advice, industry trends, and best practices for modern construction management.
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                  <Link href="/blog" className="inline-block bg-teal-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-700 shadow-lg transform hover:-translate-y-1 transition">
+                    Browse Blog
+                  </Link>
+                  <Link href="/blog/post" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Read Latest Post
+                  </Link>
+                  <Link href="/tools/construction-loan-emi-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Construction Loan EMI Calculator
+                  </Link>
+                  <Link href="/tools/slope-and-gradient-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Slope and Gradient Calculator
+                  </Link>
+                  <Link href="/tools/slab-steel-estimator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Slab Steel Estimator
+                  </Link>
+                  <Link href="/tools/flooring-material-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Flooring Material Calculator
+                  </Link>
+                  <Link href="/tools/paint-quantity-estimator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Paint Quantity Estimator
+                  </Link>
+                  <Link href="/tools/hvac-load-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    HVAC Load Calculator
+                  </Link>
+                  <Link href="/tools/concrete-mix-design-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Concrete Mix Design Calculator
+                  </Link>
+                  <Link href="/tools/construction-project-roi-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Construction Project ROI Calculator
+                  </Link>
+                  <Link href="/tools/construction-project-roi-calculator" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    ROI Calculator
+                  </Link>
+                  <Link href="/chrome-extensions" className="inline-block bg-white text-teal-600 border-2 border-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-teal-50 transition">
+                    Chrome Extensions
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Final CTA Section */}
+      <AnimatedSection>
+        <section className="bg-gradient-to-br from-slate-900 to-teal-900 text-white">
+          <div className="max-w-4xl mx-auto text-center py-20 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+              <span className="block">Ready to Transform Your Construction Business?</span>
+            </h2>
+            <p className="mt-6 text-lg leading-6 text-teal-100 max-w-2xl mx-auto">
+              Join 10,000+ construction professionals who are already using BuildMate to streamline operations, reduce costs, and grow their businesses.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+              <Link href="/demo" className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-transparent text-xl font-bold rounded-lg text-slate-900 bg-teal-400 hover:bg-teal-300 sm:w-auto transition">
+                Start Free Trial
+              </Link>
+              <Link href="/pricing" className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-teal-300 text-xl font-bold rounded-lg text-white bg-transparent hover:bg-teal-800 sm:w-auto transition">
+                View Pricing
+              </Link>
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
+    </main>
+  </div>
+  );
+}

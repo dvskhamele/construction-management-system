@@ -1,7 +1,7 @@
 {
-  "name": "hotel-ops-fullstack",
+  "name": "construction-ops-fullstack",
   "version": "1.0.0",
-  "description": "Complete Hotel Operations Management System",
+  "description": "Complete Construction Operations Management System",
   "main": "server.js",
   "scripts": {
     "build": "cd frontend && npm run build",
@@ -12,19 +12,20 @@
     "postbuild": "echo 'Frontend built successfully'"
   },
   "keywords": [
-    "hotel",
+    "construction",
     "management",
     "operations"
   ],
-  "author": "Hotel Operations Team",
+  "author": "Construction Operations Team",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "concurrently": "^8.2.0"
   }
 }

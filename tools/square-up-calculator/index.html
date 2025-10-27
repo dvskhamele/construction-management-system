@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square-Up Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Square-Up Calculator</h1>
+        <div class="input-group">
+            <label for="length">Length (in feet):</label>
+            <input type="number" id="length" placeholder="Enter the length of one side">
+        </div>
+        <div class="input-group">
+            <label for="width">Width (in feet):</label>
+            <input type="number" id="width" placeholder="Enter the length of the other side">
+        </div>
+        <button onclick="calculateDiagonal()">Calculate Diagonal</button>
+        <div class="result" id="result">
+            The calculated diagonal length will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

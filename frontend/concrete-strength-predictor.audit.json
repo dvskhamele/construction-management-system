@@ -1,0 +1,35 @@
+{
+  "tool_slug": "concrete-strength-predictor",
+  "audit_date": "2025-10-22T00:35:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Concrete Strength Predictor (7 to 28 Day)",
+      "status": "pass",
+      "recommendation": "Excellent, long-tail keyword targeting for a very specific engineering need."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Predict 28-Day Strength",
+      "status": "pass",
+      "recommendation": "CTA is clear and uses a strong, benefit-oriented verb."
+    },
+    "lead_capture": {
+      "offer": "Get a guide on concrete mix design and testing procedures.",
+      "status": "pass",
+      "recommendation": "Highly relevant lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 3,
+      "status": "pass",
+      "recommendation": "Very simple form. Easy to use."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear. The color-coded success/warning message is a great touch for immediate comprehension."
+    }
+  }
+}

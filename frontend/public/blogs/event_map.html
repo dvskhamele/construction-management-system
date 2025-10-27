@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Map</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .event {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .properties {
+            margin-left: 20px;
+        }
+        strong {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Event Map</h1>
+
+        <div class="event">
+            <h2>ToolOpened</h2>
+            <p>A user opened a tool.</p>
+            <div class="properties">
+                <p><strong>tool_slug:</strong> (string) Slug of the tool opened</p>
+                <p><strong>timestamp:</strong> (datetime) Time the tool was opened</p>
+                <p><strong>user_agent:</strong> (string) User agent of the client</p>
+                <p><strong>ip_address:</strong> (string) IP address of the client</p>
+            </div>
+        </div>
+
+        <div class="event">
+            <h2>ToolSubmitted</h2>
+            <p>A user submitted a tool form.</p>
+            <div class="properties">
+                <p><strong>tool_slug:</strong> (string) Slug of the tool submitted</p>
+                <p><strong>timestamp:</strong> (datetime) Time the tool form was submitted</p>
+                <p><strong>input_data:</strong> (object) Anonymized input data for the tool</p>
+                <p><strong>user_agent:</strong> (string) User agent of the client</p>
+                <p><strong>ip_address:</strong> (string) IP address of the client</p>
+            </div>
+        </div>
+
+        <div class="event">
+            <h2>ToolResultViewed</h2>
+            <p>A user viewed the results of a tool.</p>
+            <div class="properties">
+                <p><strong>tool_slug:</strong> (string) Slug of the tool whose results were viewed</p>
+                <p><strong>timestamp:</strong> (datetime) Time the tool results were viewed</p>
+                <p><strong>result_id:</strong> (string) Unique ID of the generated result</p>
+                <p><strong>user_agent:</strong> (string) User agent of the client</p>
+                <p><strong>ip_address:</strong> (string) IP address of the client</p>
+            </div>
+        </div>
+
+        <div class="event">
+            <h2>LeadCaptured</h2>
+            <p>A lead was captured through a tool.</p>
+            <div class="properties">
+                <p><strong>tool_slug:</strong> (string) Slug of the tool that captured the lead</p>
+                <p><strong>timestamp:</strong> (datetime) Time the lead was captured</p>
+                <p><strong>email:</strong> (string) Hashed email address of the lead</p>
+                <p><strong>lead_source:</strong> (string) Source of the lead (e.g., tool, homepage)</p>
+                <p><strong>user_agent:</strong> (string) User agent of the client</p>
+                <p><strong>ip_address:</strong> (string) IP address of the client</p>
+            </div>
+        </div>
+
+        <div class="event">
+            <h2>ErrorEvent</h2>
+            <p>An error occurred during tool execution or page rendering.</p>
+            <div class="properties">
+                <p><strong>error_code:</strong> (string) Unique error code</p>
+                <p><strong>message:</strong> (string) Error message</p>
+                <p><strong>severity:</strong> (string) Severity of the error (e.g., low, medium, high)</p>
+                <p><strong>timestamp:</strong> (datetime) Time the error occurred</p>
+                <p><strong>context:</strong> (object) Additional context about the error (e.g., tool_slug, page_path)</p>
+                <p><strong>user_agent:</strong> (string) User agent of the client</p>
+                <p><strong>ip_address:</strong> (string) IP address of the client</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

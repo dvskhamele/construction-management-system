@@ -50,6 +50,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, user, onLogout }) => {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           {children}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-slate-600">
+              Are you a client?{' '}
+              <Link href="/client-login" className="font-medium text-teal-600 hover:text-teal-500">
+                Client Login
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     )
@@ -76,7 +84,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, user, onLogout }) => {
   };
 
   // Redirect to unauthorized page if no access
-  if (!hasAccess(pathname)) {
+  if (pathname && !hasAccess(pathname)) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-4 py-8">
         <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">

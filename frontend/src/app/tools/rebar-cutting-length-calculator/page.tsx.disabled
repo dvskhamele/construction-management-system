@@ -1,0 +1,163 @@
+"use client";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+
+const RebarCuttingLengthCalculator = () => {
+  const [rebarType, setRebarType] = useState("stirrupRectangular");
+  const [length, setLength] = useState("");
+  const [width, setWidth] = useState("");
+  const [diameter, setDiameter] = useState("");
+  const [hookLength, setHookLength] = useState("10"); // Default 10 times diameter
+  const [cuttingLength, setCuttingLength] = useState(null);
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const calculateCuttingLength = () => {
+    const barDiameter = parseFloat(diameter);
+    const bendAllowance = 2 * barDiameter; // Simplified bend allowance for 90-degree bends
+
+    let calculatedLength = 0;
+
+    if (rebarType === "stirrupRectangular") {
+      const rectLength = parseFloat(length);
+      const rectWidth = parseFloat(width);
+      if (rectLength > 0 && rectWidth > 0 && barDiameter > 0) {
+        // For rectangular stirrup: 2*(L+W) + 2*hookLength - bendAllowance
+        // Assuming 2 hooks and 3 90-degree bends (simplified)
+        calculatedLength = 2 * (rectLength + rectWidth) + 2 * (parseFloat(hookLength) * barDiameter / 1000) - (3 * bendAllowance / 1000);
+      }
+    } else if (rebarType === "straightWithHooks") {
+      const straightLength = parseFloat(length);
+      if (straightLength > 0 && barDiameter > 0) {
+        // For straight bar with 2 hooks: L + 2*hookLength
+        calculatedLength = straightLength + 2 * (parseFloat(hookLength) * barDiameter / 1000);
+      }
+    }
+
+    if (calculatedLength > 0) {
+      setCuttingLength(calculatedLength.toFixed(3));
+      localStorage.setItem("rebarCuttingCalculator", JSON.stringify({ rebarType, length, width, diameter, hookLength, cuttingLength: calculatedLength.toFixed(3) }));
+      logAnalyticsEvent("Rebar_Cutting_Length_Estimation", { rebarType, length, width, diameter, hookLength });
+    }
+  };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      console.log("Lead captured:", email);
+      saveLead(email);
+      setIsSubmitted(true);
+      setEmail("");
+    }
+  };
+
+  const saveLead = (leadEmail) => {
+    const existingLeads = JSON.parse(localStorage.getItem("rebar_cutting_leads")) || [];
+    const newLeads = [...existingLeads, { email: leadEmail, timestamp: new Date().toISOString() }];
+    localStorage.setItem("rebar_cutting_leads", JSON.stringify(newLeads));
+  };
+
+  const logAnalyticsEvent = (eventName: string, eventData: any) => {
+    const existingEvents = JSON.parse(localStorage.getItem("analytics_events")) || [];
+    const newEvent = { name: eventName, data: eventData, timestamp: new Date().toISOString() };
+    const newEvents = [...existingEvents, newEvent];
+    localStorage.setItem("analytics_events", JSON.stringify(newEvents));
+  };
+
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("rebarCuttingCalculator"));
+    if (savedData) {
+      setRebarType(savedData.rebarType);
+      setLength(savedData.length);
+      setWidth(savedData.width);
+      setDiameter(savedData.diameter);
+      setHookLength(savedData.hookLength);
+      setCuttingLength(savedData.cuttingLength);
+    }
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>Rebar Cutting Length Calculator | BuildMate</title>
+        <meta name="description" content="Estimate the cutting length of steel reinforcement bars for stirrups and straight bars with hooks. Essential for steel fabricators and site engineers."/>
+        <meta property="og:title" content="Rebar Cutting Length Calculator | BuildMate" />
+        <meta property="og:description" content="A free tool for Indian contractors to accurately calculate rebar cutting lengths." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://constructioncrm.vercel.app/tools/rebar-cutting-length-calculator" />
+        <meta property="og:image" content="https://constructioncrm.vercel.app/og-image-rebar-cutting-calculator.png" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <div className="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Rebar Cutting Length Calculator</h1>
+          <p className="text-center text-gray-600 mb-8">Calculate cutting lengths for stirrups and straight bars with hooks.</p>
+
+          <div className="grid grid-cols-1 gap-6">
+            <div className="form-group">
+              <label htmlFor="rebarType" className="block text-sm font-medium text-gray-700 mb-1">Rebar Type</label>
+              <select id="rebarType" value={rebarType} onChange={(e) => setRebarType(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                <option value="stirrupRectangular">Rectangular Stirrup</option>
+                <option value="straightWithHooks">Straight Bar with Hooks</option>
+              </select>
+            </div>
+
+            {rebarType === "stirrupRectangular" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="form-group">
+                  <label htmlFor="length" className="block text-sm font-medium text-gray-700 mb-1">Length (mm)</label>
+                  <input type="number" id="length" value={length} onChange={(e) => setLength(e.target.value)} placeholder="e.g., 300" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="width" className="block text-sm font-medium text-gray-700 mb-1">Width (mm)</label>
+                  <input type="number" id="width" value={width} onChange={(e) => setWidth(e.target.value)} placeholder="e.g., 200" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+                </div>
+              </div>
+            )}
+
+            {rebarType === "straightWithHooks" && (
+              <div className="form-group">
+                <label htmlFor="length" className="block text-sm font-medium text-gray-700 mb-1">Length (meters)</label>
+                <input type="number" id="length" value={length} onChange={(e) => setLength(e.target.value)} placeholder="e.g., 6" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="diameter" className="block text-sm font-medium text-gray-700 mb-1">Bar Diameter (mm)</label>
+              <input type="number" id="diameter" value={diameter} onChange={(e) => setDiameter(e.target.value)} placeholder="e.g., 8" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="hookLength" className="block text-sm font-medium text-gray-700 mb-1">Hook Length (D)</label>
+              <input type="number" id="hookLength" value={hookLength} onChange={(e) => setHookLength(e.target.value)} placeholder="e.g., 10 (for 10D)" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <button onClick={calculateCuttingLength} className="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors">Calculate</button>
+          </div>
+
+          {cuttingLength && (
+            <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
+              <h2 className="text-2xl font-semibold text-gray-800">Estimated Cutting Length</h2>
+              <p className="text-4xl font-bold text-blue-600 mt-4">{cuttingLength} meters</p>
+            </div>
+          )}
+
+          <div className="mt-10 text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Get More Tools & Insights</h3>
+            <p className="text-gray-600 mb-6">Join our newsletter for more free tools, industry news, and tips for construction professionals in India.</p>
+            {isSubmitted ? (
+              <p className="text-green-600 font-semibold">Thank you for subscribing!</p>
+            ) : (
+              <form onSubmit={handleEmailSubmit} className="flex flex-col md:flex-row justify-center items-center gap-4">
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required className="w-full md:w-80 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+                <button type="submit" className="w-full md:w-auto bg-green-600 text-white font-bold py-2 px-6 rounded-md hover:bg-green-700 transition-colors">Subscribe</button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default RebarCuttingLengthCalculator;

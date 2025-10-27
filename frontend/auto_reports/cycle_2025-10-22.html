@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cycle Report - 2025-10-22</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #666;
+            margin-top: 15px;
+        }
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .code-block {
+            background-color: #eef;
+            border-left: 4px solid #007bff;
+            padding: 10px 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cycle Report - 2025-10-22</h1>
+        <p>This report summarizes the development cycle for the <strong>Construction Loan EMI Calculator</strong>.</p>
+
+        <h2>Tool: Construction Loan EMI Calculator</h2>
+        <p><strong>Description:</strong> Calculates the Equated Monthly Installment (EMI) for construction loans, helping users plan their finances.</p>
+
+        <h2>Implementation Details (A-H Requirements)</h2>
+
+        <h3>A. UI Form – HTML/CSS + JS input validation.</h3>
+        <ul>
+            <li>A React component (`index.tsx`) was generated for the tool's user interface, including generic input fields.</li>
+            <li>Basic client-side validation is included in the template.</li>
+            <li><strong>File:</strong> <a href="/tools/construction-loan-emi-calculator">/frontend/src/pages/tools/construction-loan-emi-calculator/index.tsx</a></li>
+        </ul>
+
+        <h3>B. JS Logic – Functional calculation, analyzer, quiz, estimator, etc. (no AI). Results must differ per input.</h3>
+        <ul>
+            <li>The `calculate` function within `index.tsx` contains a placeholder for the core calculation logic.</li>
+            <li>Results are dynamically generated and displayed based on the provided input values.</li>
+            <li><strong>File:</strong> <a href="/tools/construction-loan-emi-calculator">/frontend/src/pages/tools/construction-loan-emi-calculator/index.tsx</a></li>
+        </ul>
+
+        <h3>C. Storage – Inputs + results → /data/prelogin_results/{tool_slug}.json.</h3>
+        <ul>
+            <li>An API endpoint (`/api/save-construction-loan-emi-calculator-result.ts`) was generated to handle saving the tool's inputs and calculated results.</li>
+            <li>Each submission generates a unique ID, and data is stored in a JSON file: `/frontend/data/prelogin_results/construction-loan-emi-calculator-{id}.json`.</li>
+            <li><strong>Files:</strong> <a href="/api/save-construction-loan-emi-calculator-result">/frontend/src/pages/api/save-construction-loan-emi-calculator-result.ts</a>, <a href="/tools/construction-loan-emi-calculator">/frontend/src/pages/tools/construction-loan-emi-calculator/index.tsx</a> (calls API)</li>
+        </ul>
+
+        <h3>D. Result Page – Shareable URL /tools/results/{id}, rendered via JS + template with SEO + OG tags.</h3>
+        <ul>
+            <li>A dynamic Next.js page (`[id].tsx`) was generated at `/frontend/src/pages/tools/results/construction-loan-emi-calculator/[id].tsx`.</li>
+            <li>This page fetches the saved results using another API endpoint (`/api/get-construction-loan-emi-calculator-result/[id].ts`).</li>
+            <li>Includes placeholders for SEO and Open Graph tags, and social sharing buttons.</li>
+            <li><strong>Files:</strong> <a href="/tools/results/construction-loan-emi-calculator/[id]">/frontend/src/pages/tools/results/construction-loan-emi-calculator/[id].tsx</a>, <a href="/api/get-construction-loan-emi-calculator-result/[id]">/frontend/src/pages/api/get-construction-loan-emi-calculator-result/[id].ts</a></li>
+        </ul>
+
+        <h3>E. Lead Capture – Enhanced report/email save → /data/prelogin_leads/leads.json.</h3>
+        <ul>
+            <li>A lead capture form was integrated into the result page (`[id].tsx`).</li>
+            <li>The existing API endpoint (`/api/save-lead.ts`) is used to save captured emails and the tool slug to `/frontend/data/prelogin_leads/leads.json`.</li>
+            <li><strong>File:</strong> <a href="/tools/results/construction-loan-emi-calculator/[id]">/frontend/src/pages/tools/results/construction-loan-emi-calculator/[id].tsx</a> (form integration)</li>
+        </ul>
+
+        <h3>F. Audit File – {tool_slug}.audit.json with on-page + marketing audit (SEO/CRO/UX).</h3>
+        <ul>
+            <li>An audit file (`construction-loan-emi-calculator.audit.json`) was generated in the `/frontend` directory.</li>
+            <li>This file contains placeholder information for SEO, CRO, and UX audits, along with marketing suggestions.</li>
+            <li><strong>File:</strong> <a href="/frontend/construction-loan-emi-calculator.audit.json">/frontend/construction-loan-emi-calculator.audit.json</a></li>
+        </ul>
+
+        <h3>G. Analytics Log – Append ToolOpened, ToolSubmitted, ToolResultViewed, LeadCaptured to /data/analytics_events.log.</h3>
+        <ul>
+            <li>The existing API endpoint (`/api/log-event.ts`) is used to log various events.</li>
+            <li>`ToolOpened` and `ToolSubmitted` events are logged from the main tool page (`index.tsx`).</li>
+            <li>`ToolResultViewed` and `LeadCaptured` events are logged from the result page (`[id].tsx`).</li>
+            <li>Events are appended to `/frontend/data/analytics_events.log`.</li>
+            <li><strong>Files:</strong> <a href="/tools/construction-loan-emi-calculator">/frontend/src/pages/tools/construction-loan-emi-calculator/index.tsx</a>, <a href="/tools/results/construction-loan-emi-calculator/[id]">/frontend/src/pages/tools/results/construction-loan-emi-calculator/[id].tsx</a></li>
+        </ul>
+
+        <h3>H. Integration – Add tool link in footer + pre-login menu.</h3>
+        <ul>
+            <li>A link to the tool was added to the `Footer.tsx` component under the "Tools" section.</li>
+            <li>A link was also added to the `HomePage` component (`page.tsx`) within the "Blog Link Section", serving as a pre-login menu integration.</li>
+            <li><strong>Files:</strong> <a href="/components/Footer">/frontend/src/components/Footer.tsx</a>, <a href="/">/frontend/src/app/page.tsx</a></li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        <p>The ToolScheduler will continue to generate new tools based on the specifications outlined in the <code>tool_specs.html</code> blog.</p>
+    </div>
+</body>
+</html>

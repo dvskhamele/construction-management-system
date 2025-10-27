@@ -1,0 +1,28 @@
+{
+  "tool_slug": "construction-project-roi-calculator",
+  "audit_date": "2025-10-22",
+  "seo_audit": {
+    "title_tag": "Construction Project ROI Calculator - Calculator",
+    "meta_description": "Helps construction businesses estimate the potential return on investment for various projects by inputting costs, revenues, and project duration.",
+    "keywords": "construction, project, roi, calculator, calculator, estimator",
+    "h1_present": true,
+    "url_structure": "/tools/construction-project-roi-calculator",
+    "canonical_tag": "https://yourdomain.com/tools/construction-project-roi-calculator"
+  },
+  "cro_audit": {
+    "cta_clarity": "To be assessed",
+    "form_ease_of_use": "To be assessed",
+    "mobile_responsiveness": "Assumed High - Using Tailwind CSS for responsive design.",
+    "page_load_speed_estimate": "Good - Minimal assets, client-side calculation."
+  },
+  "ux_audit": {
+    "intuitive_navigation": "To be assessed",
+    "feedback_mechanisms": "To be assessed",
+    "visual_appeal": "Basic - Tailwind CSS default styling.",
+    "accessibility_considerations": "Basic - Standard HTML elements, no specific ARIA attributes yet."
+  },
+  "marketing_suggestions": [
+    "Promote Construction Project ROI Calculator on relevant industry platforms.",
+    "Create blog content around \"Uncertainty in project profitability, difficulty in justifying investments.\" linking to the tool."
+  ]
+}

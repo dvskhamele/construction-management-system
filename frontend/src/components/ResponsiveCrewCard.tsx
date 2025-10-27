@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+// COMMENTED OUT DUE TO BUILD ERROR - @mui/material module not found
+/*
 import { 
   Card, 
   CardContent, 
@@ -16,13 +18,12 @@ import {
   IconButton,
   Tooltip
 } from '@mui/material'
-import { 
-  Email as EmailIcon, 
-  Info as InfoIcon, 
-  CalendarToday as CalendarIcon,
-  People as PeopleIcon,
-  TrendingUp as TrendingUpIcon
-} from '@mui/icons-material'
+import EmailIcon from '@mui/icons-material/Email'
+import InfoIcon from '@mui/icons-material/Info'
+import CalendarIcon from '@mui/icons-material/CalendarToday'
+import PeopleIcon from '@mui/icons-material/People'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
+*/
 
 interface CrewMember {
   id: number
@@ -71,206 +72,138 @@ const getPerformanceEmoji = (performance: number) => {
 
 const ResponsiveCrewCard: React.FC<ResponsiveCrewCardProps> = ({ member, onScheduleClick }) => {
   return (
-    <Card 
-      sx={{ 
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        boxShadow: 2,
-        borderRadius: 3,
-        transition: 'all 0.3s ease-in-out',
-        '&:hover': {
-          boxShadow: 4,
-          transform: 'translateY(-2px)'
-        }
-      }}
+    <div 
+      className="bg-white border border-gray-200 rounded-xl shadow-md flex flex-col h-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
     >
-      <CardContent sx={{ flexGrow: 1, pb: 1 }}>
+      <div className="p-4 pb-2 flex-grow">
         {/* Header with avatar and info */}
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
-          <Avatar 
-            sx={{ 
-              bgcolor: 'teal.main',
-              width: 48,
-              height: 48,
-              fontSize: '1.25rem',
-              fontWeight: 'medium'
-            }}
+        <div className="flex items-start mb-2">
+          <div 
+            className="bg-teal-500 w-12 h-12 rounded-full flex items-center justify-center text-white text-lg font-medium"
           >
             {member.name.charAt(0)}
-          </Avatar>
+          </div>
           
-          <Box sx={{ ml: 2, flexGrow: 1, minWidth: 0 }}>
-            <Typography 
-              variant="h6" 
-              sx={{ 
-                fontWeight: 'bold',
-                mb: 0.5,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}
+          <div className="ml-3 flex-grow min-w-0">
+            <div 
+              className="font-bold text-gray-900 mb-1 overflow-hidden text-ellipsis whitespace-nowrap"
             >
               {member.name}
-            </Typography>
-            <Typography 
-              variant="body2" 
-              color="text.secondary"
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}
+            </div>
+            <div 
+              className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
             >
               {member.position}
-            </Typography>
-          </Box>
+            </div>
+          </div>
           
-          <Chip 
-            label={member.status}
-            color={getStatusColor(member.status)}
-            size="small"
-            sx={{ 
-              height: 'auto',
-              '& .MuiChip-label': {
-                display: 'block',
-                whiteSpace: 'normal'
-              }
-            }}
-          />
-        </Box>
+          <span className={`px-2 py-1 rounded-full text-xs ${
+            member.status === 'Active' ? 'bg-green-100 text-green-800' :
+            member.status === 'Break' ? 'bg-yellow-100 text-yellow-800' :
+            'bg-gray-100 text-gray-800'
+          }`}>
+            {member.status}
+          </span>
+        </div>
         
         {/* Info Grid */}
-        <Box sx={{ mb: 2 }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr 1fr', sm: '1fr 1fr' }, gap: 1.5 }}>
-            <Box sx={{ bgcolor: 'grey.50', p: 1.5, borderRadius: 1.5 }}>
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+        <div className="mb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="text-xs text-gray-500 block">
                 Department
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 'medium',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}
+              </div>
+              <div 
+                className="text-sm font-medium text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {member.department}
-              </Typography>
-            </Box>
+              </div>
+            </div>
             
-            <Box sx={{ bgcolor: 'grey.50', p: 1.5, borderRadius: 1.5 }}>
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="text-xs text-gray-500 block">
                 Schedule
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 'medium',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}
+              </div>
+              <div 
+                className="text-sm font-medium text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {member.schedule}
-              </Typography>
-            </Box>
+              </div>
+            </div>
             
-            <Box sx={{ bgcolor: 'grey.50', p: 1.5, borderRadius: 1.5 }}>
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="text-xs text-gray-500 block">
                 Hire Date
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 'medium',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}
+              </div>
+              <div 
+                className="text-sm font-medium text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {new Date(member.hireDate).toLocaleDateString()}
-              </Typography>
-            </Box>
+              </div>
+            </div>
             
-            <Box sx={{ bgcolor: 'grey.50', p: 1.5, borderRadius: 1.5 }}>
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="text-xs text-gray-500 block">
                 Attendance
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 'medium',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}
+              </div>
+              <div 
+                className="text-sm font-medium text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {member.attendance || 'N/A'}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+              </div>
+            </div>
+          </div>
+        </div>
         
         {/* Performance Section */}
-        <Divider sx={{ my: 1 }} />
+        <div className="border-t border-gray-200 my-3" />
         
-        <Box sx={{ mb: 1 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Typography variant="body2" color="text.secondary">
+        <div className="mb-3">
+          <div className="flex justify-between items-center mb-1">
+            <div className="text-sm text-gray-600">
               Performance
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+            </div>
+            <div className="text-sm font-bold flex items-center">
               {member.performance}% {getPerformanceEmoji(member.performance)}
-            </Typography>
-          </Box>
+            </div>
+          </div>
           
-          <LinearProgress 
-            variant="determinate" 
-            value={member.performance}
-            sx={{ 
-              height: 8, 
-              borderRadius: 1,
-              backgroundColor: 'grey.200',
-              '& .MuiLinearProgress-bar': {
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div 
+              className="h-full rounded-full"
+              style={{ 
+                width: `${member.performance}%`,
                 backgroundColor: getPerformanceColor(member.performance)
-              }
-            }}
-          />
-        </Box>
-      </CardContent>
+              }}
+            />
+          </div>
+        </div>
+      </div>
       
       {/* Actions */}
-      <CardActions sx={{ justifyContent: 'space-between', p: 2, pt: 1 }}>
-        <Button 
-          size="small" 
-          variant="text"
+      <div className="flex justify-between p-3 pt-2">
+        <button 
+          className="text-sm font-medium text-teal-600 hover:text-teal-800 px-0 py-1 min-w-0"
           onClick={() => onScheduleClick(member)}
-          sx={{ 
-            fontWeight: 'medium',
-            textTransform: 'none',
-            minWidth: 0,
-            p: 0.5
-          }}
         >
           View Schedule
-        </Button>
+        </button>
         
-        <Box>
-          <Tooltip title="Send Message">
-            <IconButton size="small">
-              <EmailIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="More Info">
-            <IconButton size="small">
-              <InfoIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </CardActions>
-    </Card>
+        <div className="flex">
+          <div title="Send Message" className="p-1 rounded hover:bg-gray-100 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            </svg>
+          </div>
+          <div title="More Info" className="p-1 rounded hover:bg-gray-100 cursor-pointer ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

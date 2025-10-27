@@ -1,0 +1,65 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function PipeFlowCalculator() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    pipeDiameter: '150',
+    units: 'mm',
+    pipeSlope: '1',
+    manningCoefficient: '0.013',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/tools/pipe-flow-rate-calculator/result?${query}`);
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Pipe Flow Rate Calculator
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Estimate the flow rate of water in a pipe using the Manning formula.
+          </p>
+        </div>
+
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="pipeDiameter" className="block text-sm font-medium text-slate-700">Pipe Inner Diameter</label>
+                    <input type="number" name="pipeDiameter" value={formData.pipeDiameter} onChange={(e) => setFormData({...formData, pipeDiameter: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="units" className="block text-sm font-medium text-slate-700">Units</label>
+                    <select name="units" value={formData.units} onChange={(e) => setFormData({...formData, units: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md">
+                        <option>mm</option>
+                        <option>inches</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label htmlFor="pipeSlope" className="block text-sm font-medium text-slate-700">Pipe Slope (%)</label>
+                <input type="number" name="pipeSlope" value={formData.pipeSlope} onChange={(e) => setFormData({...formData, pipeSlope: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+            </div>
+            <div>
+                <label htmlFor="manningCoefficient" className="block text-sm font-medium text-slate-700">Manning's Roughness Coefficient (n)</label>
+                <input type="number" step="0.001" name="manningCoefficient" value={formData.manningCoefficient} onChange={(e) => setFormData({...formData, manningCoefficient: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+            </div>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Calculate Flow Rate
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Creep Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Creep Calculator</h1>
+        <form id="creep-form">
+            <div class="input-group">
+                <label for="compressive-strength">Concrete Compressive Strength (psi):</label>
+                <input type="number" id="compressive-strength" value="4000" required>
+            </div>
+            <div class="input-group">
+                <label for="age-of-loading">Age of Loading (days):</label>
+                <input type="number" id="age-of-loading" value="28" required>
+            </div>
+            <div class="input-group">
+                <label for="duration-of-loading">Duration of Loading (days):</label>
+                <input type="number" id="duration-of-loading" value="365" required>
+            </div>
+            <div class="input-group">
+                <label for="relative-humidity">Average Relative Humidity (%):</label>
+                <input type="number" id="relative-humidity" value="70" required>
+            </div>
+            <div class="input-group">
+                <label for="effective-thickness">Effective Thickness (inches):</label>
+                <input type="number" id="effective-thickness" value="6" required>
+            </div>
+            <button type="submit">Calculate Creep</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

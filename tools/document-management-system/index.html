@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Document Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Document Management System</h1>
+        <p>Organize and track your construction project documents.</p>
+        <div class="document-manager">
+            <div class="input-group">
+                <label for="document-name">Document Name</label>
+                <input type="text" id="document-name" placeholder="e.g., Blueprint_Phase1">
+            </div>
+            <div class="input-group">
+                <label for="document-type">Document Type</label>
+                <select id="document-type">
+                    <option value="blueprint">Blueprint</option>
+                    <option value="contract">Contract</option>
+                    <option value="permit">Permit</option>
+                    <option value="report">Report</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="document-status">Status</label>
+                <select id="document-status">
+                    <option value="draft">Draft</option>
+                    <option value="pending-approval">Pending Approval</option>
+                    <option value="approved">Approved</option>
+                    <option value="archived">Archived</option>
+                </select>
+            </div>
+            <button id="add-document">Add Document</button>
+        </div>
+        <div class="document-list">
+            <h2>Project Documents</h2>
+            <table id="documents-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

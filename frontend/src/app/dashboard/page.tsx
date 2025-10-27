@@ -1,21 +1,15 @@
 'use client'
 
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 import ProjectAnalytics from '../../components/ProjectAnalytics'
 import TeamLeaderboard from '../../components/TeamLeaderboard'
-import MobileNavigation from '../../components/MobileNavigation'
-import TaskAssignment from '../../components/TaskAssignment'
-import TaskBoard from '../../components/TaskBoard'
 import VastuDashboard from '../../components/VastuDashboard'
 import CreateProject from '../../components/CreateProject'
 
 import apiService from '../../utils/constructionApiService'
-import MobileDashboard from './page-mobile'
 
 export default function Dashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -29,7 +23,11 @@ export default function Dashboard() {
     teamActive: 0,
     maintenanceRequests: 0,
     avgResponseTime: 0,
-    qualityRating: 0
+    qualityRating: 0,
+    totalSites: 0,
+    activeSites: 0,
+    lowStockItems: 0,
+    pendingConsumptions: 0
   })
   const [activity, setActivity] = useState<any[]>([])
   const [projects, setProjects] = useState<any[]>([])
@@ -41,6 +39,10 @@ export default function Dashboard() {
   })
   const [timeRange, setTimeRange] = useState('7d') // For charts
   const [isMobile, setIsMobile] = useState(false)
+  const [selectedSite, setSelectedSite] = useState('')
+  const [selectedProject, setSelectedProject] = useState('')
+  const [sites, setSites] = useState<any[]>([])
+  const [projectList, setProjectList] = useState<any[]>([])
 
   const router = useRouter()
 
@@ -82,9 +84,22 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      // Fetch dashboard stats
-      const statsData = await apiService.getDashboardStats()
-      setStats(statsData.stats)
+      // Fetch dashboard stats - using mock data for construction management
+      setStats({
+        pendingTasks: 12,
+        activeProjects: 5,
+        completedProjects: 3,
+        revenueToday: 125000,
+        projectCompletionRate: 78,
+        teamActive: 24,
+        maintenanceRequests: 8,
+        avgResponseTime: 32,
+        qualityRating: 94,
+        totalSites: 5,
+        activeSites: 4,
+        lowStockItems: 3,
+        pendingConsumptions: 7
+      })
       
       // Fetch recent activity
       const activityData = await apiService.getDashboardActivity()
@@ -100,11 +115,7 @@ export default function Dashboard() {
       
       // Fetch performance data
       const performanceData = await apiService.getDashboardPerformance()
-      setPerformance({
-        projectPerformance: performanceData.projectPerformance,
-        teamPerformance: performanceData.teamPerformance,
-        qualityMetrics: performanceData.qualityMetrics
-      })
+      setPerformance(performanceData)
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
       // Fallback to mock data if API fails
@@ -117,7 +128,11 @@ export default function Dashboard() {
         teamActive: 24,
         maintenanceRequests: 5,
         avgResponseTime: 25,
-        qualityRating: 92
+        qualityRating: 92,
+        totalSites: 42,
+        activeSites: 8,
+        lowStockItems: 3,
+        pendingConsumptions: 12
       })
       setPerformance({
         projectPerformance: 87,
@@ -306,14 +321,9 @@ export default function Dashboard() {
     )
   }
 
-  // Render mobile dashboard for small screens
-  if (isMobile) {
-    return <MobileDashboard />
-  }
-
   return (
-    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
-      <div className="px-4 py-6">
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="dashboard">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -424,13 +434,7 @@ export default function Dashboard() {
         {/* Vastu Dashboard for non-client users */}
         {user?.role !== 'CLIENT' && <VastuDashboard currentUser={user} />}
         
-        {/* Task Assignment and Board for specific roles */}
-        {(user?.role === 'ADMIN' || user?.role === 'PROJECT_MANAGER' || user?.role === 'SITE_SUPERVISOR') && (
-          <div className={`grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8 ${user?.role !== 'CLIENT' ? 'mt-6 sm:mt-8' : ''}`}>
-            <TaskAssignment currentUserRole={user?.role} />
-            <TaskBoard currentUserRole={user?.role} />
-          </div>
-        )}
+
         
         {/* Client Dashboard View */}
         {user?.role === 'CLIENT' && (
@@ -439,7 +443,7 @@ export default function Dashboard() {
             <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 card">
               <h2 className="text-xl font-semibold text-slate-800 mb-4">Project Progress</h2>
               <div className="space-y-4">
-                {projects.map((project) => (
+                {projects.filter(p => p.clientId === user.id || p.client === user.name.split(' ')[0]).map((project) => (
                   <div key={project.id} className="border-b border-slate-200 pb-4 last:border-0 last:pb-0">
                     <div className="flex justify-between items-center mb-2">
                       <h3 className="font-medium text-slate-800">{project.name}</h3>
@@ -453,7 +457,7 @@ export default function Dashboard() {
                     </div>
                     <div className="flex justify-between text-xs text-slate-500 mt-2">
                       <span>Status: {project.status}</span>
-                      <span>Deadline: {new Date(project.deadline).toLocaleDateString()}</span>
+                      <span>Deadline: {new Date(project.endDate).toLocaleDateString()}</span>
                     </div>
                   </div>
                 ))}
@@ -487,6 +491,338 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        )}
+        
+        {/* Simplify other sections for clients - hide internal communication features */}
+        {user?.role !== 'CLIENT' && (
+          <>
+            {/* Charts Section - Hide from clients */}
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+              {/* Project Completion Chart */}
+              <div className="bg-white rounded-2xl shadow-md p-6 card">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Project Progress</h2>
+                  <div className="flex space-x-2">
+                    <button 
+                      className={`text-xs px-2 py-1 rounded ${timeRange === '7d' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-600'}`}
+                      onClick={() => setTimeRange('7d')}
+                    >
+                      7D
+                    </button>
+                    <button 
+                      className={`text-xs px-2 py-1 rounded ${timeRange === '30d' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-600'}`}
+                      onClick={() => setTimeRange('30d')}
+                    >
+                      30D
+                    </button>
+                  </div>
+                </div>
+                <div className="h-64 flex items-end space-x-2 mt-8 cursor-pointer hover:opacity-90 transition-opacity" onClick={() => router.push('/analytics')}>
+                  {projectCompletionData.map((data, index) => (
+                    <div key={index} className="flex flex-col items-center flex-1 group">
+                      <div className="text-xs text-slate-500 mb-1 group-hover:text-teal-600 transition-colors">
+                        {data.completion}%
+                      </div>
+                      <div 
+                        className="w-full bg-gradient-to-t from-teal-400 to-teal-600 rounded-t transition-all duration-300 group-hover:from-teal-500 group-hover:to-teal-700"
+                        style={{ height: `${(data.completion / 100) * 200}px` }}
+                      ></div>
+                      <div className="text-xs text-slate-600 mt-1 group-hover:text-slate-800 transition-colors">
+                        {data.date}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Revenue Chart */}
+              <div className="bg-white rounded-2xl shadow-md p-6 card">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Revenue Trend</h2>
+                  <div className="flex space-x-2">
+                    <button 
+                      className={`text-xs px-2 py-1 rounded ${timeRange === '7d' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}`}
+                      onClick={() => setTimeRange('7d')}
+                    >
+                      7D
+                    </button>
+                    <button 
+                      className={`text-xs px-2 py-1 rounded ${timeRange === '30d' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}`}
+                      onClick={() => setTimeRange('30d')}
+                    >
+                      30D
+                    </button>
+                  </div>
+                </div>
+                <div className="h-64 flex items-end space-x-2 mt-8 cursor-pointer hover:opacity-90 transition-opacity" onClick={() => router.push('/analytics')}>
+                  {revenueData.map((data, index) => (
+                    <div key={index} className="flex flex-col items-center flex-1 group">
+                      <div className="text-xs text-slate-500 mb-1 group-hover:text-emerald-600 transition-colors">
+                        ₹{(data.revenue / 1000).toFixed(1)}k
+                      </div>
+                      <div 
+                        className="w-full bg-gradient-to-t from-emerald-400 to-emerald-600 rounded-t transition-all duration-300 group-hover:from-emerald-500 group-hover:to-emerald-700"
+                        style={{ height: `${(data.revenue / 80000) * 200}px` }}
+                      ></div>
+                      <div className="text-xs text-slate-600 mt-1 group-hover:text-slate-800 transition-colors">
+                        {data.date}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions - Hide from clients */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              {/* Quick Actions */}
+              <div className="lg:col-span-1 bg-white rounded-2xl shadow-md p-6 card">
+                <h2 className="text-xl font-semibold text-slate-800 mb-4">Quick Actions</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div 
+                    className="bg-gradient-to-br from-teal-500 to-teal-600 text-white py-4 px-4 rounded-xl text-center hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => router.push('/tasks')}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <span className="text-sm font-medium">View Tasks</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-blue-500 to-blue-600 text-white py-4 px-4 rounded-xl text-center hover:from-blue-600 hover:to-blue-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => router.push('/projects')}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span className="text-sm font-medium">Manage Projects</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-purple-500 to-purple-600 text-white py-4 px-4 rounded-xl text-center hover:from-purple-600 hover:to-purple-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => router.push('/analytics')}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span className="text-sm font-medium">View Analytics</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-amber-500 to-amber-600 text-white py-4 px-4 rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => router.push('/departments')}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span className="text-sm font-medium">Crews</span>
+                  </div>
+                  
+                  {/* Smart Form-Based Buttons */}
+                  <div 
+                    className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white py-4 px-4 rounded-xl text-center hover:from-emerald-600 hover:to-emerald-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => {
+                      // "Work done today" form
+                      alert('Work Done Today form opened. Fill in numbers/pictures/video in 2 clicks');
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm font-medium">Work Done Today</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-amber-500 to-amber-600 text-white py-4 px-4 rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => {
+                      // "Material received" form
+                      alert('Material Received form opened. Select vendor + quantity + upload bill photo');
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    <span className="text-sm font-medium">Material Received</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-rose-500 to-rose-600 text-white py-4 px-4 rounded-xl text-center hover:from-rose-600 hover:to-rose-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => {
+                      // "Issue reported" form
+                      alert('Issue Reported form opened. Attach photo + select category');
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span className="text-sm font-medium">Report Issue</span>
+                  </div>
+                  <div 
+                    className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white py-4 px-4 rounded-xl text-center hover:from-indigo-600 hover:to-indigo-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                    onClick={() => {
+                      // "Update labour" form
+                      alert('Labour Count form opened. Update daily labour count');
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span className="text-sm font-medium">Update Labour</span>
+                  </div>
+                </div>
+
+                {/* Daily Progress Visualization */}
+                <h3 className="text-lg font-medium text-slate-800 mt-6 mb-4">Daily Progress</h3>
+                <div className="space-y-4">
+                  {/* Foundation Progress */}
+                  <div className="bg-slate-50 rounded-lg p-3">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">Foundation</span>
+                      <span className="text-sm font-medium text-slate-700">75%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div
+                        className="bg-emerald-500 h-2.5 rounded-full transition-all duration-500 hover:bg-emerald-600"
+                        style={{ width: '75%' }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-slate-500 mt-1">
+                      <span>15/20 tasks</span>
+                      <span>Completed</span>
+                    </div>
+                  </div>
+                  
+                  {/* Framing Progress */}
+                  <div className="bg-slate-50 rounded-lg p-3">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">Framing</span>
+                      <span className="text-sm font-medium text-slate-700">45%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div
+                        className="bg-amber-500 h-2.5 rounded-full transition-all duration-500 hover:bg-amber-600"
+                        style={{ width: '45%' }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-slate-500 mt-1">
+                      <span>9/20 tasks</span>
+                      <span>Completed</span>
+                    </div>
+                  </div>
+                  
+                  {/* Tasks Progress */}
+                  <div className="bg-slate-50 rounded-lg p-3">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">Daily Tasks</span>
+                      <span className="text-sm font-medium text-slate-700">68%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div
+                        className="bg-blue-500 h-2.5 rounded-full transition-all duration-500 hover:bg-blue-600"
+                        style={{ width: '68%' }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-slate-500 mt-1">
+                      <span>34/50 tasks</span>
+                      <span>Completed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recent Activity - Hide from clients */}
+              <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 card">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Recent Activity</h2>
+                  <button className="text-sm text-teal-600 hover:text-teal-800 font-medium cursor-pointer" onClick={() => router.push('/reports')}>
+                    View All
+                  </button>
+                </div>
+                <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                  {activity.map((item: any) => (
+                    <div 
+                      key={item.id} 
+                      className={`${getActivityColor(item.type, item.status)} pl-4 py-3 bg-slate-50 rounded-lg transition-all duration-300 hover:shadow-md animate-fade-in cursor-pointer`}
+                      onClick={() => {
+                        // Navigate to appropriate page based on activity type
+                        switch(item.type) {
+                          case 'task':
+                            router.push('/tasks');
+                            break;
+                          case 'project':
+                            router.push('/projects');
+                            break;
+                          case 'team':
+                            router.push('/team');
+                            break;
+                          default:
+                            router.push('/reports');
+                        }
+                      }}
+                    >
+                      <div className="flex justify-between">
+                        <h3 className="font-medium text-slate-800">{item.title}</h3>
+                        <span className="text-xs text-slate-500">{new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 mt-1">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Recent Tasks */}
+                <h3 
+                  className="text-lg font-medium text-slate-800 mt-6 mb-4 cursor-pointer hover:text-teal-600 transition-colors" 
+                  onClick={() => router.push('/tasks')}
+                >
+                  Recent Tasks
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-slate-200">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Project</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Task</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Assigned To</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Priority</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-slate-200">
+                      {tasks.slice(0, 5).map((task: any) => (
+                        <tr 
+                          key={task.id} 
+                          className="hover:bg-slate-50 transition-all duration-300 cursor-pointer"
+                          onClick={() => router.push(`/tasks/${task.id}`)}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-slate-900">{task.projectName}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                            {task.title}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                            {task.assignedTo}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getDepartmentClass(task.department)}`}>
+                              {task.department}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getPriorityClass(task.priority)}`}>
+                              {task.priority}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getStatusClass(task.status)}`}>
+                              {task.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </>
         )}
 
         {/* Charts Section */}
@@ -608,54 +944,54 @@ export default function Dashboard() {
                 <span className="text-sm font-medium">Crews</span>
               </div>
               
-              {/* New Quick Action Buttons */}
+              {/* Smart Form-Based Buttons */}
               <div 
-                className="bg-gradient-to-br from-rose-500 to-rose-600 text-white py-4 px-4 rounded-xl text-center hover:from-rose-600 hover:to-rose-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white py-4 px-4 rounded-xl text-center hover:from-emerald-600 hover:to-emerald-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
                 onClick={() => {
-                  // Mock function to create a new task
-                  alert('Creating new task...');
+                  // "Work done today" form
+                  alert('Work Done Today form opened. Fill in numbers/pictures/video in 2 clicks');
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-sm font-medium">New Task</span>
+                <span className="text-sm font-medium">Work Done Today</span>
+              </div>
+              <div 
+                className="bg-gradient-to-br from-amber-500 to-amber-600 text-white py-4 px-4 rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                onClick={() => {
+                  // "Material received" form
+                  alert('Material Received form opened. Select vendor + quantity + upload bill photo');
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                <span className="text-sm font-medium">Material Received</span>
+              </div>
+              <div 
+                className="bg-gradient-to-br from-rose-500 to-rose-600 text-white py-4 px-4 rounded-xl text-center hover:from-rose-600 hover:to-rose-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
+                onClick={() => {
+                  // "Issue reported" form
+                  alert('Issue Reported form opened. Attach photo + select category');
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span className="text-sm font-medium">Report Issue</span>
               </div>
               <div 
                 className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white py-4 px-4 rounded-xl text-center hover:from-indigo-600 hover:to-indigo-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
                 onClick={() => {
-                  // Mock function to update project status
-                  alert('Updating project status...');
+                  // "Update labour" form
+                  alert('Labour Count form opened. Update daily labour count');
                 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="text-sm font-medium">Update Status</span>
-              </div>
-              <div 
-                className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white py-4 px-4 rounded-xl text-center hover:from-emerald-600 hover:to-emerald-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
-                onClick={() => {
-                  // Mock function to assign task
-                  alert('Assigning task...');
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                </svg>
-                <span className="text-sm font-medium">Assign Task</span>
-              </div>
-              <div 
-                className="bg-gradient-to-br from-cyan-500 to-cyan-600 text-white py-4 px-4 rounded-xl text-center hover:from-cyan-600 hover:to-cyan-700 transition duration-300 shadow-md transform hover:-translate-y-1 flex flex-col items-center justify-center cursor-pointer"
-                onClick={() => {
-                  // Mock function to send notification
-                  alert('Sending notification...');
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span className="text-sm font-medium">Notify Team</span>
+                <span className="text-sm font-medium">Update Labour</span>
               </div>
             </div>
 
@@ -1124,7 +1460,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        </div>
-    </ResponsiveSidebarLayout>
+      </div>
+    </HeaderResponsiveLayout>
   )
 }

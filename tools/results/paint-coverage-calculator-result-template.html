@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Coverage Calculation Results - BuildMate</title>
+    <meta name="description" content="View the results of your paint coverage calculation.">
+    <meta property="og:title" content="Paint Coverage Calculation Results - BuildMate">
+    <meta property="og:description" content="View the results of your paint coverage calculation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/tools/results/paint-coverage-calculator-results.html">
+    <meta property="og:image" content="https://your-domain.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paint Coverage Calculation Results - BuildMate">
+    <meta name="twitter:description" content="View the results of your paint coverage calculation.">
+    <meta name="twitter:image" content="https://your-domain.com/twitter-image.png">
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f2f5; margin: 0; padding: 20px; box-sizing: border-box; }
+        .container { background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); width: 100%; max-width: 600px; text-align: center; }
+        h1 { color: #2c3e50; margin-bottom: 20px; }
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; margin-top: 20px; }
+        .result-item { background-color: #f9f9f9; padding: 15px; border-radius: 5px; }
+        .result-item strong { color: #34495e; }
+        .total { grid-column: span 2; text-align: center; font-size: 1.5em; font-weight: bold; color: #28a745; margin-top: 20px; }
+        a { color: #007bff; text-decoration: none; margin-top: 20px; display: inline-block; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculation Results</h1>
+        <div id="results-container">
+            <p>Loading results...</p>
+        </div>
+        <a href="/tools/paint-coverage-calculator/paint-coverage-calculator.html">Back to Calculator</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultsContainer = document.getElementById('results-container');
+            const resultsData = localStorage.getItem('paintCoverageResults');
+
+            if (resultsData) {
+                const results = JSON.parse(resultsData);
+                resultsContainer.innerHTML = `
+                    <div class="results-grid">
+                        <div class="result-item"><strong>Wall Length:</strong> ${results.length} meters</div>
+                        <div class="result-item"><strong>Wall Width:</strong> ${results.width} meters</div>
+                        <div class="result-item"><strong>Coats:</strong> ${results.coats}</div>
+                        <div class="result-item"><strong>Paint Coverage:</strong> ${results.coverage} sq meters/liter</div>
+                    </div>
+                    <div class="total">
+                        Total Paint Needed: ${results.totalPaintNeeded} ${results.unit}
+                    </div>
+                `;
+                // In a real scenario, this event would be logged to a persistent backend service.
+                console.log('Analytics Log: ToolResultViewed, PaintCoverageCalculator');
+                localStorage.removeItem('paintCoverageResults'); // Clean up after displaying
+            } else {
+                resultsContainer.innerHTML = '<p>No results found. Please use the calculator to generate results.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

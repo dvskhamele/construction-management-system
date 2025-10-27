@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roofing Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Roofing Estimator</h1>
+        <p>Estimate roofing materials (shingles, underlayment) for your project.</p>
+
+        <div class="input-section">
+            <h2>Roof Dimensions</h2>
+            <div class="input-group">
+                <label for="roof-length">Roof Length (meters):</label>
+                <input type="number" id="roof-length" placeholder="e.g., 10" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="roof-width">Roof Width (meters):</label>
+                <input type="number" id="roof-width" placeholder="e.g., 8" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="roof-pitch">Roof Pitch (rise in cm per 100cm run):</label>
+                <input type="number" id="roof-pitch" placeholder="e.g., 30 (for 30cm rise per 100cm run)" min="0" step="1">
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2>Material Details</h2>
+            <div class="input-group">
+                <label for="shingle-coverage">Shingle Coverage (sq meters per bundle):</label>
+                <input type="number" id="shingle-coverage" placeholder="e.g., 3.1 (typical for 3-tab shingles)" min="0.1" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="underlayment-coverage">Underlayment Coverage (sq meters per roll):</label>
+                <input type="number" id="underlayment-coverage" placeholder="e.g., 93 (typical for 1000 sq ft roll)" min="0.1" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="waste-factor">Waste Factor (%):</label>
+                <input type="number" id="waste-factor" value="10" min="0" max="100" step="1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Roofing Materials</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

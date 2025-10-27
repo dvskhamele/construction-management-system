@@ -1,0 +1,23 @@
+
+[
+    {
+        "id": "ppe",
+        "text": "Ensure all PPE (Personal Protective Equipment) is worn and in good condition."
+    },
+    {
+        "id": "site-hazards",
+        "text": "Identify and mitigate all potential site hazards."
+    },
+    {
+        "id": "equipment-check",
+        "text": "Inspect all equipment before use."
+    },
+    {
+        "id": "fall-protection",
+        "text": "Verify fall protection systems are in place and properly used."
+    },
+    {
+        "id": "emergency-plan",
+        "text": "Review emergency procedures and exits."
+    }
+]

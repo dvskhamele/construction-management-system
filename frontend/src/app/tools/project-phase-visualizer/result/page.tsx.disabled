@@ -1,0 +1,62 @@
+'use client';
+import React from 'react';
+import { useSearchParams } from 'next/navigation';
+
+export default function PhaseResultPage() {
+  const searchParams = useSearchParams();
+  const encodedPhases = searchParams.get('phases') || '';
+  let phasesData = [];
+  try {
+    phasesData = atob(encodedPhases).split('\n').map(line => {
+      const [name, start, end] = line.split(',').map(item => item.trim());
+      return { name, start: new Date(start), end: new Date(end) };
+    });
+  } catch (e) {
+    console.error("Error parsing phases data");
+  }
+
+  const projectStart = Math.min(...phasesData.map(p => p.start.getTime()));
+  const projectEnd = Math.max(...phasesData.map(p => p.end.getTime()));
+  const totalDuration = projectEnd - projectStart;
+
+  const colors = ['bg-teal-500', 'bg-emerald-500', 'bg-sky-500', 'bg-indigo-500', 'bg-purple-500'];
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Project Timeline Visual
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-2xl font-bold text-slate-800 border-b pb-2 mb-6">Timeline</h2>
+            <div className="space-y-4 relative">
+              {phasesData.map((phase, index) => {
+                const left = ((phase.start.getTime() - projectStart) / totalDuration) * 100;
+                const width = ((phase.end.getTime() - phase.start.getTime()) / totalDuration) * 100;
+                return (
+                  <div key={index} className="relative h-12 flex items-center rounded-lg" style={{ marginLeft: `${left}%`, width: `${width}%` }}>
+                    <div className={`absolute inset-0 ${colors[index % colors.length]} opacity-80 rounded-lg`}></div>
+                    <span className="relative text-white font-medium px-2 text-sm truncate">{phase.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Save & Share</h2>
+            <p className="text-slate-600 mb-4">Save this timeline as a PDF to include in your proposals and project documents.</p>
+            <form className="flex gap-2">
+                <input type="email" placeholder="Enter your email" required className="flex-grow block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm" />
+                <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+                    Save as PDF
+                </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

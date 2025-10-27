@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thinset Mortar Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Thinset Mortar Calculator</h1>
+        <div class="input-group">
+            <label for="area">Area to Tile (in square feet):</label>
+            <input type="number" id="area" placeholder="Enter the total area">
+        </div>
+        <div class="input-group">
+            <label for="trowel">Trowel Size (e.g., 1/4 for 1/4" x 1/4"):</label>
+            <select id="trowel">
+                <option value="0.03125">1/4" x 1/4"</option>
+                <option value="0.046875">1/4" x 3/8"</option>
+                <option value="0.0625">1/2" x 1/2"</option>
+            </select>
+        </div>
+        <button onclick="calculateThinset()">Calculate Thinset Needed</button>
+        <div class="result" id="result">
+            The estimated amount of thinset mortar will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

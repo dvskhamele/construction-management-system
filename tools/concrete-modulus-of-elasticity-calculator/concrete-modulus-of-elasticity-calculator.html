@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Modulus of Elasticity Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Modulus of Elasticity Calculator</h1>
+        <form id="modulus-form">
+            <div class="input-group">
+                <label for="compressive-strength">Concrete Compressive Strength (f'c, psi):</label>
+                <input type="number" id="compressive-strength" value="4000" required>
+            </div>
+            <div class="input-group">
+                <label for="concrete-type">Concrete Type:</label>
+                <select id="concrete-type">
+                    <option value="normal-weight">Normal Weight Concrete</option>
+                    <option value="lightweight">Lightweight Concrete</option>
+                </select>
+            </div>
+            <div class="input-group" id="density-input-group" style="display: none;">
+                <label for="concrete-density">Concrete Density (w, pcf):</label>
+                <input type="number" id="concrete-density" value="100">
+            </div>
+            <button type="submit">Calculate Modulus</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

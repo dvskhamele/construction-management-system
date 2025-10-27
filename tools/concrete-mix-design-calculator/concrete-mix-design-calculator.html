@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Mix Design Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Mix Design Calculator</h1>
+        <form id="mix-design-form">
+            <div class="input-group">
+                <label for="concrete-grade">Concrete Grade (Mix Ratio)</label>
+                <select id="concrete-grade">
+                    <option value="m15">M15 (1:2:4)</option>
+                    <option value="m20">M20 (1:1.5:3)</option>
+                    <option value="m25">M25 (1:1:2)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="concrete-volume">Total Concrete Volume (cubic feet)</label>
+                <input type="number" id="concrete-volume" required>
+            </div>
+            <button type="submit">Calculate Mix</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

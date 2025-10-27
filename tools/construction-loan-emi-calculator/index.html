@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Loan EMI Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Loan EMI Calculator</h1>
+        <p>Calculate your Equated Monthly Installments (EMI) for construction loans.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="loan-amount">Loan Amount (₹)</label>
+                <input type="number" id="loan-amount" placeholder="e.g., 5000000">
+            </div>
+            <div class="input-group">
+                <label for="interest-rate">Annual Interest Rate (%)</label>
+                <input type="number" id="interest-rate" placeholder="e.g., 9.5">
+            </div>
+            <div class="input-group">
+                <label for="loan-tenure">Loan Tenure (in years)</label>
+                <input type="number" id="loan-tenure" placeholder="e.g., 15">
+            </div>
+            <button id="calculate-emi">Calculate EMI</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

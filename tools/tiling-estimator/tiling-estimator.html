@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiling Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tiling Estimator</h1>
+        <form id="tiling-form">
+            <div class="input-group">
+                <label for="area-to-tile">Area to Tile (sq ft):</label>
+                <input type="number" id="area-to-tile" required>
+            </div>
+            <div class="input-group">
+                <label for="tile-length">Tile Length (inches):</label>
+                <input type="number" id="tile-length" required>
+            </div>
+            <div class="input-group">
+                <label for="tile-width">Tile Width (inches):</label>
+                <input type="number" id="tile-width" required>
+            </div>
+            <div class="input-group">
+                <label for="grout-gap">Grout Gap (inches):</label>
+                <input type="number" id="grout-gap" value="0.125" step="0.001" required>
+            </div>
+            <div class="input-group">
+                <label for="waste-percentage">Waste Percentage (%):</label>
+                <input type="number" id="waste-percentage" value="10" required>
+            </div>
+            <button type="submit">Estimate Tiles</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

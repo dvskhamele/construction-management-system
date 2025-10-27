@@ -1,0 +1,61 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function SlopeCalculator() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    rise: '1',
+    run: '10',
+    units: 'Meters',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/tools/slope-gradient-calculator/result?${query}`);
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Slope & Gradient Calculator
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Calculate slope based on rise and run, and convert between percentage, degrees, and ratio.
+          </p>
+        </div>
+
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="rise" className="block text-sm font-medium text-slate-700">Rise</label>
+                    <input type="number" name="rise" value={formData.rise} onChange={(e) => setFormData({...formData, rise: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="run" className="block text-sm font-medium text-slate-700">Run</label>
+                    <input type="number" name="run" value={formData.run} onChange={(e) => setFormData({...formData, run: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+            </div>
+            <div>
+                <label htmlFor="units" className="block text-sm font-medium text-slate-700">Units</label>
+                <select name="units" value={formData.units} onChange={(e) => setFormData({...formData, units: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md">
+                    <option>Meters</option>
+                    <option>Feet</option>
+                    <option>Inches</option>
+                </select>
+            </div>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Calculate Slope
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

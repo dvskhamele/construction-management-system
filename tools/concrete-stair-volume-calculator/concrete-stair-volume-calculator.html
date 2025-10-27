@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Stair Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Stair Volume Calculator</h1>
+        <form id="stair-volume-form">
+            <div class="input-group">
+                <label for="num-steps">Number of Steps:</label>
+                <input type="number" id="num-steps" required>
+            </div>
+            <div class="input-group">
+                <label for="step-rise">Step Rise (inches):</label>
+                <input type="number" id="step-rise" required>
+            </div>
+            <div class="input-group">
+                <label for="step-run">Step Run (inches):</label>
+                <input type="number" id="step-run" required>
+            </div>
+            <div class="input-group">
+                <label for="stair-width">Stair Width (feet):</label>
+                <input type="number" id="stair-width" required>
+            </div>
+            <div class="input-group">
+                <label for="slab-thickness">Slab Thickness (inches, for landing/base):</label>
+                <input type="number" id="slab-thickness" value="4" required>
+            </div>
+            <button type="submit">Calculate Volume</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

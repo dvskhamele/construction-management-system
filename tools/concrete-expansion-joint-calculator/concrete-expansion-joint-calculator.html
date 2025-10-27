@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Expansion Joint Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Expansion Joint Calculator</h1>
+        <form id="expansion-joint-form">
+            <div class="input-group">
+                <label for="slab-length">Slab Length (feet):</label>
+                <input type="number" id="slab-length" required>
+            </div>
+            <div class="input-group">
+                <label for="slab-width">Slab Width (feet):</label>
+                <input type="number" id="slab-width" required>
+            </div>
+            <div class="input-group">
+                <label for="thermal-expansion-coeff">Coefficient of Thermal Expansion (per °F, e.g., 0.0000055):</label>
+                <input type="number" id="thermal-expansion-coeff" step="0.0000001" value="0.0000055" required>
+            </div>
+            <div class="input-group">
+                <label for="temp-change">Expected Temperature Change (°F):</label>
+                <input type="number" id="temp-change" required>
+            </div>
+            <div class="input-group">
+                <label for="max-joint-movement">Maximum Allowable Joint Movement (inches):</label>
+                <input type="number" id="max-joint-movement" step="0.01" value="0.25" required>
+            </div>
+            <button type="submit">Calculate Joint Spacing</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

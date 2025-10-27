@@ -1,0 +1,25 @@
+
+{
+    "terms": [
+        {
+            "term": "RFI",
+            "definition": "Request for Information. A formal process for clarifying information in construction documents."
+        },
+        {
+            "term": "Submittal",
+            "definition": "Shop drawings, material data, samples, and product data. Submittals are required primarily for the architect and engineer to verify that the correct products will be installed on the project."
+        },
+        {
+            "term": "Change Order",
+            "definition": "A written document that modifies the plans and specifications, and/or the price of the construction contract."
+        },
+        {
+            "term": "Punch List",
+            "definition": "A list of items to be completed or corrected by the contractor."
+        },
+        {
+            "term": "Lien",
+            "definition": "A legal claim against a property for debt."
+        }
+    ]
+}

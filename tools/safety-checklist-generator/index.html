@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Safety Checklist Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Safety Checklist Generator</h1>
+        <p>Generate a custom safety checklist for your construction site.</p>
+        <div class="checklist-generator">
+            <div class="options">
+                <h2>Select Checklist Categories</h2>
+                <label><input type="checkbox" value="personal_protective_equipment"> Personal Protective Equipment (PPE)</label>
+                <label><input type="checkbox" value="fall_protection"> Fall Protection</label>
+                <label><input type="checkbox" value="scaffolding"> Scaffolding</label>
+                <label><input type="checkbox" value="electrical_safety"> Electrical Safety</label>
+                <label><input type="checkbox" value="excavation_and_trenching"> Excavation and Trenching</label>
+                <label><input type="checkbox" value="cranes_and_hoists"> Cranes and Hoists</label>
+                <label><input type="checkbox" value="fire_safety"> Fire Safety</label>
+            </div>
+            <button id="generate-checklist">Generate Checklist</button>
+            <div id="checklist-output" class="checklist-output"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function RightAngleCalculator() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    sideA: '3',
+    sideB: '4',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/tools/right-angle-calculator/result?${query}`);
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            3-4-5 Right Angle Triangle Calculator
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Quickly calculate the hypotenuse for laying out square corners using the 3-4-5 method.
+          </p>
+        </div>
+
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="sideA" className="block text-sm font-medium text-slate-700">Length of Side A</label>
+                    <input type="number" name="sideA" value={formData.sideA} onChange={(e) => setFormData({...formData, sideA: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="sideB" className="block text-sm font-medium text-slate-700">Length of Side B</label>
+                    <input type="number" name="sideB" value={formData.sideB} onChange={(e) => setFormData({...formData, sideB: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+            </div>
+            <p className="text-sm text-slate-500">Enter any two sides of a right-angle triangle (or a multiple of 3 and 4) to find the required length of the third side (hypotenuse) to create a perfect 90° corner.</p>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Calculate Hypotenuse
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

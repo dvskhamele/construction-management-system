@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cut and Fill Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cut and Fill Calculator</h1>
+        <div class="input-group">
+            <label for="area">Area of Site (in square feet):</label>
+            <input type="number" id="area" placeholder="Enter the total site area">
+        </div>
+        <div class="input-group">
+            <label for="existing-elevation">Average Existing Elevation (in feet):</label>
+            <input type="number" id="existing-elevation" placeholder="Enter the average existing elevation">
+        </div>
+        <div class="input-group">
+            <label for="proposed-elevation">Average Proposed Elevation (in feet):</label>
+            <input type="number" id="proposed-elevation" placeholder="Enter the average proposed elevation">
+        </div>
+        <button onclick="calculateCutAndFill()">Calculate Cut and Fill</button>
+        <div class="result" id="result">
+            The calculated cut and fill volumes will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

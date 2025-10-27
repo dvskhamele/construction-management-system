@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Project Cash Flow Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .cash-flow-form {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            grid-column: 1 / -1; /* Span across both columns */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #cashFlowOutput {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        #cashFlowOutput h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #cashFlowChart {
+            max-width: 100%;
+            height: 400px;
+        }
+
+        #summary {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Project Cash Flow Analyzer</h1>
+        <div class="cash-flow-form">
+            <div class="input-group">
+                <label for="initialInvestment">Initial Investment ($)</label>
+                <input type="number" id="initialInvestment" placeholder="Enter initial investment">
+            </div>
+            <div class="input-group">
+                <label for="monthlyIncome">Average Monthly Income ($)</label>
+                <input type="number" id="monthlyIncome" placeholder="Enter monthly income">
+            </div>
+            <div class="input-group">
+                <label for="monthlyExpenses">Average Monthly Expenses ($)</label>
+                <input type="number" id="monthlyExpenses" placeholder="Enter monthly expenses">
+            </div>
+            <div class="input-group">
+                <label for="projectDuration">Project Duration (months)</label>
+                <input type="number" id="projectDuration" placeholder="Enter project duration">
+            </div>
+            <button id="analyzeBtn">Analyze Cash Flow</button>
+        </div>
+        <div id="cashFlowOutput">
+            <h2>Cash Flow Analysis</h2>
+            <canvas id="cashFlowChart"></canvas>
+            <div id="summary"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value);
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value);
+            const projectDuration = parseFloat(document.getElementById('projectDuration').value);
+
+            if (isNaN(initialInvestment) || isNaN(monthlyIncome) || isNaN(monthlyExpenses) || isNaN(projectDuration)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+
+            const cashFlowData = [];
+            const labels = [];
+            let cumulativeCashFlow = -initialInvestment;
+
+            cashFlowData.push(cumulativeCashFlow);
+            labels.push('Month 0 (Investment)');
+
+            for (let i = 1; i <= projectDuration; i++) {
+                cumulativeCashFlow += (monthlyIncome - monthlyExpenses);
+                cashFlowData.push(cumulativeCashFlow);
+                labels.push(`Month ${i}`);
+            }
+
+            renderChart(labels, cashFlowData);
+            renderSummary(initialInvestment, monthlyIncome, monthlyExpenses, projectDuration, cumulativeCashFlow);
+        });
+
+        let cashFlowChartInstance = null; // To store the Chart.js instance
+
+        function renderChart(labels, data) {
+            const ctx = document.getElementById('cashFlowChart').getContext('2d');
+
+            if (cashFlowChartInstance) {
+                cashFlowChartInstance.destroy(); // Destroy existing chart before creating a new one
+            }
+
+            cashFlowChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cumulative Cash Flow',
+                        data: data,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cash Flow ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (Months)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderSummary(initialInvestment, monthlyIncome, monthlyExpenses, projectDuration, finalCashFlow) {
+            const summaryDiv = document.getElementById('summary');
+            let summaryHTML = `
+                <p><strong>Initial Investment:</strong> $${initialInvestment.toFixed(2)}</p>
+                <p><strong>Average Monthly Net Cash Flow:</strong> $${(monthlyIncome - monthlyExpenses).toFixed(2)}</p>
+                <p><strong>Project Duration:</strong> ${projectDuration} months</p>
+                <p><strong>Final Cumulative Cash Flow:</strong> $${finalCashFlow.toFixed(2)}</p>
+            `;
+
+            if (finalCashFlow > 0) {
+                summaryHTML += '<p style="color: green;">The project is projected to be profitable.</p>';
+            } else if (finalCashFlow < 0) {
+                summaryHTML += '<p style="color: red;">The project is projected to incur a loss.</p>';
+            } else {
+                summaryHTML += '<p>The project is projected to break even.</p>';
+            }
+
+            summaryDiv.innerHTML = summaryHTML;
+        }
+    </script>
+</body>
+</html>

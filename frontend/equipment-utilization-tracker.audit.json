@@ -1,0 +1,50 @@
+{
+  "tool_slug": "equipment-utilization-tracker",
+  "tool_name": "Equipment Utilization Tracker",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Equipment Utilization Tracker - BuildMate",
+    "meta_description": "Helps track and optimize the usage of construction equipment across multiple projects, identifying underutilized assets and maintenance needs.",
+    "keywords": "equipment, utilization, tracker, equipment utilization tracker, construction tool",
+    "h1_tag": "Equipment Utilization Tracker",
+    "url_structure": "/tools/equipment-utilization-tracker",
+    "canonical_url": "https://yourdomain.com/tools/equipment-utilization-tracker",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Equipment Utilization Tracker",
+      "description": "Helps track and optimize the usage of construction equipment across multiple projects, identifying underutilized assets and maintenance needs.",
+      "url": "https://yourdomain.com/tools/equipment-utilization-tracker"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Calculate",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": [
+      "Input 1"
+    ],
+    "validation_rules": "Basic validation for numbers.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Calculated result clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": [
+      "Twitter",
+      "LinkedIn",
+      "Facebook"
+    ]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction professionals.",
+    "value_proposition": "High equipment costs, inefficient asset management, unexpected breakdowns.",
+    "content_ideas": [
+      "Blog post: 'How to use Equipment Utilization Tracker'",
+      "Social media campaign: 'Optimize with Equipment Utilization Tracker'"
+    ]
+  }
+}

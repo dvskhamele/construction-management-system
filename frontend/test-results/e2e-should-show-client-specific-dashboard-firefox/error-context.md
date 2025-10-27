@@ -6,122 +6,145 @@
     - generic [ref=e5]:
       - generic [ref=e6]:
         - generic [ref=e7]:
-          - img [ref=e9]
-          - heading "BuildMate" [level=1] [ref=e11]
-        - paragraph [ref=e12]: Construction Management Portal
-      - generic [ref=e13]:
-        - heading "Sign in to your account" [level=2] [ref=e14]
-        - paragraph [ref=e15]: Manage your construction projects
-        - generic [ref=e16]:
-          - generic [ref=e17]:
-            - generic [ref=e18]: Email
-            - textbox "Email" [ref=e19]:
+          - generic [ref=e8]:
+            - img [ref=e10]
+            - heading "BuildMate" [level=1] [ref=e12]
+          - generic [ref=e13]:
+            - generic [ref=e14]: "Language:"
+            - combobox "Language:" [ref=e15]:
+              - option "English" [selected]
+              - option "हिंदी (Hindi)"
+              - option "বাংলা (Bengali)"
+              - option "తెలుగు (Telugu)"
+              - option "मराठी (Marathi)"
+              - option "தமிழ் (Tamil)"
+              - option "ગુજરાતી (Gujarati)"
+              - option "ಕನ್ನಡ (Kannada)"
+              - option "മലയാളം (Malayalam)"
+              - option "ਪੰਜਾਬੀ (Punjabi)"
+              - option "اردو (Urdu)"
+              - option "ଓଡ଼ିଆ (Odia)"
+              - option "অসমীয়া (Assamese)"
+              - option "नेपाली (Nepali)"
+              - option "سنڌي (Sindhi)"
+        - paragraph [ref=e16]: Construction Management Portal
+      - generic [ref=e17]:
+        - heading "Sign in to your account" [level=2] [ref=e18]
+        - paragraph [ref=e19]: Manage your construction projects
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic [ref=e22]: Email
+            - textbox "Email" [active] [ref=e23]:
               - /placeholder: Enter your email
-              - text: client@buildmate.com
-          - generic [ref=e20]:
-            - generic [ref=e21]: Password
-            - textbox "Password" [ref=e22]:
+          - generic [ref=e24]:
+            - generic [ref=e25]: Password
+            - textbox "Password" [ref=e26]:
               - /placeholder: Enter your password
               - text: password123
-          - generic [ref=e23]:
-            - generic [ref=e24]:
-              - checkbox "Remember me" [ref=e25]
-              - generic [ref=e26]: Remember me
-            - link "Forgot password?" [ref=e28] [cursor=pointer]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - checkbox "Remember me" [ref=e29]
+              - generic [ref=e30]: Remember me
+            - link "Forgot password?" [ref=e32] [cursor=pointer]:
               - /url: /forgot-password
-          - generic [ref=e29]: Invalid email or password
-          - button "Sign In" [active] [ref=e30] [cursor=pointer]
-        - generic [ref=e31]:
-          - generic [ref=e36]: Quick Login
-          - generic [ref=e37]:
-            - button "Admin admin" [ref=e38] [cursor=pointer]:
-              - text: Admin
-              - generic [ref=e39]: admin
-            - button "PM pm" [ref=e40] [cursor=pointer]:
-              - text: PM
-              - generic [ref=e41]: pm
-            - button "SS ss" [ref=e42] [cursor=pointer]:
-              - text: SS
-              - generic [ref=e43]: ss
-            - button "CL cl" [ref=e44] [cursor=pointer]:
-              - text: CL
-              - generic [ref=e45]: cl
-            - button "SUB sub" [ref=e46] [cursor=pointer]:
-              - text: SUB
-              - generic [ref=e47]: sub
-        - paragraph [ref=e49]:
+          - button "Sign In" [ref=e33] [cursor=pointer]
+          - generic [ref=e34]:
+            - generic [ref=e39]: Quick Login (Demo)
+            - generic [ref=e40]:
+              - button "Admin" [ref=e41] [cursor=pointer]
+              - button "PM" [ref=e42] [cursor=pointer]
+              - button "SS" [ref=e43] [cursor=pointer]
+              - button "CL" [ref=e44] [cursor=pointer]
+              - button "SUB" [ref=e45] [cursor=pointer]
+        - paragraph [ref=e47]:
           - text: Don't have an account?
-          - link "Sign up" [ref=e50] [cursor=pointer]:
+          - link "Sign up" [ref=e48] [cursor=pointer]:
             - /url: /signup
-      - generic [ref=e52]:
-        - generic [ref=e53]: © 2025 BuildMate. Construction Process Automation
-        - generic [ref=e54]:
-          - link "Features" [ref=e55] [cursor=pointer]:
+      - generic [ref=e50]:
+        - generic [ref=e51]: © 2025 BuildMate. Construction Process Automation
+        - generic [ref=e52]:
+          - link "Features" [ref=e53] [cursor=pointer]:
             - /url: /features
-          - link "Pricing" [ref=e56] [cursor=pointer]:
+          - link "Pricing" [ref=e54] [cursor=pointer]:
             - /url: /pricing
-          - link "Contact" [ref=e57] [cursor=pointer]:
+          - link "Contact" [ref=e55] [cursor=pointer]:
             - /url: /contact
-    - contentinfo [ref=e58]:
-      - generic [ref=e59]:
-        - generic [ref=e60]:
-          - generic [ref=e61]:
-            - generic [ref=e62]:
-              - img [ref=e64]
-              - generic [ref=e66]: BuildMate
-            - paragraph [ref=e67]: Delhi's premier construction management platform for construction professionals.
-          - generic [ref=e68]:
-            - heading "Product" [level=3] [ref=e69]
-            - list [ref=e70]:
+    - contentinfo [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - img [ref=e62]
+              - generic [ref=e64]: BuildMate
+            - paragraph [ref=e65]: Delhi's premier construction management platform for construction professionals.
+          - generic [ref=e66]:
+            - heading "Product" [level=3] [ref=e67]
+            - list [ref=e68]:
+              - listitem [ref=e69]:
+                - link "Features" [ref=e70] [cursor=pointer]:
+                  - /url: "#"
               - listitem [ref=e71]:
-                - link "Features" [ref=e72] [cursor=pointer]:
+                - link "Pricing" [ref=e72] [cursor=pointer]:
                   - /url: "#"
               - listitem [ref=e73]:
-                - link "Pricing" [ref=e74] [cursor=pointer]:
+                - link "Templates" [ref=e74] [cursor=pointer]:
                   - /url: "#"
               - listitem [ref=e75]:
-                - link "Templates" [ref=e76] [cursor=pointer]:
+                - link "Releases" [ref=e76] [cursor=pointer]:
                   - /url: "#"
               - listitem [ref=e77]:
-                - link "Releases" [ref=e78] [cursor=pointer]:
-                  - /url: "#"
-          - generic [ref=e79]:
-            - heading "Company" [level=3] [ref=e80]
-            - list [ref=e81]:
-              - listitem [ref=e82]:
-                - link "About" [ref=e83] [cursor=pointer]:
+                - link "Safety Checklist" [ref=e78] [cursor=pointer]:
+                  - /url: /tools/construction-safety-checklist
+              - listitem [ref=e79]:
+                - link "Schedule Variance Calculator" [ref=e80] [cursor=pointer]:
+                  - /url: /tools/construction-schedule-variance-calculator
+              - listitem [ref=e81]:
+                - link "Profitability Calculator" [ref=e82] [cursor=pointer]:
+                  - /url: /tools/construction-profitability-calculator
+              - listitem [ref=e83]:
+                - link "Equipment Utilization Tracker" [ref=e84] [cursor=pointer]:
+                  - /url: /tools/construction-equipment-utilization-tracker
+              - listitem [ref=e85]:
+                - link "Defect Tracker" [ref=e86] [cursor=pointer]:
+                  - /url: /tools/construction-defect-tracker
+              - listitem [ref=e87]:
+                - link "Milestone Tracker" [ref=e88] [cursor=pointer]:
+                  - /url: /tools/construction-project-milestone-tracker
+          - generic [ref=e89]:
+            - heading "Company" [level=3] [ref=e90]
+            - list [ref=e91]:
+              - listitem [ref=e92]:
+                - link "About" [ref=e93] [cursor=pointer]:
                   - /url: "#about"
-              - listitem [ref=e84]:
-                - link "Contact" [ref=e85] [cursor=pointer]:
+              - listitem [ref=e94]:
+                - link "Contact" [ref=e95] [cursor=pointer]:
                   - /url: "#contact"
-              - listitem [ref=e86]:
-                - link "FAQs" [ref=e87] [cursor=pointer]:
+              - listitem [ref=e96]:
+                - link "FAQs" [ref=e97] [cursor=pointer]:
                   - /url: "#faqs"
-              - listitem [ref=e88]:
-                - link "Privacy Policy" [ref=e89] [cursor=pointer]:
+              - listitem [ref=e98]:
+                - link "Privacy Policy" [ref=e99] [cursor=pointer]:
                   - /url: "#"
-          - generic [ref=e90]:
-            - heading "Support" [level=3] [ref=e91]
-            - list [ref=e92]:
-              - listitem [ref=e93]:
-                - link "Documentation" [ref=e94] [cursor=pointer]:
+          - generic [ref=e100]:
+            - heading "Support" [level=3] [ref=e101]
+            - list [ref=e102]:
+              - listitem [ref=e103]:
+                - link "Documentation" [ref=e104] [cursor=pointer]:
                   - /url: "#"
-              - listitem [ref=e95]:
-                - link "API Reference" [ref=e96] [cursor=pointer]:
+              - listitem [ref=e105]:
+                - link "API Reference" [ref=e106] [cursor=pointer]:
                   - /url: "#"
-              - listitem [ref=e97]:
-                - link "Status" [ref=e98] [cursor=pointer]:
+              - listitem [ref=e107]:
+                - link "Status" [ref=e108] [cursor=pointer]:
                   - /url: "#"
-              - listitem [ref=e99]:
-                - link "Help Center" [ref=e100] [cursor=pointer]:
+              - listitem [ref=e109]:
+                - link "Help Center" [ref=e110] [cursor=pointer]:
                   - /url: "#"
-        - paragraph [ref=e102]: © 2025 BuildMate by Signimus Technologies. All rights reserved.
-  - status [ref=e103]:
-    - generic [ref=e104]:
-      - img [ref=e106]
-      - generic [ref=e108]:
-        - text: Static route
-        - button "Hide static indicator" [ref=e109] [cursor=pointer]:
-          - img [ref=e110]
+        - paragraph [ref=e112]: © 2025 BuildMate by Signimus Technologies. All rights reserved.
   - alert [ref=e113]
+  - generic [ref=e116] [cursor=pointer]:
+    - img [ref=e117]
+    - generic [ref=e121]: 2 errors
+    - button "Hide Errors" [ref=e122]:
+      - img [ref=e123]
 ```

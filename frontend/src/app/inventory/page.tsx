@@ -2,17 +2,21 @@
 
 import React, { useState, useEffect } from 'react'
 import UserLayout from '../../components/UserLayout'
+import constructionApiService from '../../utils/constructionApiService'
 
 export default function Inventory() {
   const [inventory, setInventory] = useState<any[]>([])
+  const [locations, setLocations] = useState<any[]>([])
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedStatus, setSelectedStatus] = useState('')
+  const [selectedLocation, setSelectedLocation] = useState('')
   const [sortBy, setSortBy] = useState('name')
   const [sortOrder, setSortOrder] = useState('asc')
   const [user, setUser] = useState<any>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddItemModal, setShowAddItemModal] = useState(false)
   const [showOrderModal, setShowOrderModal] = useState(false)
+  const [showLocationModal, setShowLocationModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [newItem, setNewItem] = useState({
     name: '',
@@ -20,7 +24,13 @@ export default function Inventory() {
     quantity: 0,
     minStock: 10,
     supplier: '',
-    price: 0
+    price: 0,
+    location: ''
+  })
+  const [newLocation, setNewLocation] = useState({
+    name: '',
+    address: '',
+    type: 'warehouse' // warehouse, site, store
   })
 
   useEffect(() => {
@@ -32,21 +42,48 @@ export default function Inventory() {
       setUser({ name: 'Admin User', role: 'ADMIN' } as any)
     }
 
-    // Mock data for prototype
-    const mockInventory = [
-      { id: 1, name: 'Steel Beams', category: 'Structural Materials', quantity: 150, minStock: 100, supplier: 'Steel Suppliers Inc.', price: 129.99, lastOrdered: '2023-08-15' },
-      { id: 2, name: 'Concrete Mix', category: 'Foundation Materials', quantity: 85, minStock: 50, supplier: 'Concrete Co.', price: 35.50, lastOrdered: '2023-08-20' },
-      { id: 3, name: 'Electrical Wiring', category: 'Electrical Materials', quantity: 2500, minStock: 2000, supplier: 'ElectroSupply', price: 0.75, lastOrdered: '2023-09-01' },
-      { id: 4, name: 'Safety Helmets', category: 'Safety Equipment', quantity: 40, minStock: 30, supplier: 'SafetyFirst', price: 28.99, lastOrdered: '2023-08-25' },
-      { id: 5, name: 'Wood Planks', category: 'Framing Materials', quantity: 750, minStock: 500, supplier: 'Timber Works', price: 19.25, lastOrdered: '2023-07-30' },
-      { id: 6, name: 'Drywall Sheets', category: 'Finishing Materials', quantity: 95, minStock: 80, supplier: 'WallPro', price: 24.50, lastOrdered: '2023-08-10' },
-      { id: 7, name: 'Paint Cans', category: 'Finishing Materials', quantity: 45, minStock: 50, supplier: 'ColorCo', price: 43.75, lastOrdered: '2023-08-20' },
-      { id: 8, name: 'Power Tools', category: 'Equipment', quantity: 15, minStock: 20, supplier: 'ToolTech', price: 122.50, lastOrdered: '2023-09-05' },
-      { id: 9, name: 'Work Gloves', category: 'Safety Equipment', quantity: 120, minStock: 100, supplier: 'SafetyFirst', price: 5.99, lastOrdered: '2023-08-28' },
-      { id: 10, name: 'Plumbing Pipes', category: 'Plumbing Materials', quantity: 600, minStock: 500, supplier: 'PipePro', price: 12.75, lastOrdered: '2023-08-05' }
-    ]
-    
-    setInventory(mockInventory)
+    // Load inventory using the API service (locations not supported in this API)
+    const loadInventory = async () => {
+      try {
+        const loadedInventory = await constructionApiService.getInventory();
+        setInventory(loadedInventory.inventory);
+        
+        // Use mock locations since the API doesn't support locations
+        const mockLocations = [
+          { id: 1, name: 'Main Warehouse', address: '123 Construction Ave, Delhi', type: 'warehouse', capacity: 10000 },
+          { id: 2, name: 'Site A - Downtown Office', address: '456 Business St, Delhi', type: 'construction-site', capacity: 5000 },
+          { id: 3, name: 'Site B - Residency Project', address: '789 Residential Rd, Delhi', type: 'construction-site', capacity: 3000 },
+          { id: 4, name: 'Equipment Yard', address: '321 Industrial Zone, Delhi', type: 'yard', capacity: 8000 }
+        ];
+        setLocations(mockLocations);
+      } catch (error) {
+        console.error('Error loading inventory:', error);
+        // Fallback to mock data if API fails
+        const mockLocations = [
+          { id: 1, name: 'Main Warehouse', address: '123 Construction Ave, Delhi', type: 'warehouse', capacity: 10000 },
+          { id: 2, name: 'Site A - Downtown Office', address: '456 Business St, Delhi', type: 'construction-site', capacity: 5000 },
+          { id: 3, name: 'Site B - Residency Project', address: '789 Residential Rd, Delhi', type: 'construction-site', capacity: 3000 },
+          { id: 4, name: 'Equipment Yard', address: '321 Industrial Zone, Delhi', type: 'yard', capacity: 8000 }
+        ];
+        
+        const mockInventory = [
+          { id: 1, name: 'Steel Beams', category: 'Structural Materials', quantity: 150, minStock: 100, supplier: 'Steel Suppliers Inc.', price: 129.99, lastOrdered: '2023-08-15', locationId: 1, location: 'Main Warehouse' },
+          { id: 2, name: 'Concrete Mix', category: 'Foundation Materials', quantity: 85, minStock: 50, supplier: 'Concrete Co.', price: 35.50, lastOrdered: '2023-08-20', locationId: 2, location: 'Site A - Downtown Office' },
+          { id: 3, name: 'Electrical Wiring', category: 'Electrical Materials', quantity: 2500, minStock: 2000, supplier: 'ElectroSupply', price: 0.75, lastOrdered: '2023-09-01', locationId: 1, location: 'Main Warehouse' },
+          { id: 4, name: 'Safety Helmets', category: 'Safety Equipment', quantity: 40, minStock: 30, supplier: 'SafetyFirst', price: 28.99, lastOrdered: '2023-08-25', locationId: 4, location: 'Equipment Yard' },
+          { id: 5, name: 'Wood Planks', category: 'Framing Materials', quantity: 750, minStock: 500, supplier: 'Timber Works', price: 19.25, lastOrdered: '2023-07-30', locationId: 1, location: 'Main Warehouse' },
+          { id: 6, name: 'Drywall Sheets', category: 'Finishing Materials', quantity: 95, minStock: 80, supplier: 'WallPro', price: 24.50, lastOrdered: '2023-08-10', locationId: 2, location: 'Site A - Downtown Office' },
+          { id: 7, name: 'Paint Cans', category: 'Finishing Materials', quantity: 45, minStock: 50, supplier: 'ColorCo', price: 43.75, lastOrdered: '2023-08-20', locationId: 3, location: 'Site B - Residency Project' },
+          { id: 8, name: 'Power Tools', category: 'Equipment', quantity: 15, minStock: 20, supplier: 'ToolTech', price: 122.50, lastOrdered: '2023-09-05', locationId: 4, location: 'Equipment Yard' },
+          { id: 9, name: 'Work Gloves', category: 'Safety Equipment', quantity: 120, minStock: 100, supplier: 'SafetyFirst', price: 5.99, lastOrdered: '2023-08-28', locationId: 1, location: 'Main Warehouse' },
+          { id: 10, name: 'Plumbing Pipes', category: 'Plumbing Materials', quantity: 600, minStock: 500, supplier: 'PipePro', price: 12.75, lastOrdered: '2023-08-05', locationId: 2, location: 'Site A - Downtown Office' }
+        ];
+        setInventory(mockInventory);
+        setLocations(mockLocations);
+      }
+    };
+
+    loadInventory();
   }, [])
 
   // Filter inventory based on selected filters and search term
@@ -57,12 +94,16 @@ export default function Inventory() {
     const statusMatch = selectedStatus 
       ? (selectedStatus === 'low' ? item.quantity <= item.minStock : item.quantity > item.minStock)
       : true
+    const locationMatch = selectedLocation
+      ? item.locationId === parseInt(selectedLocation)
+      : true
     const searchMatch = searchTerm 
       ? item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
         item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.supplier.toLowerCase().includes(searchTerm.toLowerCase())
+        item.supplier.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.location.toLowerCase().includes(searchTerm.toLowerCase())
       : true
-    return categoryMatch && statusMatch && searchMatch
+    return categoryMatch && statusMatch && locationMatch && searchMatch
   })
 
   // Sort inventory
@@ -76,37 +117,73 @@ export default function Inventory() {
 
   // Get unique categories for filter
   const categories = Array.from(new Set(inventory.map((item: any) => item.category)))
+  
+  // Get unique locations for filter
+  const locationOptions = locations.map((location: any) => ({
+    id: location.id,
+    name: location.name
+  }))
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     window.location.href = '/'
   }
 
-  const handleAddItem = () => {
-    const newId = inventory.length > 0 ? Math.max(...inventory.map((i: any) => i.id)) + 1 : 1
-    const itemToAdd = {
-      ...newItem,
-      id: newId,
-      lastOrdered: new Date().toISOString().split('T')[0]
+  const handleAddItem = async () => {
+    try {
+      const newItemWithLocation = {
+        ...newItem,
+        id: inventory.length + 1, // Generate ID for mock data
+        lastOrdered: new Date().toISOString().split('T')[0],
+        locationId: locations.find(loc => loc.name === newItem.location)?.id || 1 // Find location ID or default to 1
+      };
+      
+      // Update local state (since there's no API method)
+      setInventory([...inventory, newItemWithLocation]);
+      
+      // Reset form and close modal
+      setNewItem({
+        name: '',
+        category: '',
+        quantity: 0,
+        minStock: 10,
+        supplier: '',
+        price: 0,
+        location: ''
+      });
+      setShowAddItemModal(false);
+    } catch (error) {
+      console.error('Error adding inventory item:', error);
+      alert('Error adding inventory item. Please try again.');
     }
-    
-    setInventory([...inventory, itemToAdd])
-    
-    // Reset form and close modal
-    setNewItem({
-      name: '',
-      category: '',
-      quantity: 0,
-      minStock: 10,
-      supplier: '',
-      price: 0
-    })
-    setShowAddItemModal(false)
   }
 
   const openOrderModal = (item: any) => {
     setSelectedItem(item)
     setShowOrderModal(true)
+  }
+
+  const handleAddLocation = async () => {
+    try {
+      const newLocationWithId = {
+        ...newLocation,
+        id: locations.length + 1 // Generate ID for mock data
+      };
+      
+      // Update local state (since there's no API method)
+      setLocations([...locations, newLocationWithId]);
+      
+      // Reset form and close modal
+      setNewLocation({
+        name: '',
+        address: '',
+        type: 'warehouse'
+      });
+      setShowLocationModal(false);
+    } catch (error) {
+      console.error('Error adding location:', error);
+      alert('Error adding location. Please try again.');
+    }
   }
 
   const getStatusClass = (quantity: number, minStock: number) => {
@@ -175,14 +252,14 @@ export default function Inventory() {
 
         {/* Filters and Sorting */}
         <div className="bg-white rounded-xl shadow p-4 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             <div>
               <label htmlFor="search" className="block text-sm font-medium text-slate-700 mb-1">Search</label>
               <input
                 type="text"
                 id="search"
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Material name, category, or supplier"
+                placeholder="Material name, category, supplier, or location"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -198,6 +275,20 @@ export default function Inventory() {
                 <option value="">All Categories</option>
                 {categories.map((category: string) => (
                   <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="locationFilter" className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+              <select
+                id="locationFilter"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+              >
+                <option value="">All Locations</option>
+                {locationOptions.map((location: any) => (
+                  <option key={location.id} value={location.id}>{location.name}</option>
                 ))}
               </select>
             </div>
@@ -224,6 +315,7 @@ export default function Inventory() {
               >
                 <option value="name">Name</option>
                 <option value="category">Category</option>
+                <option value="location">Location</option>
                 <option value="quantity">Quantity</option>
                 <option value="price">Price</option>
                 <option value="lastOrdered">Last Ordered</option>
@@ -235,6 +327,7 @@ export default function Inventory() {
                 onClick={() => {
                   setSelectedCategory('')
                   setSelectedStatus('')
+                  setSelectedLocation('')
                   setSearchTerm('')
                   setSortBy('name')
                   setSortOrder('asc')
@@ -288,6 +381,12 @@ export default function Inventory() {
                 
                 <div className="mt-4">
                   <div className="flex justify-between text-sm">
+                    <span className="text-slate-600">Location</span>
+                    <span className="font-medium text-slate-800">
+                      {locations.find(loc => loc.id === item.locationId)?.name || item.location}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
                     <span className="text-slate-600">Supplier</span>
                     <span className="font-medium text-slate-800">{item.supplier}</span>
                   </div>
@@ -298,6 +397,10 @@ export default function Inventory() {
                   <div className="flex justify-between text-sm mt-1">
                     <span className="text-slate-600">Last Ordered</span>
                     <span className="font-medium text-slate-800">{new Date(item.lastOrdered).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
+                    <span className="text-slate-600">Consumption Rate</span>
+                    <span className="font-medium text-slate-800">{item.consumptionRate || 0} units/day</span>
                   </div>
                 </div>
                 
@@ -350,10 +453,12 @@ export default function Inventory() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Item</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Supplier</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Price</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Stock</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Consumption Rate</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Last Ordered</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -370,6 +475,9 @@ export default function Inventory() {
                       {item.category}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {locations.find(loc => loc.id === item.locationId)?.name || item.location}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                       {item.supplier}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
@@ -383,6 +491,9 @@ export default function Inventory() {
                         {getStatusText(item.quantity, item.minStock)}
                       </span>
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {item.consumptionRate || 0} units/day
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                       {new Date(item.lastOrdered).toLocaleDateString()}
                     </td>
@@ -390,13 +501,19 @@ export default function Inventory() {
                       <div className="flex space-x-2">
                         <button 
                           className="text-teal-600 hover:text-teal-900"
-                          onClick={() => openOrderModal(item)}
+                          onClick={() => {
+                            // Navigate to consumption tracker with pre-selected item
+                            window.location.href = `/consumption-tracker?itemId=${item.id}`;
+                          }}
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
                           </svg>
                         </button>
-                        <button className="text-slate-600 hover:text-teal-600">
+                        <button 
+                          className="text-slate-600 hover:text-teal-600"
+                          onClick={() => openOrderModal(item)}
+                        >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                           </svg>
@@ -419,29 +536,54 @@ export default function Inventory() {
         <div className="mt-8 bg-white rounded-xl shadow p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-slate-800">Inventory Insights</h3>
-            <button className="text-sm text-teal-600 hover:text-teal-800 font-medium">View Detailed Reports</button>
+            <div className="flex space-x-3">
+              <button 
+                className="text-sm text-teal-600 hover:text-teal-800 font-medium"
+                onClick={() => {
+                  // Navigate to consumption tracker
+                  window.location.href = '/consumption-tracker';
+                }}
+              >
+                View Consumption
+              </button>
+              <button 
+                className="text-sm text-teal-600 hover:text-teal-800 font-medium"
+                onClick={() => setShowLocationModal(true)}
+              >
+                Manage Locations
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="border border-rose-200 bg-rose-50 rounded-lg p-4 hover:bg-rose-100 transition duration-300 cursor-pointer">
               <div className="flex justify-between items-start">
                 <h4 className="font-medium text-rose-800">Low Stock Alerts</h4>
               </div>
-              <p className="text-xl font-bold text-rose-700 mt-2">3 Items</p>
+              <p className="text-xl font-bold text-rose-700 mt-2">{inventory.filter(i => i.quantity <= i.minStock).length}</p>
               <p className="text-sm text-rose-600">Require immediate attention</p>
             </div>
             <div className="border border-blue-200 bg-blue-50 rounded-lg p-4 hover:bg-blue-100 transition duration-300 cursor-pointer">
               <div className="flex justify-between items-start">
-                <h4 className="font-medium text-blue-800">Top Categories</h4>
+                <h4 className="font-medium text-blue-800">Total Items</h4>
               </div>
-              <p className="text-xl font-bold text-blue-700 mt-2">Toiletries</p>
-              <p className="text-sm text-blue-600">32% of inventory</p>
+              <p className="text-xl font-bold text-blue-700 mt-2">{inventory.length}</p>
+              <p className="text-sm text-blue-600">In all locations</p>
             </div>
             <div className="border border-emerald-200 bg-emerald-50 rounded-lg p-4 hover:bg-emerald-100 transition duration-300 cursor-pointer">
               <div className="flex justify-between items-start">
-                <h4 className="font-medium text-emerald-800">Monthly Spend</h4>
+                <h4 className="font-medium text-emerald-800">Total Value</h4>
               </div>
-              <p className="text-xl font-bold text-emerald-700 mt-2">₹12,450</p>
-              <p className="text-sm text-emerald-600">↓ 5% from last month</p>
+              <p className="text-xl font-bold text-emerald-700 mt-2">
+                ₹{inventory.reduce((total, item) => total + (item.quantity * item.price), 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              </p>
+              <p className="text-sm text-emerald-600">Current inventory value</p>
+            </div>
+            <div className="border border-amber-200 bg-amber-50 rounded-lg p-4 hover:bg-amber-100 transition duration-300 cursor-pointer">
+              <div className="flex justify-between items-start">
+                <h4 className="font-medium text-amber-800">Locations</h4>
+              </div>
+              <p className="text-xl font-bold text-amber-700 mt-2">{locations.length}</p>
+              <p className="text-sm text-amber-600">Active locations</p>
             </div>
           </div>
         </div>
@@ -484,6 +626,19 @@ export default function Inventory() {
                     <option value="">Select category</option>
                     {categories.map((category: string) => (
                       <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                  <select
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={newItem.location}
+                    onChange={(e) => setNewItem({...newItem, location: e.target.value})}
+                  >
+                    <option value="">Select location</option>
+                    {locations.map((location: any) => (
+                      <option key={location.id} value={location.name}>{location.name}</option>
                     ))}
                   </select>
                 </div>
@@ -584,6 +739,18 @@ export default function Inventory() {
                   <span className="font-medium text-slate-800">{selectedItem.minStock}</span>
                 </div>
                 
+                <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                  <span className="text-slate-700">Consumption Rate</span>
+                  <span className="font-medium text-slate-800">{selectedItem.consumptionRate || 0} units/day</span>
+                </div>
+                
+                <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                  <span className="text-slate-700">Location</span>
+                  <span className="font-medium text-slate-800">
+                    {locations.find(loc => loc.id === selectedItem.locationId)?.name || selectedItem.location}
+                  </span>
+                </div>
+                
                 <div className="border-t border-slate-200 pt-4">
                   <h4 className="font-medium text-slate-800 mb-2">Order Details</h4>
                   <div className="grid grid-cols-2 gap-4">
@@ -630,6 +797,76 @@ export default function Inventory() {
                 onClick={() => setShowOrderModal(false)}
               >
                 Place Order
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Location Modal */}
+      {showLocationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-slate-800">Add New Location</h3>
+              <button 
+                onClick={() => setShowLocationModal(false)}
+                className="text-slate-400 hover:text-slate-500"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Location Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Enter location name"
+                    value={newLocation.name}
+                    onChange={(e) => setNewLocation({...newLocation, name: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Location Type</label>
+                  <select
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    value={newLocation.type}
+                    onChange={(e) => setNewLocation({...newLocation, type: e.target.value})}
+                  >
+                    <option value="warehouse">Warehouse</option>
+                    <option value="construction-site">Construction Site</option>
+                    <option value="yard">Yard</option>
+                    <option value="store">Store</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Address</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Enter location address"
+                    value={newLocation.address}
+                    onChange={(e) => setNewLocation({...newLocation, address: e.target.value})}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="px-6 py-4 bg-slate-50 rounded-b-2xl flex justify-end space-x-3">
+              <button 
+                className="px-4 py-2 text-slate-700 hover:text-slate-900 font-medium rounded-lg"
+                onClick={() => setShowLocationModal(false)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-teal-700 transition duration-300"
+                onClick={handleAddLocation}
+              >
+                Add Location
               </button>
             </div>
           </div>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drywall Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Drywall Calculator</h1>
+        <form id="drywall-form">
+            <div class="input-group">
+                <label for="room-width">Room Width (feet)</label>
+                <input type="number" id="room-width" required>
+            </div>
+            <div class="input-group">
+                <label for="room-length">Room Length (feet)</label>
+                <input type="number" id="room-length" required>
+            </div>
+            <div class="input-group">
+                <label for="room-height">Room Height (feet)</label>
+                <input type="number" id="room-height" required>
+            </div>
+            <div class="input-group">
+                <label for="sheet-size">Drywall Sheet Size</label>
+                <select id="sheet-size">
+                    <option value="32">4' x 8'</option>
+                    <option value="48">4' x 12'</option>
+                </select>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

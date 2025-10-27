@@ -33,11 +33,11 @@ export default function Pricing() {
       id: 'basic',
       name: 'BuildMate Basic',
       price: '₹999/month',
-      priceAnnual: '₹8,888/year',
-      originalPrice: '₹2,999/month',
-      originalPriceAnnual: '₹35,555/year',
-      discount: '67% off',
-      description: 'Essential construction management features for small contractors',
+      priceAnnual: '₹999/month',
+      originalPrice: null,
+      originalPriceAnnual: null,
+      discount: null,
+      description: 'Essential construction management features for small contractors across India',
       features: [
         'Project tracking with milestone management',
         'Basic crew and equipment tracking',
@@ -46,6 +46,7 @@ export default function Pricing() {
         'Email notifications',
         'Up to 5 projects',
         'Basic progress tracking',
+        'Vastu guidance for Indian construction practices',
         'Customizable as per your needs',
         'Fully end-to-end construction management'
       ],
@@ -55,12 +56,12 @@ export default function Pricing() {
     {
       id: 'professional',
       name: 'BuildMate Professional',
-      price: '₹999/month',
-      priceAnnual: '₹8,888/year',
-      originalPrice: '₹2,999/month',
-      originalPriceAnnual: '₹35,555/year',
-      discount: '67% off',
-      description: 'Comprehensive solution for growing construction businesses',
+      price: '₹12,000/year',
+      priceAnnual: '₹12,000/year',
+      originalPrice: null,
+      originalPriceAnnual: null,
+      discount: null,
+      description: 'Comprehensive solution for growing construction businesses across India',
       features: [
         'All Basic features',
         'Advanced resource management',
@@ -70,21 +71,22 @@ export default function Pricing() {
         'Up to 20 projects',
         'Priority support',
         'Custom project templates',
+        'Vastu guidance for Indian construction practices',
         'Customizable as per your needs',
         'Fully end-to-end construction management'
       ],
-      cta: 'Start 14-Day Trial',
+      cta: 'Start Free Trial',
       popular: true
     },
     {
       id: 'enterprise',
       name: 'BuildMate Enterprise',
-      price: '₹999/month',
-      priceAnnual: '₹8,888/year',
-      originalPrice: '₹2,999/month',
-      originalPriceAnnual: '₹35,555/year',
-      discount: '67% off',
-      description: 'Complete construction management platform',
+      price: '₹24,000/year',
+      priceAnnual: '₹24,000/year',
+      originalPrice: null,
+      originalPriceAnnual: null,
+      discount: null,
+      description: 'Complete construction management platform for large enterprises across India',
       features: [
         'All Professional features',
         'Unlimited projects',
@@ -95,6 +97,7 @@ export default function Pricing() {
         'Custom training sessions',
         'White-label options',
         'Unlimited storage for documentation',
+        'Vastu guidance for Indian construction practices',
         'Customizable as per your needs',
         'Fully end-to-end construction management'
       ],
@@ -190,15 +193,14 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* Pricing Toggle */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-full p-1 shadow-md">
-            <div className="flex items-center">
-              <span className="px-4 py-2 text-sm font-medium text-slate-700">Monthly</span>
-              <span className="px-4 py-2 text-sm font-medium text-slate-700">Annual</span>
-              <div className="absolute w-24 h-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full transform transition-transform duration-300"></div>
-            </div>
-          </div>
+        {/* Pricing information */}
+        <div className="text-center mb-8">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Simple, transparent pricing. Basic plan billed monthly, Professional and Enterprise plans billed annually.
+          </p>
+          <p className="text-sm text-slate-500 mt-2">
+            USD conversions are approximate based on 1 USD = ₹83.33
+          </p>
         </div>
 
         {/* Pricing Plans */}
@@ -221,11 +223,23 @@ export default function Pricing() {
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
                 <div className="mb-4">
                   <div className="flex items-baseline">
-                    <span className="text-4xl font-extrabold text-slate-900">{plan.priceAnnual}</span>
-                    <span className="text-slate-600 ml-2">/year</span>
+                    <span className="text-4xl font-extrabold text-slate-900">
+                      {plan.id === 'basic' ? plan.price : plan.priceAnnual}
+                    </span>
+                    {plan.id === 'basic' ? (
+                      <span className="text-slate-600 ml-2">/month</span>
+                    ) : (
+                      <span className="text-slate-600 ml-2">/year</span>
+                    )}
                   </div>
-                  <div className="text-sm text-slate-500 line-through">{plan.originalPriceAnnual}/year</div>
-                  <div className="text-sm text-emerald-600 font-medium mt-1">{plan.discount}</div>
+                  <div className="text-slate-600 text-sm mt-1">
+                    {plan.id === 'basic' ? 
+                      "(~$12/month)" : 
+                      plan.id === 'professional' ? 
+                      "(~$144/year)" : 
+                      "(~$288/year)"
+                    }
+                  </div>
                 </div>
                 <p className="text-slate-600 mb-6">{plan.description}</p>
                 <ul className="space-y-3 mb-8">
@@ -234,7 +248,7 @@ export default function Pricing() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="ml-2 text-slate-700">{feature}</span>
+                      <span className="ml-2 text-slate-800 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -290,7 +304,7 @@ export default function Pricing() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-teal-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="ml-2 text-sm text-slate-700">{permission}</span>
+                      <span className="ml-2 text-sm text-slate-800 font-medium">{permission}</span>
                     </li>
                   ))}
                 </ul>

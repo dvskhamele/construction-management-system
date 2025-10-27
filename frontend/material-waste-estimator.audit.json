@@ -1,0 +1,45 @@
+{
+  "tool_slug": "material-waste-estimator",
+  "tool_name": "Material Waste Estimator",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Material Waste Estimator - BuildMate",
+    "meta_description": "Estimate material waste for concrete, lumber, drywall, and tiles. Optimize material usage and reduce costs on your construction projects with BuildMate's free tool.",
+    "keywords": "material waste calculator, construction waste, concrete waste, lumber waste, drywall waste, tile waste, material optimization, cost reduction",
+    "h1_tag": "Material Waste Estimator",
+    "url_structure": "/tools/material-waste-estimator",
+    "canonical_url": "https://yourdomain.com/tools/material-waste-estimator",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Material Waste Estimator",
+      "description": "Estimate material waste for concrete, lumber, drywall, and tiles. Optimize material usage and reduce costs on your construction projects.",
+      "url": "https://yourdomain.com/tools/material-waste-estimator"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Estimate Waste",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": ["Material Type", "Length", "Width", "Thickness (for concrete)", "Waste Percentage"],
+    "validation_rules": "All fields required, positive numbers. Thickness required for concrete.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Estimated Waste Volume and Cost clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": ["Twitter", "LinkedIn", "Facebook"]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels, material type dropdown.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction project managers, site managers, contractors, material procurement specialists.",
+    "value_proposition": "Reduce material costs and improve project profitability by accurately estimating and minimizing waste.",
+    "content_ideas": [
+      "Blog post: '5 Ways to Reduce Construction Material Waste'",
+      "Social media campaign: 'Stop Wasting Materials, Start Saving Money'",
+      "Email campaign: 'Your Material Waste Analysis is Ready'"
+    ]
+  }
+}

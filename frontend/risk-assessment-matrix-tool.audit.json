@@ -1,0 +1,50 @@
+{
+  "tool_slug": "risk-assessment-matrix-tool",
+  "tool_name": "Risk Assessment Matrix Tool",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Risk Assessment Matrix Tool - BuildMate",
+    "meta_description": "A tool to identify, assess, and prioritize potential project risks, allowing for the development of mitigation strategies.",
+    "keywords": "risk, assessment, matrix, tool, risk assessment matrix tool, construction tool",
+    "h1_tag": "Risk Assessment Matrix Tool",
+    "url_structure": "/tools/risk-assessment-matrix-tool",
+    "canonical_url": "https://yourdomain.com/tools/risk-assessment-matrix-tool",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Risk Assessment Matrix Tool",
+      "description": "A tool to identify, assess, and prioritize potential project risks, allowing for the development of mitigation strategies.",
+      "url": "https://yourdomain.com/tools/risk-assessment-matrix-tool"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Calculate",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": [
+      "Input 1"
+    ],
+    "validation_rules": "Basic validation for numbers.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Calculated result clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": [
+      "Twitter",
+      "LinkedIn",
+      "Facebook"
+    ]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction professionals.",
+    "value_proposition": "Unforeseen project issues, budget overruns due to unmanaged risks.",
+    "content_ideas": [
+      "Blog post: 'How to use Risk Assessment Matrix Tool'",
+      "Social media campaign: 'Optimize with Risk Assessment Matrix Tool'"
+    ]
+  }
+}

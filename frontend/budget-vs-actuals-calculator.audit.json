@@ -1,0 +1,35 @@
+{
+  "tool_slug": "budget-vs-actuals-calculator",
+  "audit_date": "2025-10-21T23:05:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Budget vs. Actuals Calculator",
+      "status": "pass",
+      "recommendation": "Title is highly specific, targeting a key financial pain point for project managers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Variance",
+      "status": "pass",
+      "recommendation": "CTA is clear and directly communicates the tool's primary benefit."
+    },
+    "lead_capture": {
+      "offer": "Get a more detailed variance analysis report and tips on cost control sent to your email.",
+      "status": "pass",
+      "recommendation": "Lead magnet offers clear, actionable value that logically follows from the tool's results."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 10,
+      "status": "pass",
+      "recommendation": "Form is clearly broken down by cost category, making it easy to fill out despite the number of fields."
+    },
+    "results_clarity": {
+      "visualizations": ["Table", "BarChart"],
+      "status": "pass",
+      "recommendation": "Results are excellent. The top-line summary gives an instant answer, the color-coded table provides detailed variance analysis, and the bar chart offers a quick visual comparison."
+    }
+  }
+}

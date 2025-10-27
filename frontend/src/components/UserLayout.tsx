@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Sidebar from '../components/Sidebar'
-import Header from '../components/Header'
-import NotificationComponent from '../components/NotificationComponent'
-import MobileNotificationComponent from '../components/MobileNotificationComponent'
-import MinimalFooter from '../components/MinimalFooter'
+import Header from './Header'
+import NotificationComponent from './NotificationComponent'
+import MobileNotificationComponent from './MobileNotificationComponent'
+import MinimalFooter from './MinimalFooter'
 
 interface User {
   name: string;
@@ -19,7 +18,6 @@ interface UserLayoutProps {
 }
 
 const UserLayout: React.FC<UserLayoutProps> = ({ children, user, onLogout }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
 
@@ -36,10 +34,6 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children, user, onLogout }) => 
       window.removeEventListener('resize', checkIsMobile)
     }
   }, [])
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
 
   // For login and signup pages, show minimal header but still provide navigation
   if (pathname === '/login' || pathname === '/signup') {
@@ -84,7 +78,8 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children, user, onLogout }) => 
       PROJECT_MANAGER: ['/dashboard', '/projects', '/tasks', '/analytics', '/reports', '/calendar', '/teams', '/defects', '/safety', '/subcontractors', '/inventory', '/equipment', '/departments'],
       SITE_SUPERVISOR: ['/dashboard', '/tasks', '/sites', '/defects', '/safety', '/equipment', '/inventory'],
       CREW_LEADER: ['/dashboard', '/tasks', '/crew-tracking'],
-      SUBCONTRACTOR: ['/dashboard', '/tasks', '/reports']
+      SUBCONTRACTOR: ['/dashboard', '/tasks', '/reports'],
+      CLIENT: ['/client-dashboard', '/dashboard', '/projects', '/tasks', '/materials', '/reports'] // Client-specific access
     };
     
     // Check if user has access to the current path
@@ -93,7 +88,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children, user, onLogout }) => 
   };
 
   // Redirect to unauthorized page if no access
-  if (!hasAccess(pathname)) {
+  if (pathname && !hasAccess(pathname)) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-2xl shadow-xl w-96 text-center">
@@ -113,82 +108,21 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children, user, onLogout }) => 
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className={`${isSidebarOpen ? 'md:ml-0' : 'ml-0'} transition-all duration-300`}>
-        {/* Mobile header always visible */}
-        <header className="md:hidden bg-white shadow sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-3">
-              <button 
-                className="text-slate-600 hover:text-slate-900 p-1"
-                onClick={toggleSidebar}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-              
-              <div className="text-xl font-bold text-slate-800">
-                <span>BuildMate</span>
-              </div>
-              
-              <div>
-                <MobileNotificationComponent user={user} />
-              </div>
-            </div>
-          </div>
-        </header>
-        
-        <div className="flex">
-          {/* Sidebar - hidden on mobile unless open */}
-          <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:w-64 fixed md:static z-40 h-[calc(100vh-4rem)] md:h-screen w-64 transition-all duration-300 ease-in-out overflow-hidden`}>
-            <Sidebar 
-              user={user} 
-              onLogout={onLogout} 
-              isSidebarOpen={isSidebarOpen} 
-              toggleSidebar={toggleSidebar} 
-            />
-          </div>
-          
-          {/* Overlay for mobile when sidebar is open */}
-          {isSidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-              onClick={toggleSidebar}
-            ></div>
-          )}
-          
-          {/* Main content area - full width by default, offset only on desktop */}
-          <div className="flex-1 md:pl-64 transition-all duration-300 min-h-screen">
-            {/* Desktop header - hidden on mobile */}
-            <header className="hidden md:block bg-white shadow sticky top-0 z-40">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center py-4">
-                  <div className="text-xl font-bold text-slate-800">
-                    <span>BuildMate</span>
-                  </div>
-                  
-                  <div>
-                    <NotificationComponent user={user} />
-                  </div>
-                </div>
-              </div>
-            </header>
-            
-            {/* Main content */}
-            <main className="p-4 md:p-6">
-              {children}
-            </main>
-            
-            {/* Footer */}
-            <footer className="py-3 text-center text-xs text-slate-500 border-t border-slate-200 mt-auto">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p>© 2025 BuildMate Construction Management</p>
-              </div>
-            </footer>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col">
+      {/* Header - always visible on all devices */}
+      <Header user={user} onLogout={onLogout} />
+      
+      {/* Main content area */}
+      <main className="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full">
+        {children}
+      </main>
+      
+      {/* Footer */}
+      <footer className="py-3 text-center text-xs text-slate-500 border-t border-slate-200 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p>© 2025 BuildMate Construction Management</p>
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

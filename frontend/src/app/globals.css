@@ -96,3 +96,24 @@ body {
 ::-webkit-scrollbar:vertical {
   width: 8px;
 }
+
+/* Ensure select text is visible */
+select {
+  color: #000;
+}
+
+/* Ensure text input text is visible */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+textarea {
+  color: #000;
+}
+
+/* Specific styling for form controls to ensure text visibility */
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af; /* slate-400 */
+}

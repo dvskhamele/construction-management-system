@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumber Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lumber Estimator</h1>
+        <p>Estimate lumber needed for wall framing (studs, plates).</p>
+
+        <div class="input-section">
+            <h2>Wall Dimensions</h2>
+            <div class="input-group">
+                <label for="wall-length">Wall Length (meters):</label>
+                <input type="number" id="wall-length" placeholder="e.g., 6" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="wall-height">Wall Height (meters):</label>
+                <input type="number" id="wall-height" placeholder="e.g., 2.4" min="0" step="0.1">
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2>Framing Details</h2>
+            <div class="input-group">
+                <label for="stud-spacing">Stud Spacing (cm, on center):</label>
+                <input type="number" id="stud-spacing" value="40.6" min="10" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="num-top-plates">Number of Top Plates:</label>
+                <input type="number" id="num-top-plates" value="2" min="1" step="1">
+            </div>
+            <div class="input-group">
+                <label for="waste-factor">Waste Factor (%):</label>
+                <input type="number" id="waste-factor" value="10" min="0" max="100" step="1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Lumber Needed</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

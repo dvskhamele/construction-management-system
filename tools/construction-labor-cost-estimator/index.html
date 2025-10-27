@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Labor Cost Estimator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Analytics placeholder
+        function trackEvent(eventName, eventData) {
+            console.log(`Analytics: ${eventName}`, eventData);
+            // In a real implementation, this would send data to an analytics service
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('ToolOpened', { toolName: 'Construction Labor Cost Estimator' });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Construction Labor Cost Estimator</h1>
+        <p class="text-center">Estimate the labor costs for your construction project.</p>
+        <form id="laborCostEstimatorForm">
+            <div class="form-group">
+                <label for="numberOfWorkers">Number of Workers:</label>
+                <input type="number" class="form-control" id="numberOfWorkers" placeholder="Enter total number of workers" required min="1">
+            </div>
+            <div class="form-group">
+                <label for="averageHourlyRate">Average Hourly Rate ($):</label>
+                <input type="number" class="form-control" id="averageHourlyRate" placeholder="Enter average hourly rate" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="estimatedHoursPerWorker">Estimated Hours Per Worker:</label>
+                <input type="number" class="form-control" id="estimatedHoursPerWorker" placeholder="Enter estimated hours per worker" required min="0">
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">Calculate Labor Cost</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('laborCostEstimatorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            trackEvent('ToolSubmitted', { toolName: 'Construction Labor Cost Estimator' });
+
+            const numberOfWorkers = parseFloat(document.getElementById('numberOfWorkers').value);
+            const averageHourlyRate = parseFloat(document.getElementById('averageHourlyRate').value);
+            const estimatedHoursPerWorker = parseFloat(document.getElementById('estimatedHoursPerWorker').value);
+
+            if (isNaN(numberOfWorkers) || isNaN(averageHourlyRate) || isNaN(estimatedHoursPerWorker) || numberOfWorkers <= 0 || averageHourlyRate < 0 || estimatedHoursPerWorker < 0) {
+                alert('Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            const totalLaborCost = numberOfWorkers * averageHourlyRate * estimatedHoursPerWorker;
+            let interpretation = '';
+
+            if (totalLaborCost > 0) {
+                interpretation = 'This is the estimated total labor cost for your project.';
+            } else {
+                interpretation = 'The estimated total labor cost is zero. Please check your inputs.';
+            }
+
+            const results = {
+                totalLaborCost: totalLaborCost.toFixed(2),
+                interpretation: interpretation,
+            };
+
+            localStorage.setItem('laborCostResults', JSON.stringify(results));
+            window.location.href = '/tools/results/construction-labor-cost-estimator.html';
+        });
+    </script>
+</body>
+</html>

@@ -5,11 +5,16 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import UserLayout from '../../../../components/UserLayout'
 
-export default function SiteReports() {
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+export default function SiteReports({ params }: Props) {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [user, setUser] = useState<any>({ name: 'Site Manager', role: 'ADMIN' })
   
-  const params = useParams()
   const router = useRouter()
   const siteId = params.id
 

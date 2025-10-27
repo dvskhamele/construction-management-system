@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Project Milestone Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Analytics placeholder
+        function trackEvent(eventName, eventData) {
+            console.log(`Analytics: ${eventName}`, eventData);
+            // In a real implementation, this would send data to an analytics service
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('ToolOpened', { toolName: 'Construction Project Milestone Tracker' });
+            loadMilestones();
+        });
+
+        function saveMilestones(milestones) {
+            localStorage.setItem('constructionMilestones', JSON.stringify(milestones));
+        }
+
+        function loadMilestones() {
+            const milestones = JSON.parse(localStorage.getItem('constructionMilestones') || '[]');
+            displayMilestones(milestones);
+            return milestones;
+        }
+
+        function displayMilestones(milestones) {
+            const milestoneList = document.getElementById('milestoneList');
+            milestoneList.innerHTML = ''; // Clear existing list
+            if (milestones.length === 0) {
+                milestoneList.innerHTML = '<p class="text-center">No milestones logged yet.</p>';
+                return;
+            }
+
+            milestones.forEach((milestone, index) => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.innerHTML = `
+                    <div>
+                        <strong>Milestone:</strong> ${milestone.name}<br>
+                        <strong>Due Date:</strong> ${milestone.dueDate}<br>
+                        <strong>Status:</strong> ${milestone.status}
+                    </div>
+                    <button class="btn btn-sm btn-info float-right" onclick="editMilestone(${index})">Edit</button>
+                `;
+                milestoneList.appendChild(li);
+            });
+        }
+
+        function editMilestone(index) {
+            const milestones = loadMilestones();
+            const milestone = milestones[index];
+            
+            document.getElementById('milestoneName').value = milestone.name;
+            document.getElementById('dueDate').value = milestone.dueDate;
+            document.getElementById('status').value = milestone.status;
+
+            // For simplicity, we'll just remove and re-add for now. In a real app, you'd update.
+            milestones.splice(index, 1);
+            saveMilestones(milestones);
+            displayMilestones(milestones);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('milestoneTrackerForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                trackEvent('ToolSubmitted', { toolName: 'Construction Project Milestone Tracker' });
+
+                const name = document.getElementById('milestoneName').value;
+                const dueDate = document.getElementById('dueDate').value;
+                const status = document.getElementById('status').value;
+
+                const newMilestone = {
+                    name,
+                    dueDate,
+                    status,
+                };
+
+                const milestones = loadMilestones();
+                milestones.push(newMilestone);
+                saveMilestones(milestones);
+                displayMilestones(milestones);
+
+                // Clear form
+                event.target.reset();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Construction Project Milestone Tracker</h1>
+        <p class="text-center">Define, track, and visualize key project milestones to ensure timely delivery.</p>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Add New Milestone</h4>
+            </div>
+            <div class="card-body">
+                <form id="milestoneTrackerForm">
+                    <div class="form-group">
+                        <label for="milestoneName">Milestone Name:</label>
+                        <input type="text" class="form-control" id="milestoneName" placeholder="e.g., Foundation Complete" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date:</label>
+                        <input type="date" class="form-control" id="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select class="form-control" id="status" required>
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Delayed">Delayed</option>
+                        </select>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Add Milestone</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Logged Milestones</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group" id="milestoneList">
+                    <!-- Milestones will be loaded here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

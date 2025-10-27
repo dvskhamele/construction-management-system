@@ -1,0 +1,28 @@
+
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.calculator-links a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+}
+
+.calculator-links a:hover {
+    background-color: #e0e0e0;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall and Ceiling Area Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wall and Ceiling Area Calculator</h1>
+        <p>Calculate the total area of walls and ceilings, subtracting openings.</p>
+
+        <div class="input-section">
+            <h2>Room Dimensions</h2>
+            <div class="input-group">
+                <label for="room-length">Room Length (meters):</label>
+                <input type="number" id="room-length" placeholder="e.g., 5" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="room-width">Room Width (meters):</label>
+                <input type="number" id="room-width" placeholder="e.g., 4" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="room-height">Room Height (meters):</label>
+                <input type="number" id="room-height" placeholder="e.g., 2.5" min="0" step="0.1">
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2>Openings (Windows/Doors)</h2>
+            <div class="input-group">
+                <label for="num-windows">Number of Windows:</label>
+                <input type="number" id="num-windows" value="0" min="0" step="1">
+            </div>
+            <div class="input-group">
+                <label for="window-length">Avg. Window Length (meters):</label>
+                <input type="number" id="window-length" value="1.2" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="window-height">Avg. Window Height (meters):</label>
+                <input type="number" id="window-height" value="1.0" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="num-doors">Number of Doors:</label>
+                <input type="number" id="num-doors" value="0" min="0" step="1">
+            </div>
+            <div class="input-group">
+                <label for="door-length">Avg. Door Length (meters):</label>
+                <input type="number" id="door-length" value="0.9" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="door-height">Avg. Door Height (meters):</label>
+                <input type="number" id="door-height" value="2.1" min="0" step="0.1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Areas</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

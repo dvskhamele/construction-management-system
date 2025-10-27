@@ -1,0 +1,28 @@
+{
+  "tool_slug": "slab-steel-estimator",
+  "audit_date": "2025-10-22",
+  "seo_audit": {
+    "title_tag": "Slab Steel Estimator - Calculator",
+    "meta_description": "Estimates the amount of steel reinforcement needed for concrete slabs based on slab dimensions, concrete strength, and design codes.",
+    "keywords": "slab, steel, estimator, calculator, estimator",
+    "h1_present": true,
+    "url_structure": "/tools/slab-steel-estimator",
+    "canonical_tag": "https://yourdomain.com/tools/slab-steel-estimator"
+  },
+  "cro_audit": {
+    "cta_clarity": "To be assessed",
+    "form_ease_of_use": "To be assessed",
+    "mobile_responsiveness": "Assumed High - Using Tailwind CSS for responsive design.",
+    "page_load_speed_estimate": "Good - Minimal assets, client-side calculation."
+  },
+  "ux_audit": {
+    "intuitive_navigation": "To be assessed",
+    "feedback_mechanisms": "To be assessed",
+    "visual_appeal": "Basic - Tailwind CSS default styling.",
+    "accessibility_considerations": "Basic - Standard HTML elements, no specific ARIA attributes yet."
+  },
+  "marketing_suggestions": [
+    "Promote Slab Steel Estimator on relevant industry platforms.",
+    "Create blog content around \"Incorrect rebar quantities, structural integrity issues, material cost overruns.\" linking to the tool."
+  ]
+}

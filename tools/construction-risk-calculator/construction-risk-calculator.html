@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Risk Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Risk Calculator</h1>
+        <form id="risk-form">
+            <p>Rate each risk factor from 1 (Very Low) to 5 (Very High).</p>
+
+            <h2>Risk Factor 1: Design Complexity</h2>
+            <div class="input-group">
+                <label for="design-prob">Probability (1-5)</label>
+                <input type="number" id="design-prob" min="1" max="5" value="1" required>
+            </div>
+            <div class="input-group">
+                <label for="design-impact">Impact (1-5)</label>
+                <input type="number" id="design-impact" min="1" max="5" value="1" required>
+            </div>
+
+            <h2>Risk Factor 2: Resource Availability</h2>
+            <div class="input-group">
+                <label for="resource-prob">Probability (1-5)</label>
+                <input type="number" id="resource-prob" min="1" max="5" value="1" required>
+            </div>
+            <div class="input-group">
+                <label for="resource-impact">Impact (1-5)</label>
+                <input type="number" id="resource-impact" min="1" max="5" value="1" required>
+            </div>
+
+            <h2>Risk Factor 3: Weather Conditions</h2>
+            <div class="input-group">
+                <label for="weather-prob">Probability (1-5)</label>
+                <input type="number" id="weather-prob" min="1" max="5" value="1" required>
+            </div>
+            <div class="input-group">
+                <label for="weather-impact">Impact (1-5)</label>
+                <input type="number" id="weather-impact" min="1" max="5" value="1" required>
+            </div>
+
+            <button type="submit">Calculate Risk</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

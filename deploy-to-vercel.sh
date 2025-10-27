@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# HotelOps Vercel Deployment Script
-# This script helps deploy the HotelOps application to Vercel
+# BuildMate Vercel Deployment Script
+# This script helps deploy the BuildMate Construction Management application to Vercel
 
-echo "🏨 HotelOps Vercel Deployment Script"
+echo "🏗️ BuildMate Vercel Deployment Script"
 echo "====================================="
 
 # Check if we're in the right directory
-BASE_DIR="/Users/test/startups/hotelmanagement/hotel-ops-app"
+BASE_DIR="/Users/test/startups/constructionmanagement"
 if [ ! -d "$BASE_DIR" ]; then
-    echo "❌ Error: HotelOps directory not found at $BASE_DIR"
+    echo "❌ Error: BuildMate directory not found at $BASE_DIR"
     exit 1
 fi
 
@@ -33,7 +33,7 @@ echo "✅ Vercel CLI version: $(vercel --version)"
 echo ""
 
 # Check if required files exist
-REQUIRED_FILES=("package.json" "frontend/package.json" "backend/package.json" "vercel.json")
+REQUIRED_FILES=("package.json" "frontend/package.json" "vercel.json")
 for file in "${REQUIRED_FILES[@]}"; do
     if [ ! -f "$file" ]; then
         echo "❌ Error: Required file '$file' not found"
@@ -60,11 +60,10 @@ echo "✅ Successfully authenticated with Vercel"
 echo ""
 
 # Deploy to Vercel
-echo "🚀 Deploying HotelOps to Vercel..."
+echo "🚀 Deploying BuildMate to Vercel..."
 echo ""
-echo "This will deploy both the frontend and backend:"
-echo "  • Frontend: Next.js application"
-echo "  • Backend: Node.js API server"
+echo "This will deploy the frontend Next.js application:"
+echo "  • Frontend: Construction Management System"
 echo ""
 echo "Press Enter to continue or Ctrl+C to cancel..."
 read
@@ -72,12 +71,13 @@ read
 echo "📤 Starting deployment..."
 echo ""
 
-# Deploy the entire project
+# Deploy the frontend project
+cd frontend
 vercel --prod
 
 if [ $? -eq 0 ]; then
     echo ""
-    echo "✅ HotelOps deployed successfully to Vercel!"
+    echo "✅ BuildMate deployed successfully to Vercel!"
     echo ""
     echo "💡 Next steps:"
     echo "  • Visit your deployed application URL"
@@ -86,7 +86,7 @@ if [ $? -eq 0 ]; then
     echo ""
 else
     echo ""
-    echo "❌ Error: Failed to deploy HotelOps to Vercel"
+    echo "❌ Error: Failed to deploy BuildMate to Vercel"
     echo ""
     echo "💡 Troubleshooting tips:"
     echo "  • Check your internet connection"

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebar Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rebar Estimator</h1>
+        <p>Estimate reinforcing steel (rebar) needed for concrete slabs or footings.</p>
+
+        <div class="input-section">
+            <h2>Concrete Element Dimensions</h2>
+            <div class="input-group">
+                <label for="element-length">Length (meters):</label>
+                <input type="number" id="element-length" placeholder="e.g., 5" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="element-width">Width (meters):</label>
+                <input type="number" id="element-width" placeholder="e.g., 4" min="0" step="0.1">
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2>Rebar Details</h2>
+            <div class="input-group">
+                <label for="rebar-spacing">Rebar Spacing (cm, on center):</label>
+                <input type="number" id="rebar-spacing" value="30" min="5" step="1">
+            </div>
+            <div class="input-group">
+                <label for="rebar-overlap">Overlap/Lapping Length (cm):</label>
+                <input type="number" id="rebar-overlap" value="40" min="0" step="1">
+            </div>
+            <div class="input-group">
+                <label for="waste-factor">Waste Factor (%):</label>
+                <input type="number" id="waste-factor" value="5" min="0" max="100" step="1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Rebar Needed</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

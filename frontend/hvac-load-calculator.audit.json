@@ -1,0 +1,28 @@
+{
+  "tool_slug": "hvac-load-calculator",
+  "audit_date": "2025-10-22",
+  "seo_audit": {
+    "title_tag": "HVAC Load Calculator - Calculator",
+    "meta_description": "Estimates heating and cooling loads for buildings based on factors like insulation, window area, occupancy, and climate data.",
+    "keywords": "hvac, load, calculator, calculator, estimator",
+    "h1_present": true,
+    "url_structure": "/tools/hvac-load-calculator",
+    "canonical_tag": "https://yourdomain.com/tools/hvac-load-calculator"
+  },
+  "cro_audit": {
+    "cta_clarity": "To be assessed",
+    "form_ease_of_use": "To be assessed",
+    "mobile_responsiveness": "Assumed High - Using Tailwind CSS for responsive design.",
+    "page_load_speed_estimate": "Good - Minimal assets, client-side calculation."
+  },
+  "ux_audit": {
+    "intuitive_navigation": "To be assessed",
+    "feedback_mechanisms": "To be assessed",
+    "visual_appeal": "Basic - Tailwind CSS default styling.",
+    "accessibility_considerations": "Basic - Standard HTML elements, no specific ARIA attributes yet."
+  },
+  "marketing_suggestions": [
+    "Promote HVAC Load Calculator on relevant industry platforms.",
+    "Create blog content around \"Undersized or oversized HVAC systems, energy inefficiency, occupant discomfort.\" linking to the tool."
+  ]
+}

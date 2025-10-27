@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Load Calculator | BuildMate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">HVAC Load Calculator</h1>
+            <p class="text-gray-600 mb-6">Estimate the heating and cooling load for a room or building to size your HVAC system correctly.</p>
+
+            <!-- Calculator Form -->
+            <form id="calculatorForm" class="space-y-4">
+                <div>
+                    <label for="area" class="block text-sm font-medium text-gray-700">Room Area (sq ft)</label>
+                    <input type="number" id="area" name="area" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter room area" required>
+                </div>
+                <div>
+                    <label for="insulation" class="block text-sm font-medium text-gray-700">Insulation Quality</label>
+                    <select id="insulation" name="insulation" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="poor">Poor</option>
+                        <option value="average">Average</option>
+                        <option value="good">Good</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="windows" class="block text-sm font-medium text-gray-700">Number of Windows</label>
+                    <input type="number" id="windows" name="windows" value="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="occupants" class="block text-sm font-medium text-gray-700">Number of Occupants</label>
+                    <input type="number" id="occupants" name="occupants" value="1" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Calculate Load
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results -->
+            <div id="results" class="mt-8 hidden">
+                <h2 class="text-2xl font-semibold text-gray-800">Estimated HVAC Load</h2>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 space-y-2">
+                    <p class="text-lg">Cooling Load: <span id="coolingLoad" class="font-bold"></span> BTU/hr</p>
+                    <p class="text-lg">Heating Load: <span id="heatingLoad" class="font-bold"></span> BTU/hr</p>
+                    <a id="shareableLink" href="#" class="text-indigo-600 hover:text-indigo-800 mt-2 inline-block">Share this result</a>
+                </div>
+            </div>
+
+            <!-- Lead Capture Form -->
+            <div id="leadCapture" class="mt-8 border-t pt-6">
+                 <h2 class="text-2xl font-semibold text-gray-800">Get More Tools & Insights</h2>
+                 <p class="text-gray-600 mb-4">Enter your email to get a full report of your calculation and subscribe to our newsletter for more free construction tools.</p>
+                 <form id="leadForm" class="flex items-center">
+                     <input type="email" id="email" name="email" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="you@example.com" required>
+                     <button type="submit" class="ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                         Subscribe
+                     </button>
+                 </form>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

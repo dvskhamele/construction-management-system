@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Mix Design Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Concrete Mix Design Calculator</h1>
+        <div class="input-group">
+            <label for="strength">Desired Compressive Strength (PSI):</label>
+            <input type="number" id="strength" placeholder="e.g., 3000">
+        </div>
+        <div class="input-group">
+            <label for="slump">Desired Slump (inches):</label>
+            <input type="number" id="slump" placeholder="e.g., 4">
+        </div>
+        <div class="input-group">
+            <label for="aggregate-size">Maximum Aggregate Size (inches):</label>
+            <input type="number" id="aggregate-size" placeholder="e.g., 0.75">
+        </div>
+        <button onclick="calculateMixDesign()">Calculate Mix Design</button>
+        <div class="result" id="result">
+            The estimated concrete mix proportions will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

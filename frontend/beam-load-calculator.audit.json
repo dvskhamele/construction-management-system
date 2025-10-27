@@ -1,0 +1,35 @@
+{
+  "tool_slug": "beam-load-calculator",
+  "audit_date": "2025-10-22T01:45:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Beam Load Calculator (Uniform Load)",
+      "status": "pass",
+      "recommendation": "Excellent keyword for structural and civil engineers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Load",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Download our guide on common beam types and their load-bearing characteristics.",
+      "status": "pass",
+      "recommendation": "A highly relevant lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 3,
+      "status": "pass",
+      "recommendation": "Very simple form with clear unit selection."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear and provide the two key metrics an engineer would be looking for."
+    }
+  }
+}

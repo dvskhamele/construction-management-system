@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brick Quantity Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Brick Quantity Calculator</h1>
+        <form id="brick-form">
+            <div class="input-group">
+                <label for="wall-length">Wall Length (feet)</label>
+                <input type="number" id="wall-length" required>
+            </div>
+            <div class="input-group">
+                <label for="wall-height">Wall Height (feet)</label>
+                <input type="number" id="wall-height" required>
+            </div>
+            <div class="input-group">
+                <label for="brick-length">Brick Length (inches)</label>
+                <input type="number" id="brick-length" value="8" required>
+            </div>
+            <div class="input-group">
+                <label for="brick-height">Brick Height (inches)</label>
+                <input type="number" id="brick-height" value="2.25" required>
+            </div>
+            <div class="input-group">
+                <label for="mortar-thickness">Mortar Thickness (inches)</label>
+                <input type="number" id="mortar-thickness" value="0.375" step="0.001" required>
+            </div>
+            <button type="submit">Calculate Bricks</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

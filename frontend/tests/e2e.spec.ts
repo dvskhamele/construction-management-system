@@ -2,8 +2,8 @@
 import { test, expect } from '@playwright/test';
 
 test('should allow user to login and navigate to dashboard', async ({ page }) => {
-  // Navigate to the deployed application
-  await page.goto('http://localhost:3001/login');
+  // Navigate to the login page
+  await page.goto('/login');
   
   // Check that we're on the login page
   await expect(page).toHaveTitle(/BuildMate/);
@@ -30,8 +30,8 @@ test('should allow user to login and navigate to dashboard', async ({ page }) =>
 });
 
 test('should show role-specific navigation', async ({ page }) => {
-  // Navigate to the deployed application
-  await page.goto('http://localhost:3001/login');
+  // Navigate to the login page
+  await page.goto('/login');
   
   // Login as admin
   await page.fill('input[type="email"]', 'admin@buildmate.com');
@@ -55,8 +55,8 @@ test('should show role-specific navigation', async ({ page }) => {
 });
 
 test('should show client-specific dashboard', async ({ page }) => {
-  // Navigate to the deployed application
-  await page.goto('http://localhost:3001/login');
+  // Navigate to the login page
+  await page.goto('/login');
   
   // Login as client
   await page.fill('input[type="email"]', 'client@buildmate.com');
@@ -73,8 +73,8 @@ test('should show client-specific dashboard', async ({ page }) => {
 });
 
 test('should navigate between different sections', async ({ page }) => {
-  // Navigate to the deployed application
-  await page.goto('http://localhost:3001/login');
+  // Navigate to the login page
+  await page.goto('/login');
   
   // Login as admin
   await page.fill('input[type="email"]', 'admin@buildmate.com');
@@ -106,8 +106,8 @@ test('should navigate between different sections', async ({ page }) => {
 });
 
 test('should show Vastu dashboard elements', async ({ page }) => {
-  // Navigate to the deployed application
-  await page.goto('http://localhost:3001/login');
+  // Navigate to the login page
+  await page.goto('/login');
   
   // Login as admin
   await page.fill('input[type="email"]', 'admin@buildmate.com');

@@ -1,0 +1,103 @@
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+const {{ToolComponentName}} = () => {
+    const [input1, setInput1] = useState(''); // Generic input
+    const [result, setResult] = useState(null);
+    const router = useRouter();
+
+    const logEvent = async (eventName: string, properties: object = {}) => {
+        try {
+            await fetch('/api/log-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: eventName,
+                    tool_slug: '{{tool_slug}}',
+                    timestamp: new Date().toISOString(),
+                    ...properties,
+                }),
+            });
+        } catch (error) {
+            console.error(`Failed to log event ${eventName}:`, error);
+        }
+    };
+
+    useEffect(() => {
+        logEvent('ToolOpened');
+    }, []);
+
+    const calculate = async () => {
+        // --- Placeholder for actual calculation logic ---
+        const calculatedResult = {
+            output: `Result for ${input1}`,
+            // Add more specific results based on toolSpec.coreFunctionality
+        };
+        setResult(calculatedResult);
+
+        // Save results via API
+        try {
+            const response = await fetch('/api/save-{{tool_slug}}-result', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    inputs: { input1 }, // Replace with actual inputs
+                    results: calculatedResult,
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                logEvent('ToolSubmitted', { result_id: data.id, input_data: { input1 } }); // Replace with actual inputs
+                router.push(`/tools/results/{{tool_slug}}/${data.id}`);
+            } else {
+                alert(`Error saving results: ${data.message}`);
+                logEvent('ErrorEvent', { error_code: 'SAVE_RESULT_FAILED', message: data.message });
+            }
+        } catch (error) {
+            console.error('Failed to save results:', error);
+            alert('An error occurred while saving results.');
+            logEvent('ErrorEvent', { error_code: 'SAVE_RESULT_EXCEPTION', message: error.message });
+        }
+    };
+
+    return (
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">{{tool_title}}</h1>
+            <p className="mb-4">{{tool_description}}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label className="block mb-2">Input 1</label>
+                    <input
+                        type="text"
+                        className="w-full p-2 border rounded"
+                        value={input1}
+                        onChange={(e) => setInput1(e.target.value)}
+                    />
+                </div>
+                {/* Add more input fields based on toolSpec.coreFunctionality */}
+            </div>
+            <button
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                onClick={calculate}
+            >
+                Calculate
+            </button>
+
+            {result && (
+                <div className="mt-4 p-4 border rounded bg-gray-100">
+                    <h2 className="text-2xl font-bold mb-2">Results</h2>
+                    <p>{result.output}</p>
+                    {/* Display more specific results */}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default {{ToolComponentName}};

@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Schedule Variance Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Schedule Variance Calculator</h1>
+        <form id="schedule-variance-form">
+            <div class="input-group">
+                <label for="earned-value">Earned Value (EV) ($)</label>
+                <input type="number" id="earned-value" required>
+            </div>
+            <div class="input-group">
+                <label for="planned-value">Planned Value (PV) ($)</label>
+                <input type="number" id="planned-value" required>
+            </div>
+            <button type="submit">Calculate Variance</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

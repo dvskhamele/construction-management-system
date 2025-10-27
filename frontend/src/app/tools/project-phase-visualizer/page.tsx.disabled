@@ -1,0 +1,53 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function PhaseVisualizer() {
+  const router = useRouter();
+  const [phases, setPhases] = useState(
+    `Planning & Design, 2025-01-01, 2025-01-31\nFoundation, 2025-02-01, 2025-03-15\nFraming & Structure, 2025-03-16, 2025-05-31\nMEP & Interiors, 2025-06-01, 2025-08-31\nFinishing & Handover, 2025-09-01, 2025-09-30`
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const encodedPhases = btoa(phases); // Base64 encode to handle special characters in URL
+    router.push(`/tools/project-phase-visualizer/result?phases=${encodedPhases}`);
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Simple Project Phase Visualizer
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Create a clean, visual timeline of your project phases to share with clients or team members.
+          </p>
+        </div>
+
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="phases" className="block text-sm font-medium text-slate-700">Project Phases</label>
+              <p className="text-xs text-slate-500 mb-2">Enter one phase per line in the format: Phase Name, YYYY-MM-DD, YYYY-MM-DD</p>
+              <textarea 
+                name="phases" 
+                id="phases" 
+                rows={8} 
+                value={phases} 
+                onChange={(e) => setPhases(e.target.value)} 
+                className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md font-mono text-sm"
+              />
+            </div>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Visualize Timeline
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

@@ -1,0 +1,35 @@
+{
+  "tool_slug": "construction-risk-calculator",
+  "audit_date": "2025-10-22T00:05:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Simple Construction Risk Calculator",
+      "status": "pass",
+      "recommendation": "Title is clear and targets a specific project management need."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Risk Score",
+      "status": "pass",
+      "recommendation": "CTA is clear and benefit-driven."
+    },
+    "lead_capture": {
+      "offer": "Download our comprehensive Risk Management Plan template.",
+      "status": "pass",
+      "recommendation": "Excellent lead magnet that provides a direct solution to the problem identified by the tool."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 5,
+      "status": "pass",
+      "recommendation": "Simple, multiple-choice form is very fast for the user to complete."
+    },
+    "results_clarity": {
+      "visualizations": ["Scorecard"],
+      "status": "pass",
+      "recommendation": "The color-coded risk score is immediately understandable. Listing the contributing factors adds valuable context."
+    }
+  }
+}

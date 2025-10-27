@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 import apiService from '../../utils/constructionApiService'
 
 export default function SitesDashboard() {
@@ -108,6 +108,7 @@ export default function SitesDashboard() {
   const [timeRange, setTimeRange] = useState('30d')
   const [selectedSite, setSelectedSite] = useState<any>(null)
   const [showSiteModal, setShowSiteModal] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
   const router = useRouter()
 
@@ -119,11 +120,25 @@ export default function SitesDashboard() {
   }
 
   const filteredSites = sites.filter(site => {
-    if (filter === 'all') return true
-    if (filter === 'active') return site.status === 'ACTIVE'
-    if (filter === 'completed') return site.status === 'COMPLETED'
-    if (filter === 'onhold') return site.status === 'ON_HOLD'
-    if (filter === 'planning') return site.status === 'PLANNING'
+    // Apply status filter
+    if (filter !== 'all') {
+      if (filter === 'active' && site.status !== 'ACTIVE') return false
+      if (filter === 'completed' && site.status !== 'COMPLETED') return false
+      if (filter === 'onhold' && site.status !== 'ON_HOLD') return false
+      if (filter === 'planning' && site.status !== 'PLANNING') return false
+    }
+    
+    // Apply search filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase()
+      return (
+        site.name.toLowerCase().includes(searchLower) ||
+        site.project.toLowerCase().includes(searchLower) ||
+        site.location.toLowerCase().includes(searchLower) ||
+        site.supervisor.toLowerCase().includes(searchLower)
+      )
+    }
+    
     return true
   })
 
@@ -210,7 +225,7 @@ export default function SitesDashboard() {
   }
 
   return (
-    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="sites">
       <div className="px-4 py-6">
         {/* Page Header */}
         <div className="mb-8">
@@ -279,7 +294,7 @@ export default function SitesDashboard() {
               </button>
             </div>
             
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               <select 
                 className="text-sm px-3 py-1 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
                 value={sortBy}
@@ -293,6 +308,15 @@ export default function SitesDashboard() {
                 <option value="issues">Sort by Issues</option>
                 <option value="incidents">Sort by Incidents</option>
               </select>
+              
+              {/* Site search input */}
+              <input
+                type="text"
+                placeholder="Search sites..."
+                className="text-sm px-3 py-1 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -507,6 +531,6 @@ export default function SitesDashboard() {
           </div>
         )}
       </div>
-    </ResponsiveSidebarLayout>
+    </HeaderResponsiveLayout>
   )
 }

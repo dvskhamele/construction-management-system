@@ -1,0 +1,35 @@
+{
+  "tool_slug": "paint-cost-estimator",
+  "audit_date": "2025-10-21T23:15:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Paint Quantity & Cost Estimator",
+      "status": "pass",
+      "recommendation": "Title is clear and targets a very common and specific user query."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Estimate Paint & Cost",
+      "status": "pass",
+      "recommendation": "CTA is clear and benefit-driven."
+    },
+    "lead_capture": {
+      "offer": "Get a 10% discount coupon for paint supplies from our partner vendors.",
+      "status": "pass",
+      "recommendation": "Lead magnet is a strong, tangible incentive (a discount) which is highly effective."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": "Varies (5-8)",
+      "status": "pass",
+      "recommendation": "Form is clean and the conditional logic for including primer is intuitive."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are presented as a simple, clear summary table, which is appropriate for this type of calculation. No complex chart is needed."
+    }
+  }
+}

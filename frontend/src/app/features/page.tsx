@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function FeaturesPage() {
   const features = [
     {
-      category: "Client Experience",
+      category: "Project Management",
       items: [
         {
           title: "Client Request Management",
@@ -23,31 +23,31 @@ export default function FeaturesPage() {
           ]
         },
         {
-          title: "Personalized Client Profiles",
-          description: "AI-powered client preference tracking and personalization engine for tailored experiences.",
+          title: "Site Status Tracking",
+          description: "Real-time site status tracking with mobile-friendly interfaces for crew to update statuses instantly.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           ),
           benefits: [
-            "Increased client loyalty and repeat bookings",
-            "Higher average daily rates through upselling",
-            "Reduced client complaints by 45%"
+            "40% improvement in site management efficiency",
+            "Real-time visibility into site availability",
+            "Reduced site turnaround time by 25%"
           ]
         },
         {
-          title: "Real-Time Communication",
-          description: "Multi-channel communication platform for seamless client-staff interactions.",
+          title: "Crew Management",
+          description: "Comprehensive crew management with performance tracking, scheduling, and communication tools.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           ),
           benefits: [
-            "24/7 multilingual support",
-            "Reduced miscommunication by 60%",
-            "Improved client engagement scores"
+            "35% improvement in crew productivity",
+            "Reduced turnover by 30%",
+            "Real-time performance analytics"
           ]
         }
       ]
@@ -56,45 +56,45 @@ export default function FeaturesPage() {
       category: "Operations Management",
       items: [
         {
-          title: "Housekeeping & Area Status",
-          description: "Real-time area status tracking with mobile-friendly interfaces for staff to update statuses instantly.",
+          title: "Materials Control",
+          description: "Track and manage all construction materials with automated alerts for low stock and reorder recommendations.",
           icon: (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-          ),
-          benefits: [
-            "40% improvement in housekeeping efficiency",
-            "Real-time visibility into area availability",
-            "Reduced area turnaround time by 25%"
-          ]
-        },
-        {
-          title: "Staff Management",
-          description: "Comprehensive staff management with performance tracking, scheduling, and communication tools.",
-          icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          ),
-          benefits: [
-            "35% improvement in staff productivity",
-            "Reduced turnover by 30%",
-            "Real-time performance analytics"
-          ]
-        },
-        {
-          title: "Inventory Control",
-          description: "Track and manage all construction inventory with automated alerts for low stock and reorder recommendations.",
-          icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
           ),
           benefits: [
-            "50% reduction in inventory costs",
+            "50% reduction in materials costs",
             "Elimination of stockouts",
             "Automated purchasing recommendations"
+          ]
+        },
+        {
+          title: "Quality Management",
+          description: "Advanced quality control tools for tracking defects, inspections, and compliance across all construction phases.",
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          ),
+          benefits: [
+            "40% reduction in rework costs",
+            "99% compliance with safety standards",
+            "Prevention of quality issues"
+          ]
+        },
+        {
+          title: "Safety Management",
+          description: "Comprehensive safety management with incident tracking, compliance monitoring, and preventive measures.",
+          icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          ),
+          benefits: [
+            "50% reduction in safety incidents",
+            "100% compliance tracking",
+            "Automated safety alerts"
           ]
         }
       ]
@@ -111,9 +111,9 @@ export default function FeaturesPage() {
             </svg>
           ),
           benefits: [
-            "Predictive demand forecasting",
-            "Revenue optimization recommendations",
-            "Client behavior pattern analysis"
+            "Predictive project forecasting",
+            "Cost optimization recommendations",
+            "Performance pattern analysis"
           ]
         },
         {
@@ -126,7 +126,7 @@ export default function FeaturesPage() {
           ),
           benefits: [
             "60% improvement in cross-departmental communication",
-            "Reduced service delivery time by 35%",
+            "Reduced project delivery time by 35%",
             "Enhanced problem-solving capabilities"
           ]
         },
@@ -146,6 +146,27 @@ export default function FeaturesPage() {
           ]
         }
       ]
+    }
+  ];
+
+  const testimonials = [
+    {
+      quote: "BuildMate transformed our project management. Response times dropped by 60% and project completion scores increased to 96%.",
+      author: "Sarah Johnson",
+      position: "Project Manager, BuildCo Construction",
+      rating: 5
+    },
+    {
+      quote: "The crew management features alone saved us 15 hours per week in administrative tasks. The ROI was immediate.",
+      author: "Michael Chen",
+      position: "Operations Director, Metro Construction Group",
+      rating: 5
+    },
+    {
+      quote: "Implementing BuildMate was seamless. Our construction efficiency improved by 40% in the first month.",
+      author: "Robert Williams",
+      position: "Construction Manager, BuildCo Construction",
+      rating: 5
     }
   ];
 
@@ -181,7 +202,7 @@ export default function FeaturesPage() {
             Comprehensive Construction Management Features
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-teal-100">
-            Everything you need to run a world-class hospitality operation with zero human management required
+            Everything you need to run a world-class construction operation with zero human management required
           </p>
         </div>
       </div>
@@ -300,8 +321,8 @@ export default function FeaturesPage() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Staff Empowerment</h3>
-              <p className="text-slate-300">40% improvement in staff productivity through smart tools</p>
+              <h3 className="text-xl font-bold text-white mb-2">Crew Empowerment</h3>
+              <p className="text-slate-300">40% improvement in crew productivity through smart tools</p>
             </div>
           </div>
         </div>
@@ -335,6 +356,18 @@ export default function FeaturesPage() {
           <p className="mt-6 text-teal-100">
             No credit card required • 14-day free trial • Cancel anytime
           </p>
+          
+          <div className="mt-8 text-center">
+            <Link 
+              href="/features/bluebeam" 
+              className="inline-flex items-center text-white hover:text-teal-200 font-medium"
+            >
+              View Bluebeam-inspired Features
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

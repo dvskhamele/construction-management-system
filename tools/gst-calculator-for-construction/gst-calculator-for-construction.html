@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator for Construction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>GST Calculator for Construction</h1>
+        <form id="gst-form">
+            <div class="input-group">
+                <label for="amount">Amount (before or after GST)</label>
+                <input type="number" id="amount" required>
+            </div>
+            <div class="input-group">
+                <label for="gst-rate">GST Rate (%)</label>
+                <input type="number" id="gst-rate" step="0.01" value="18" required>
+            </div>
+            <div class="input-group">
+                <label for="calculation-type">Calculate:</label>
+                <select id="calculation-type">
+                    <option value="add-gst">Add GST to Amount</option>
+                    <option value="remove-gst">Remove GST from Amount</option>
+                </select>
+            </div>
+            <button type="submit">Calculate GST</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

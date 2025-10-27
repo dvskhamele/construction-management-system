@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Column Axial Load Capacity Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Column Axial Load Capacity Calculator</h1>
+        <form id="axial-load-form">
+            <div class="input-group">
+                <label for="column-type">Column Type:</label>
+                <select id="column-type">
+                    <option value="tied">Tied Column</option>
+                    <option value="spiral">Spiral Column</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="compressive-strength">Concrete Compressive Strength (f'c, psi):</label>
+                <input type="number" id="compressive-strength" value="4000" required>
+            </div>
+            <div class="input-group">
+                <label for="yield-strength-steel">Yield Strength of Steel (fy, psi):</label>
+                <input type="number" id="yield-strength-steel" value="60000" required>
+            </div>
+            <div class="input-group">
+                <label for="gross-area">Gross Area of Column (Ag, in²):</label>
+                <input type="number" id="gross-area" required>
+            </div>
+            <div class="input-group">
+                <label for="steel-area">Area of Steel Reinforcement (Ast, in²):</label>
+                <input type="number" id="steel-area" required>
+            </div>
+            <button type="submit">Calculate Capacity</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

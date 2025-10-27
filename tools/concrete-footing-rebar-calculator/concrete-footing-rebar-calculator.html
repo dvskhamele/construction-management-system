@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Footing Rebar Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Footing Rebar Calculator</h1>
+        <form id="rebar-footing-form">
+            <div class="input-group">
+                <label for="footing-length">Footing Length (feet)</label>
+                <input type="number" id="footing-length" required>
+            </div>
+            <div class="input-group">
+                <label for="footing-width">Footing Width (feet)</label>
+                <input type="number" id="footing-width" required>
+            </div>
+            <div class="input-group">
+                <label for="footing-depth">Footing Depth (inches)</label>
+                <input type="number" id="footing-depth" required>
+            </div>
+            <div class="input-group">
+                <label for="rebar-size">Rebar Size (e.g., #4)</label>
+                <select id="rebar-size">
+                    <option value="0.376">#3 (0.376 lbs/ft)</option>
+                    <option value="0.668">#4 (0.668 lbs/ft)</option>
+                    <option value="1.043">#5 (1.043 lbs/ft)</option>
+                    <option value="1.502">#6 (1.502 lbs/ft)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="rebar-spacing">Rebar Spacing (inches, center-to-center)</label>
+                <input type="number" id="rebar-spacing" value="12" required>
+            </div>
+            <button type="submit">Calculate Rebar</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

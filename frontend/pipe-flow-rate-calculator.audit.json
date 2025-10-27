@@ -1,0 +1,35 @@
+{
+  "tool_slug": "pipe-flow-rate-calculator",
+  "audit_date": "2025-10-22T01:35:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Pipe Flow Rate Calculator",
+      "status": "pass",
+      "recommendation": "Excellent keyword for civil engineers and plumbers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Flow Rate",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get a chart of Manning's roughness coefficients for various pipe materials.",
+      "status": "pass",
+      "recommendation": "A perfect, high-value lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 4,
+      "status": "pass",
+      "recommendation": "Simple form with standard inputs for this type of calculation."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear and provided in two common units (L/s and m³/hr), which is very useful."
+    }
+  }
+}

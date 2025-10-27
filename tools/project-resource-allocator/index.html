@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Resource Allocator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .resource-form {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            grid-column: 1 / -1; /* Span across both columns */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #allocationList {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        #allocations {
+            list-style: none;
+            padding: 0;
+        }
+
+        #allocations li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Resource Allocator</h1>
+        <div class="resource-form">
+            <div class="input-group">
+                <label for="taskName">Task Name</label>
+                <input type="text" id="taskName" placeholder="e.g., Design Phase">
+            </div>
+            <div class="input-group">
+                <label for="resourceName">Resource Name</label>
+                <input type="text" id="resourceName" placeholder="e.g., John Doe">
+            </div>
+            <button id="addTaskResourceBtn">Add Task & Resource</button>
+        </div>
+        <div id="allocationList">
+            <h2>Allocations</h2>
+            <ul id="allocations"></ul>
+        </div>
+    </div>
+    <script>
+        const allocations = [];
+
+        document.getElementById('addTaskResourceBtn').addEventListener('click', function() {
+            const taskName = document.getElementById('taskName').value;
+            const resourceName = document.getElementById('resourceName').value;
+
+            if (!taskName || !resourceName) {
+                alert('Please enter both task name and resource name.');
+                return;
+            }
+
+            allocations.push({ taskName, resourceName });
+            renderAllocationList();
+            clearInputs();
+        });
+
+        function renderAllocationList() {
+            const allocationListUl = document.getElementById('allocations');
+            allocationListUl.innerHTML = '';
+            allocations.forEach((allocation, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span><strong>Task:</strong> ${allocation.taskName} - <strong>Resource:</strong> ${allocation.resourceName}</span>
+                    <button onclick="removeAllocation(${index})">Remove</button>
+                `;
+                allocationListUl.appendChild(li);
+            });
+        }
+
+        function removeAllocation(index) {
+            allocations.splice(index, 1);
+            renderAllocationList();
+        }
+
+        function clearInputs() {
+            document.getElementById('taskName').value = '';
+            document.getElementById('resourceName').value = '';
+        }
+    </script>
+</body>
+</html>

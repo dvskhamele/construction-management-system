@@ -1,249 +1,148 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - generic [ref=e2]:
-    - generic [ref=e3]:
-      - banner [ref=e4]:
-        - generic [ref=e6]:
-          - link "HO" [ref=e8]:
-            - /url: /dashboard
-            - img [ref=e9]
-            - generic [ref=e11]: HO
-          - generic [ref=e12]:
-            - button [ref=e14] [cursor=pointer]:
-              - img [ref=e15]
-            - button [ref=e17] [cursor=pointer]:
-              - img [ref=e18]
-      - main [ref=e20]:
-        - generic [ref=e22]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - img [ref=e10]
+            - heading "BuildMate" [level=1] [ref=e12]
+          - combobox "Language:" [ref=e14]:
+            - option "English" [selected]
+            - option "हिंदी (Hindi)"
+            - option "বাংলা (Bengali)"
+            - option "తెలుగు (Telugu)"
+            - option "मराठी (Marathi)"
+            - option "தமிழ் (Tamil)"
+            - option "ગુજરાતી (Gujarati)"
+            - option "ಕನ್ನಡ (Kannada)"
+            - option "മലയാളം (Malayalam)"
+            - option "ਪੰਜਾਬੀ (Punjabi)"
+            - option "اردو (Urdu)"
+            - option "ଓଡ଼ିଆ (Odia)"
+            - option "অসমীয়া (Assamese)"
+            - option "नेपाली (Nepali)"
+            - option "سنڌي (Sindhi)"
+        - paragraph [ref=e15]: Construction Management Portal
+      - generic [ref=e16]:
+        - heading "Sign in to your account" [level=2] [ref=e17]
+        - paragraph [ref=e18]: Manage your construction projects
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - generic [ref=e21]: Email
+            - textbox "Email" [active] [ref=e22]:
+              - /placeholder: Enter your email
           - generic [ref=e23]:
-            - heading "Good morning, Admin User" [level=1] [ref=e24]
-            - paragraph [ref=e25]: Here's what's happening with your construction sites today.
-          - generic [ref=e27]:
-            - generic [ref=e28]: "Last updated:"
-            - generic [ref=e29]: 12:21 AM
-            - button [ref=e30] [cursor=pointer]:
-              - img [ref=e31]
-        - generic [ref=e33]:
-          - generic [ref=e34] [cursor=pointer]:
-            - generic [ref=e35]:
-              - generic [ref=e36]:
-                - paragraph [ref=e37]: Pending Tasks
-                - paragraph [ref=e38]: "18"
-              - img [ref=e40]
-            - generic [ref=e42]: +2 from yesterday
-          - generic [ref=e43] [cursor=pointer]:
-            - generic [ref=e44]:
-              - generic [ref=e45]:
-                - paragraph [ref=e46]: Project Completion
-                - paragraph [ref=e47]: 78%
-              - img [ref=e49]
-            - generic [ref=e51]: ↑ 3% from last week
-          - generic [ref=e52] [cursor=pointer]:
-            - generic [ref=e53]:
-              - generic [ref=e54]:
-                - paragraph [ref=e55]: Revenue Today
-                - paragraph [ref=e56]: ₹45,000
-              - img [ref=e58]
-            - generic [ref=e60]: ↑ 12% from yesterday
-          - generic [ref=e61] [cursor=pointer]:
-            - generic [ref=e62]:
-              - generic [ref=e63]:
-                - paragraph [ref=e64]: Active Team
-                - paragraph [ref=e65]: "24"
-              - img [ref=e67]
-            - generic [ref=e69]: 3 on break
-        - generic [ref=e70]:
-          - heading "Quick Actions" [level=2] [ref=e71]
-          - generic [ref=e72]:
-            - generic [ref=e73] [cursor=pointer]:
-              - img [ref=e74]
-              - generic [ref=e76]: Requests
-            - generic [ref=e77] [cursor=pointer]:
-              - img [ref=e78]
-              - generic [ref=e80]: Projects
-            - generic [ref=e81] [cursor=pointer]:
-              - img [ref=e82]
-              - generic [ref=e84]: Analytics
-            - generic [ref=e85] [cursor=pointer]:
-              - img [ref=e86]
-              - generic [ref=e88]: Depts
-        - generic [ref=e89]:
-          - heading "Daily Progress" [level=3] [ref=e90]
-          - generic [ref=e91]:
-            - generic [ref=e92]:
-              - generic [ref=e93]:
-                - generic [ref=e94]: Foundation
-                - generic [ref=e95]: 75%
-              - generic [ref=e98]:
-                - generic [ref=e99]: 15/20 tasks
-                - generic [ref=e100]: Completed
-            - generic [ref=e101]:
-              - generic [ref=e102]:
-                - generic [ref=e103]: Framing
-                - generic [ref=e104]: 45%
-              - generic [ref=e107]:
-                - generic [ref=e108]: 9/20 tasks
-                - generic [ref=e109]: Completed
-            - generic [ref=e110]:
-              - generic [ref=e111]:
-                - generic [ref=e112]: Electrical
-                - generic [ref=e113]: 68%
-              - generic [ref=e116]:
-                - generic [ref=e117]: 34/50 tasks
-                - generic [ref=e118]: Completed
-        - generic [ref=e119]:
-          - generic [ref=e120]:
-            - heading "Recent Activity" [level=2] [ref=e121]
-            - button "View All" [ref=e122] [cursor=pointer]
-          - generic [ref=e123]:
-            - generic [ref=e124] [cursor=pointer]:
-              - generic [ref=e125]:
-                - heading "New project started" [level=3] [ref=e126]
-                - generic [ref=e127]: 12:21 AM
-              - paragraph [ref=e128]: Foundation work for project "Residential Complex A" has begun
-            - generic [ref=e129] [cursor=pointer]:
-              - generic [ref=e130]:
-                - heading "Task completed" [level=3] [ref=e131]
-                - generic [ref=e132]: 11:21 PM
-              - paragraph [ref=e133]: Plumbing installation completed at site 102
-            - generic [ref=e134] [cursor=pointer]:
-              - generic [ref=e135]:
-                - heading "Defect logged" [level=3] [ref=e136]
-                - generic [ref=e137]: 12:06 AM
-              - paragraph [ref=e138]: Crack found in wall of building C - needs repair
-            - generic [ref=e139] [cursor=pointer]:
-              - generic [ref=e140]:
-                - heading "Equipment maintenance" [level=3] [ref=e141]
-                - generic [ref=e142]: 10:21 PM
-              - paragraph [ref=e143]: Excavator scheduled for maintenance next week
-            - generic [ref=e144] [cursor=pointer]:
-              - generic [ref=e145]:
-                - heading "Inventory updated" [level=3] [ref=e146]
-                - generic [ref=e147]: 09:21 PM
-              - paragraph [ref=e148]: Cement supply delivered to site 305
-        - generic [ref=e149]:
-          - heading "Recent Tasks" [level=3] [ref=e150] [cursor=pointer]
-          - table [ref=e152]:
-            - rowgroup [ref=e153]:
-              - row "Project Task Assignee Status" [ref=e154]:
-                - cell "Project" [ref=e155]
-                - cell "Task" [ref=e156]
-                - cell "Assignee" [ref=e157]
-                - cell "Status" [ref=e158]
-            - rowgroup [ref=e159]:
-              - row "J John Smith Foundation Work John Smith IN_PROGRESS" [ref=e160] [cursor=pointer]:
-                - cell "J John Smith" [ref=e161]:
-                  - generic [ref=e162]:
-                    - generic [ref=e164]: J
-                    - generic [ref=e166]: John Smith
-                - cell "Foundation Work" [ref=e167]
-                - cell "John Smith" [ref=e168]
-                - cell "IN_PROGRESS" [ref=e169]
-              - row "S Sarah Johnson Electrical Installation Sarah Johnson PENDING" [ref=e170] [cursor=pointer]:
-                - cell "S Sarah Johnson" [ref=e171]:
-                  - generic [ref=e172]:
-                    - generic [ref=e174]: S
-                    - generic [ref=e176]: Sarah Johnson
-                - cell "Electrical Installation" [ref=e177]
-                - cell "Sarah Johnson" [ref=e178]
-                - cell "PENDING" [ref=e179]
-              - row "M Mike Chen Design Approval Mike Chen REVIEW" [ref=e180] [cursor=pointer]:
-                - cell "M Mike Chen" [ref=e181]:
-                  - generic [ref=e182]:
-                    - generic [ref=e184]: M
-                    - generic [ref=e186]: Mike Chen
-                - cell "Design Approval" [ref=e187]
-                - cell "Mike Chen" [ref=e188]
-                - cell "REVIEW" [ref=e189]
-      - generic [ref=e191]:
-        - link "Dashboard" [ref=e192]:
-          - /url: /dashboard
-          - img [ref=e194]
-          - generic [ref=e196]: Dashboard
-        - link "Sites" [ref=e197]:
-          - /url: /projects
-          - img [ref=e199]
-          - generic [ref=e201]: Sites
-        - link "Projects" [ref=e202]:
-          - /url: /projects
-          - img [ref=e204]
-          - generic [ref=e206]: Projects
-        - link "Tasks" [ref=e207]:
-          - /url: /tasks
-          - img [ref=e209]
-          - generic [ref=e211]: Tasks
-        - link "Crew" [ref=e212]:
-          - /url: /crew
-          - img [ref=e214]
-          - generic [ref=e216]: Crew
-    - contentinfo [ref=e217]:
-      - generic [ref=e218]:
-        - generic [ref=e219]:
-          - generic [ref=e220]:
-            - generic [ref=e221]:
-              - img [ref=e223]
-              - generic [ref=e225]: BuildMate
-            - paragraph [ref=e226]: Delhi's premier construction management platform for construction professionals.
-          - generic [ref=e227]:
-            - heading "Product" [level=3] [ref=e228]
-            - list [ref=e229]:
-              - listitem [ref=e230]:
-                - link "Features" [ref=e231]:
+            - generic [ref=e24]: Password
+            - textbox "Password" [ref=e25]:
+              - /placeholder: Enter your password
+              - text: password123
+          - generic [ref=e26]:
+            - generic [ref=e27]:
+              - checkbox "Remember me" [ref=e28]
+              - generic [ref=e29]: Remember me
+            - link "Forgot password?" [ref=e31]:
+              - /url: /forgot-password
+          - button "Sign In" [ref=e32] [cursor=pointer]
+          - generic [ref=e33]:
+            - generic [ref=e38]: Quick Login (Demo)
+            - generic [ref=e39]:
+              - button "Admin" [ref=e40] [cursor=pointer]
+              - button "PM" [ref=e41] [cursor=pointer]
+              - button "SS" [ref=e42] [cursor=pointer]
+              - button "CL" [ref=e43] [cursor=pointer]
+              - button "SUB" [ref=e44] [cursor=pointer]
+        - paragraph [ref=e46]:
+          - text: Don't have an account?
+          - link "Sign up" [ref=e47]:
+            - /url: /signup
+      - generic [ref=e49]:
+        - generic [ref=e50]: © 2025 BuildMate. Construction Process Automation
+        - generic [ref=e51]:
+          - link "Features" [ref=e52]:
+            - /url: /features
+          - link "Pricing" [ref=e53]:
+            - /url: /pricing
+          - link "Contact" [ref=e54]:
+            - /url: /contact
+    - contentinfo [ref=e55]:
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - img [ref=e61]
+              - generic [ref=e63]: BuildMate
+            - paragraph [ref=e64]: Delhi's premier construction management platform for construction professionals.
+          - generic [ref=e65]:
+            - heading "Product" [level=3] [ref=e66]
+            - list [ref=e67]:
+              - listitem [ref=e68]:
+                - link "Features" [ref=e69]:
                   - /url: "#"
-              - listitem [ref=e232]:
-                - link "Pricing" [ref=e233]:
+              - listitem [ref=e70]:
+                - link "Pricing" [ref=e71]:
                   - /url: "#"
-              - listitem [ref=e234]:
-                - link "Templates" [ref=e235]:
+              - listitem [ref=e72]:
+                - link "Templates" [ref=e73]:
                   - /url: "#"
-              - listitem [ref=e236]:
-                - link "Releases" [ref=e237]:
+              - listitem [ref=e74]:
+                - link "Releases" [ref=e75]:
                   - /url: "#"
-          - generic [ref=e238]:
-            - heading "Company" [level=3] [ref=e239]
-            - list [ref=e240]:
-              - listitem [ref=e241]:
-                - link "About" [ref=e242]:
+              - listitem [ref=e76]:
+                - link "Safety Checklist" [ref=e77]:
+                  - /url: /tools/construction-safety-checklist
+              - listitem [ref=e78]:
+                - link "Schedule Variance Calculator" [ref=e79]:
+                  - /url: /tools/construction-schedule-variance-calculator
+              - listitem [ref=e80]:
+                - link "Profitability Calculator" [ref=e81]:
+                  - /url: /tools/construction-profitability-calculator
+              - listitem [ref=e82]:
+                - link "Equipment Utilization Tracker" [ref=e83]:
+                  - /url: /tools/construction-equipment-utilization-tracker
+              - listitem [ref=e84]:
+                - link "Defect Tracker" [ref=e85]:
+                  - /url: /tools/construction-defect-tracker
+              - listitem [ref=e86]:
+                - link "Milestone Tracker" [ref=e87]:
+                  - /url: /tools/construction-project-milestone-tracker
+          - generic [ref=e88]:
+            - heading "Company" [level=3] [ref=e89]
+            - list [ref=e90]:
+              - listitem [ref=e91]:
+                - link "About" [ref=e92]:
                   - /url: "#about"
-              - listitem [ref=e243]:
-                - link "Contact" [ref=e244]:
+              - listitem [ref=e93]:
+                - link "Contact" [ref=e94]:
                   - /url: "#contact"
-              - listitem [ref=e245]:
-                - link "FAQs" [ref=e246]:
+              - listitem [ref=e95]:
+                - link "FAQs" [ref=e96]:
                   - /url: "#faqs"
-              - listitem [ref=e247]:
-                - link "Privacy Policy" [ref=e248]:
+              - listitem [ref=e97]:
+                - link "Privacy Policy" [ref=e98]:
                   - /url: "#"
-          - generic [ref=e249]:
-            - heading "Support" [level=3] [ref=e250]
-            - list [ref=e251]:
-              - listitem [ref=e252]:
-                - link "Documentation" [ref=e253]:
+          - generic [ref=e99]:
+            - heading "Support" [level=3] [ref=e100]
+            - list [ref=e101]:
+              - listitem [ref=e102]:
+                - link "Documentation" [ref=e103]:
                   - /url: "#"
-              - listitem [ref=e254]:
-                - link "API Reference" [ref=e255]:
+              - listitem [ref=e104]:
+                - link "API Reference" [ref=e105]:
                   - /url: "#"
-              - listitem [ref=e256]:
-                - link "Status" [ref=e257]:
+              - listitem [ref=e106]:
+                - link "Status" [ref=e107]:
                   - /url: "#"
-              - listitem [ref=e258]:
-                - link "Help Center" [ref=e259]:
+              - listitem [ref=e108]:
+                - link "Help Center" [ref=e109]:
                   - /url: "#"
-        - paragraph [ref=e261]: © 2025 BuildMate by Signimus Technologies. All rights reserved.
-  - generic:
-    - generic [ref=e264] [cursor=pointer]:
-      - img [ref=e265]
-      - generic [ref=e267]: 3 errors
-      - button "Hide Errors" [ref=e268]:
-        - img [ref=e269]
-    - status [ref=e272]:
-      - generic [ref=e273]:
-        - img [ref=e275]
-        - generic [ref=e277]:
-          - text: Static route
-          - button "Hide static indicator" [ref=e278] [cursor=pointer]:
-            - img [ref=e279]
-  - alert [ref=e282]
+        - paragraph [ref=e111]: © 2025 BuildMate by Signimus Technologies. All rights reserved.
+  - alert [ref=e112]
+  - generic [ref=e115] [cursor=pointer]:
+    - img [ref=e116]
+    - generic [ref=e118]: 2 errors
+    - button "Hide Errors" [ref=e119]:
+      - img [ref=e120]
 ```

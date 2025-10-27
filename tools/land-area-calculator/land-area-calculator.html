@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Area Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Land Area Calculator</h1>
+        <form id="land-area-form">
+            <div class="input-group">
+                <label for="land-length">Length (feet)</label>
+                <input type="number" id="land-length" required>
+            </div>
+            <div class="input-group">
+                <label for="land-width">Width (feet)</label>
+                <input type="number" id="land-width" required>
+            </div>
+            <button type="submit">Calculate Area</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

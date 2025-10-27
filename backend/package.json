@@ -1,5 +1,5 @@
 {
-  "name": "hotel-ops-backend",
+  "name": "construction-ops-backend",
   "version": "1.0.0",
   "main": "src/simple-server.js",
   "scripts": {

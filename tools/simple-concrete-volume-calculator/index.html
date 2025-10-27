@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Concrete Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Concrete Volume Calculator</h1>
+        <p>Calculate the volume of concrete needed for various shapes.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="shape-select">Select Shape</label>
+                <select id="shape-select">
+                    <option value="slab">Rectangular Slab</option>
+                    <option value="column">Column</option>
+                    <option value="circular-slab">Circular Slab</option>
+                </select>
+            </div>
+
+            <div id="slab-inputs" class="shape-inputs">
+                <label for="slab-length">Length (meters)</label>
+                <input type="number" id="slab-length" placeholder="e.g., 5">
+                <label for="slab-width">Width (meters)</label>
+                <input type="number" id="slab-width" placeholder="e.g., 3">
+                <label for="slab-thickness">Thickness (meters)</label>
+                <input type="number" id="slab-thickness" placeholder="e.g., 0.15">
+            </div>
+
+            <div id="column-inputs" class="shape-inputs hidden">
+                <label for="column-length">Length (meters)</label>
+                <input type="number" id="column-length" placeholder="e.g., 3">
+                <label for="column-width">Width (meters)</label>
+                <input type="number" id="column-width" placeholder="e.g., 0.3">
+                <label for="column-height">Height (meters)</label>
+                <input type="number" id="column-height" placeholder="e.g., 2.5">
+            </div>
+
+            <div id="circular-slab-inputs" class="shape-inputs hidden">
+                <label for="circular-slab-radius">Radius (meters)</label>
+                <input type="number" id="circular-slab-radius" placeholder="e.g., 2">
+                <label for="circular-slab-thickness">Thickness (meters)</label>
+                <input type="number" id="circular-slab-thickness" placeholder="e.g., 0.10">
+            </div>
+
+            <button id="calculate-volume">Calculate Volume</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

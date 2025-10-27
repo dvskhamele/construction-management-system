@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Timeline Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Timeline Estimator</h1>
+        <form id="timeline-form">
+            <p>Enter the estimated duration for each project phase in days.</p>
+
+            <div class="input-group">
+                <label for="phase1-duration">Phase 1: Planning & Design (days)</label>
+                <input type="number" id="phase1-duration" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="phase2-duration">Phase 2: Site Preparation (days)</label>
+                <input type="number" id="phase2-duration" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="phase3-duration">Phase 3: Foundation Work (days)</label>
+                <input type="number" id="phase3-duration" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="phase4-duration">Phase 4: Framing & Structure (days)</label>
+                <input type="number" id="phase4-duration" value="0" required>
+            </div>
+            <div class="input-group">
+                <label for="phase5-duration">Phase 5: Finishing & Inspections (days)</label>
+                <input type="number" id="phase5-duration" value="0" required>
+            </div>
+
+            <button type="submit">Estimate Timeline</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Curing Time Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Curing Time Calculator</h1>
+        <form id="curing-time-form">
+            <div class="input-group">
+                <label for="desired-strength">Desired Strength Gain (%):</label>
+                <input type="number" id="desired-strength" value="70" required>
+            </div>
+            <div class="input-group">
+                <label for="ambient-temperature">Average Ambient Temperature (°C):</label>
+                <input type="number" id="ambient-temperature" value="20" required>
+            </div>
+            <div class="input-group">
+                <label for="cement-type">Type of Cement:</label>
+                <select id="cement-type">
+                    <option value="type-i-ii">Type I/II (Normal)</option>
+                    <option value="type-iii">Type III (High Early Strength)</option>
+                </select>
+            </div>
+            <button type="submit">Calculate Curing Time</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

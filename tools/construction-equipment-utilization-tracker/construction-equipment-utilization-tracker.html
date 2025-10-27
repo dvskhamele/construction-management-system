@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Equipment Utilization Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Equipment Utilization Tracker</h1>
+        <form id="utilization-form">
+            <div class="input-group">
+                <label for="available-hours">Total Available Hours (e.g., per month)</label>
+                <input type="number" id="available-hours" required>
+            </div>
+            <div class="input-group">
+                <label for="operating-hours">Actual Operating Hours (e.g., per month)</label>
+                <input type="number" id="operating-hours" required>
+            </div>
+            <button type="submit">Calculate Utilization</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

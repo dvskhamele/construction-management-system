@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RFI/Submittal Tracker</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>RFI/Submittal Tracker</h1>
+    <div class="input-group">
+        <input type="text" id="item-description" placeholder="Description">
+        <select id="item-type">
+            <option value="RFI">RFI</option>
+            <option value="Submittal">Submittal</option>
+        </select>
+        <select id="item-status">
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+            <option value="Pending">Pending</option>
+        </select>
+        <button id="add-item">Add Item</button>
+    </div>
+    <div id="tracker-list"></div>
+    <button id="clear-tracker">Clear All Items</button>
+    <script src="popup.js"></script>
+</body>
+</html>

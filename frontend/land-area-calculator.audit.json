@@ -1,0 +1,35 @@
+{
+  "tool_slug": "land-area-calculator",
+  "audit_date": "2025-10-22T02:05:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Land Area Calculator (Triangular Plot)",
+      "status": "pass",
+      "recommendation": "Good keyword targeting for real estate and initial project planning."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Area",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Download our guide on land measurement units and conversion factors used in India.",
+      "status": "pass",
+      "recommendation": "Excellent, highly localized lead magnet that provides immense value to the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 4,
+      "status": "pass",
+      "recommendation": "Simple form for a potentially complex calculation."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clearly displayed in multiple relevant units (sqm, sqft, acres). The validation for a valid triangle is a good UX touch."
+    }
+  }
+}

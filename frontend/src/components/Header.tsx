@@ -2,160 +2,280 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import NotificationComponent from './NotificationComponent'
-import MobileNotificationComponent from './MobileNotificationComponent'
-import PushNotificationHandler from './PushNotificationHandler'
-import BackgroundSyncHandler from './BackgroundSyncHandler'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface User {
-  name: string;
-  role: string;
+  name: string
+  role: string
 }
 
 interface HeaderProps {
-  user: User | null;
-  onLogout: () => void;
-}
-
-interface NavItem {
-  name: string;
-  href: string;
-  icon: string;
+  user: User | null
+  onLogout: () => void
 }
 
 const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
   const pathname = usePathname()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const router = useRouter()
 
-  React.useEffect(() => {
-    // Check if user is on mobile device
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+  // Define navigation items based on user role
+  const getNavItems = () => {
+    const baseItems = [
+      { name: 'Dashboard', href: '/dashboard' },
+      { name: 'Tasks', href: '/tasks' },
+      { name: 'Projects', href: '/projects' },
+    ]
+
+    if (user?.role === 'ADMIN' || user?.role === 'PROJECT_MANAGER') {
+      return [
+        ...baseItems,
+        { name: 'Sites', href: '/sites' },
+        { name: 'Crew', href: '/crew' },
+        { name: 'Equipment', href: '/equipment' },
+        { name: 'Analytics', href: '/analytics' },
+        { name: 'Subcontractors', href: '/subcontractors' },
+      ]
     }
-    
-    checkIsMobile()
-    window.addEventListener('resize', checkIsMobile)
-    
-    return () => {
-      window.removeEventListener('resize', checkIsMobile)
+
+    if (user?.role === 'SITE_SUPERVISOR') {
+      return [
+        ...baseItems,
+        { name: 'Sites', href: '/sites' },
+        { name: 'Defects', href: '/defects' },
+        { name: 'Safety', href: '/safety' },
+      ]
     }
-  }, [])
 
-  const navItems: NavItem[] = [
-    { name: 'Dashboard', href: '/dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-    { name: 'Projects', href: '/projects', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-    { name: 'Sites', href: '/sites', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-    { name: 'Tasks', href: '/tasks', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
-    { name: 'Crew', href: '/crew', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
-    { name: 'Crew Tracking', href: '/crew-tracking', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zm-9.193-3.515a4 4 0 105.656 0M9 10h.01M15 10h.01' },
-    { name: 'Equipment', href: '/equipment', icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
-    { name: 'Defects', href: '/defects', icon: 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z' },
-    { name: 'Safety', href: '/safety', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' },
-    { name: 'Materials', href: '/materials', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
-    { name: 'Analytics', href: '/analytics', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
-    { name: 'Subcontractors', href: '/subcontractors', icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' }
-  ]
+    if (user?.role === 'CREW_LEADER') {
+      return [
+        ...baseItems,
+        { name: 'Crew Tracking', href: '/crew-tracking' },
+      ]
+    }
 
-  // For mobile, we'll show only the most important navigation items
-  const mobileNavItems = navItems.filter(item => 
-    ['Dashboard', 'Projects', 'Sites', 'Tasks', 'Crew'].includes(item.name)
-  )
+    if (user?.role === 'CLIENT') {
+      return [
+        ...baseItems,
+        { name: 'Materials', href: '/materials' },
+        { name: 'Projects', href: '/projects' },
+        { name: 'Reports', href: '/reports' },
+      ]
+    }
+
+    return baseItems
+  }
+
+  // Define additional navigation items based on user role
+  const getAdditionalNavItems = () => {
+    if (user?.role === 'CLIENT') {
+      // Only show calculators that are relevant to clients
+      return [
+        { name: 'Concrete Calculator', href: '/tools/concrete-calculator' },
+        { name: 'Roofing Calculator', href: '/tools/roofing-material-calculator' },
+        { name: 'Drywall Calculator', href: '/tools/drywall-calculator' },
+        { name: 'Decking Calculator', href: '/tools/decking-material-calculator' },
+        { name: 'Safety Checklist', href: '/tools/construction-safety-checklist' },
+        { name: 'Schedule Variance Calculator', href: '/tools/construction-schedule-variance-calculator' },
+        { name: 'Profitability Calculator', href: '/tools/construction-profitability-calculator' },
+        { name: 'Defect Tracker', href: '/tools/construction-defect-tracker' },
+        { name: 'Milestone Tracker', href: '/tools/construction-project-milestone-tracker' },
+        { name: 'Blog', href: '/blog' },
+      ];
+    }
+
+    // For other roles, show all tools and additional items
+    if (user?.role === 'ADMIN' || user?.role === 'PROJECT_MANAGER') {
+      return [
+        { name: 'Concrete Calculator', href: '/tools/concrete-calculator' },
+        { name: 'Roofing Calculator', href: '/tools/roofing-material-calculator' },
+        { name: 'Drywall Calculator', href: '/tools/drywall-calculator' },
+        { name: 'Decking Calculator', href: '/tools/decking-material-calculator' },
+        { name: 'Safety Checklist', href: '/tools/construction-safety-checklist' },
+        { name: 'Schedule Variance Calculator', href: '/tools/construction-schedule-variance-calculator' },
+        { name: 'Profitability Calculator', href: '/tools/construction-profitability-calculator' },
+        { name: 'Equipment Utilization Tracker', href: '/tools/construction-equipment-utilization-tracker' },
+        { name: 'Defect Tracker', href: '/tools/construction-defect-tracker' },
+        { name: 'Milestone Tracker', href: '/tools/construction-project-milestone-tracker' },
+        { name: 'CRM', href: '/construction-crm' },
+        { name: 'Legal Docs', href: '/legal-documents' },
+        { name: 'Blog', href: '/blog' },
+        { name: 'Inventory', href: '/inventory' },
+        { name: 'Consumption', href: '/consumption-tracker' },
+      ];
+    }
+
+    // For other roles, show appropriate subset of tools
+    return [
+      { name: 'Concrete Calculator', href: '/tools/concrete-calculator' },
+      { name: 'Roofing Calculator', href: '/tools/roofing-material-calculator' },
+      { name: 'Drywall Calculator', href: '/tools/drywall-calculator' },
+      { name: 'Decking Calculator', href: '/tools/decking-material-calculator' },
+      { name: 'Safety Checklist', href: '/tools/construction-safety-checklist' },
+      { name: 'Schedule Variance Calculator', href: '/tools/construction-schedule-variance-calculator' },
+      { name: 'Profitability Calculator', href: '/tools/construction-profitability-calculator' },
+      { name: 'Defect Tracker', href: '/tools/construction-defect-tracker' },
+      { name: 'Milestone Tracker', href: '/tools/construction-project-milestone-tracker' },
+      { name: 'Blog', href: '/blog' },
+    ];
+  };
+
+  const navItems = getNavItems()
+  const additionalNavItems = getAdditionalNavItems()
 
   return (
-    <header className="bg-white shadow sticky top-0 z-50">
-      <PushNotificationHandler />
-      <BackgroundSyncHandler />
+    <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-3">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
           <div className="flex items-center">
-            <Link href="/dashboard" className="text-xl font-bold text-slate-800 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-teal-600 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-              <span className="hidden sm:inline">BuildMate</span>
-              <span className="sm:hidden">HO</span>
+            <Link href="/dashboard" className="flex items-center">
+              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.707 2.293a1 1 0 011.414 0l7 7a1 1 0 01-1.414 1.414L11 7.414V19a1 1 0 11-2 0V7.414L2.707 13.707a1 1 0 01-1.414-1.414l7-7z" />
+                </svg>
+              </div>
+              <span className="ml-2 text-xl font-bold text-slate-800 hidden sm:block">BuildMate</span>
             </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
+          <nav className="hidden md:flex space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`${pathname === item.href ? 'text-teal-600 border-b-2 border-teal-600' : 'text-slate-600 hover:text-teal-600'} px-1 py-2 text-sm font-medium transition duration-300 flex items-center`}
+                className={`text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? 'text-teal-600 border-b-2 border-teal-600 pb-1'
+                    : 'text-slate-600 hover:text-teal-600'
+                }`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                </svg>
-                <span className="truncate max-w-[100px]">{item.name}</span>
+                {item.name}
+              </Link>
+            ))}
+            {/* Additional navigation items for all users */}
+            {additionalNavItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? 'text-teal-600 border-b-2 border-teal-600 pb-1'
+                    : 'text-slate-600 hover:text-teal-600'
+                }`}
+              >
+                {item.name}
               </Link>
             ))}
           </nav>
-          
-          <div className="flex items-center space-x-3">
-            <div className="hidden sm:block">
-              <NotificationComponent user={user} />
-            </div>
-            <div className="relative group">
-              <button className="flex items-center text-sm font-medium text-slate-700 hover:text-slate-900">
-                <span className="mr-1 hidden md:inline">{user?.name || 'User'}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
+
+          {/* User Menu */}
+          <div className="flex items-center">
+            {user ? (
+              <>
+                <div className="relative">
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center space-x-2 focus:outline-none"
+                  >
+                    <div className="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="hidden sm:block text-sm font-medium text-slate-700">{user?.name}</span>
+                  </button>
+
+                  {/* Profile Dropdown */}
+                  {isProfileOpen && (
+                    <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                      <div className="py-1">
+                        <div className="px-4 py-2 border-b border-slate-200">
+                          <p className="text-sm font-medium text-slate-900">{user?.name}</p>
+                          <p className="text-xs text-slate-500">{user?.role}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            onLogout()
+                            setIsProfileOpen(false)
+                          }}
+                          className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100"
+                        >
+                          Sign out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile menu button */}
                 <button
-                  onClick={onLogout}
-                  className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="ml-4 md:hidden text-slate-600 hover:text-slate-900 focus:outline-none"
                 >
-                  Logout
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
                 </button>
+              </>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link 
+                  href="/client-login" 
+                  className="text-sm font-medium text-teal-600 hover:text-teal-700"
+                >
+                  Client Login
+                </Link>
+                <Link 
+                  href="/login" 
+                  className="text-sm font-medium bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700"
+                >
+                  Staff Login
+                </Link>
               </div>
-            </div>
-            
-            {/* Mobile menu button */}
-            <button 
-              className="md:hidden text-slate-600 hover:text-slate-900"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            )}
           </div>
         </div>
-        
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-3 border-t border-slate-200">
-            <div className="flex justify-between mb-3">
-              {isMobile ? (
-                <MobileNotificationComponent user={user} />
-              ) : (
-                <NotificationComponent user={user} />
-              )}
-            </div>
-            <nav className="grid grid-cols-3 gap-2">
-              {mobileNavItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`${pathname === item.href ? 'text-teal-600 bg-teal-50' : 'text-slate-600'} px-2 py-2 rounded-md text-xs font-medium flex flex-col items-center justify-center text-center h-16`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
-                  <span className="truncate w-full">{item.name}</span>
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-t border-slate-200">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  pathname === item.href
+                    ? 'bg-teal-50 text-teal-700'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            {/* Additional navigation items for all users */}
+            {additionalNavItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  pathname === item.href
+                    ? 'bg-teal-50 text-teal-700'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   )
 }

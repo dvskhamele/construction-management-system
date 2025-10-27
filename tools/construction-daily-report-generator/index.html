@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Daily Report Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .report-form {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #reportOutput {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        #reportOutput h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        #reportOutput p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Daily Report Generator</h1>
+        <div class="report-form">
+            <div class="input-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" id="projectName" placeholder="Enter project name">
+            </div>
+            <div class="input-group">
+                <label for="date">Date</label>
+                <input type="date" id="date">
+            </div>
+            <div class="input-group">
+                <label for="weather">Weather</label>
+                <input type="text" id="weather" placeholder="e.g., Sunny, 25°C">
+            </div>
+            <div class="input-group">
+                <label for="workSummary">Summary of Work Done</label>
+                <textarea id="workSummary" rows="5" placeholder="Describe the work accomplished today"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="materialsUsed">Materials Used</label>
+                <textarea id="materialsUsed" rows="3" placeholder="List materials and quantities"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="equipmentUsed">Equipment Used</label>
+                <textarea id="equipmentUsed" rows="3" placeholder="List equipment on site"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="issues">Issues or Delays</label>
+                <textarea id="issues" rows="3" placeholder="Describe any issues or delays encountered"></textarea>
+            </div>
+            <button id="generateReportBtn">Generate Report</button>
+        </div>
+        <div id="reportOutput"></div>
+    </div>
+    <script>
+        document.getElementById('generateReportBtn').addEventListener('click', function() {
+            const projectName = document.getElementById('projectName').value;
+            const date = document.getElementById('date').value;
+            const weather = document.getElementById('weather').value;
+            const workSummary = document.getElementById('workSummary').value;
+            const materialsUsed = document.getElementById('materialsUsed').value;
+            const equipmentUsed = document.getElementById('equipmentUsed').value;
+            const issues = document.getElementById('issues').value;
+
+            if (!projectName || !date || !weather || !workSummary) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const reportHTML = `
+                <h2>Daily Construction Report</h2>
+                <p><strong>Project:</strong> ${projectName}</p>
+                <p><strong>Date:</strong> ${date}</p>
+                <p><strong>Weather:</strong> ${weather}</p>
+                <h3>Work Summary</h3>
+                <p>${workSummary.replace(/\n/g, '<br>')}</p>
+                <h3>Materials Used</h3>
+                <p>${materialsUsed.replace(/\n/g, '<br>')}</p>
+                <h3>Equipment Used</h3>
+                <p>${equipmentUsed.replace(/\n/g, '<br>')}</p>
+                <h3>Issues or Delays</h3>
+                <p>${issues.replace(/\n/g, '<br>')}</p>
+            `;
+
+            const reportOutput = document.getElementById('reportOutput');
+            reportOutput.innerHTML = reportHTML;
+
+            const printButton = document.createElement('button');
+            printButton.textContent = 'Print Report';
+            printButton.style.marginTop = '10px';
+            printButton.addEventListener('click', function() {
+                const printWindow = window.open('', '', 'height=600,width=800');
+                printWindow.document.write('<html><head><title>Print Report</title></head><body>');
+                printWindow.document.write(reportHTML);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+            });
+
+            reportOutput.appendChild(printButton);
+        });
+    </script>
+</body>
+</html>

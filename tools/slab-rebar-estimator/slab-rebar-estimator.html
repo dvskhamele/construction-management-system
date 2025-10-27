@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slab Rebar Estimator - BuildMate</title>
+    <meta name="description" content="Estimate the total length and weight of rebar needed for your concrete slab projects with BuildMate's free online calculator.">
+    <meta property="og:title" content="Slab Rebar Estimator - BuildMate">
+    <meta property="og:description" content="Estimate the total length and weight of rebar needed for your concrete slab projects with BuildMate's free online calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/tools/slab-rebar-estimator/slab-rebar-estimator.html">
+    <meta property="og:image" content="https://your-domain.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Slab Rebar Estimator - BuildMate">
+    <meta name="twitter:description" content="Estimate the total length and weight of rebar needed for your concrete slab projects with BuildMate's free online calculator.">
+    <meta name="twitter:image" content="https://your-domain.com/twitter-image.png">
+    <link rel="stylesheet" href="slab-rebar-estimator.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Slab Rebar Estimator</h1>
+        <div class="input-group">
+            <label for="slabLength">Slab Length (meters):</label>
+            <input type="number" id="slabLength" placeholder="e.g., 10" step="any">
+        </div>
+        <div class="input-group">
+            <label for="slabWidth">Slab Width (meters):</label>
+            <input type="number" id="slabWidth" placeholder="e.g., 5" step="any">
+        </div>
+        <div class="input-group">
+            <label for="rebarSpacing">Rebar Spacing (meters):</label>
+            <input type="number" id="rebarSpacing" value="0.2" step="any">
+        </div>
+        <div class="input-group">
+            <label for="rebarDiameter">Rebar Diameter (mm):</label>
+            <select id="rebarDiameter">
+                <option value="8">8 mm</option>
+                <option value="10">10 mm</option>
+                <option value="12">12 mm</option>
+                <option value="16">16 mm</option>
+                <option value="20">20 mm</option>
+                <option value="25">25 mm</option>
+            </select>
+        </div>
+        <button id="calculateBtn">Estimate Rebar</button>
+        <p id="error" class="error-message"></p>
+
+        <div class="lead-capture">
+            <h2>Stay Updated!</h2>
+            <p>Enter your email to receive updates on new tools and features.</p>
+            <input type="email" id="leadEmail" placeholder="your.email@example.com">
+            <button id="subscribeBtn">Subscribe</button>
+        </div>
+    </div>
+    <script src="slab-rebar-estimator.js"></script>
+</body>
+</html>

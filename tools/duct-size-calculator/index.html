@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duct Size Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .calculator {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Duct Size Calculator</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="airFlow">Air Flow (CFM)</label>
+                <input type="number" id="airFlow" placeholder="Enter air flow in CFM">
+            </div>
+            <div class="input-group">
+                <label for="frictionLoss">Friction Loss (inches of water per 100 ft)</label>
+                <input type="number" id="frictionLoss" placeholder="Enter friction loss">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const airFlow = parseFloat(document.getElementById('airFlow').value);
+            const frictionLoss = parseFloat(document.getElementById('frictionLoss').value);
+
+            if (isNaN(airFlow) || isNaN(frictionLoss)) {
+                document.getElementById('result').innerHTML = 'Please enter valid numbers.';
+                return;
+            }
+
+            // Simplified calculation using the equal friction method
+            const diameter = 0.66 * Math.pow((Math.pow(airFlow, 1.852) / (1092 * frictionLoss)), 0.204);
+            const velocity = airFlow / (Math.PI * Math.pow((diameter / 24), 2));
+
+            const resultHTML = `
+                <h3>Duct Size Calculation Results:</h3>
+                <p>Recommended Duct Diameter: ${diameter.toFixed(2)} inches</p>
+                <p>Estimated Air Velocity: ${velocity.toFixed(2)} FPM</p>
+                <p style="font-size: 14px; color: #888;">Note: This is a simplified calculation for demonstration purposes only. Always consult a qualified HVAC engineer for actual duct design.</p>
+            `;
+
+            document.getElementById('result').innerHTML = resultHTML;
+        });
+    </script>
+</body>
+</html>

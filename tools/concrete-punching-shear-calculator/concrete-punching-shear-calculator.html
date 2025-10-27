@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Punching Shear Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Punching Shear Calculator</h1>
+        <form id="punching-shear-form">
+            <div class="input-group">
+                <label for="slab-thickness">Slab Thickness (inches):</label>
+                <input type="number" id="slab-thickness" required>
+            </div>
+            <div class="input-group">
+                <label for="compressive-strength">Concrete Compressive Strength (f'c, psi):</label>
+                <input type="number" id="compressive-strength" value="4000" required>
+            </div>
+            <div class="input-group">
+                <label for="column-dim1">Column Dimension 1 (inches):</label>
+                <input type="number" id="column-dim1" required>
+            </div>
+            <div class="input-group">
+                <label for="column-dim2">Column Dimension 2 (inches):</label>
+                <input type="number" id="column-dim2" required>
+            </div>
+            <div class="input-group">
+                <label for="factored-shear-force">Factored Shear Force (Vu, kips):</label>
+                <input type="number" id="factored-shear-force" required>
+            </div>
+            <div class="input-group">
+                <label for="effective-depth">Effective Depth of Slab (d, inches):</label>
+                <input type="number" id="effective-depth" required>
+            </div>
+            <button type="submit">Calculate Punching Shear</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

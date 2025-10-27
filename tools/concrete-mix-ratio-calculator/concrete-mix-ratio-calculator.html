@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Mix Ratio Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Mix Ratio Calculator</h1>
+        <form id="mix-ratio-form">
+            <div class="input-group">
+                <label for="concrete-volume">Total Concrete Volume (cubic feet):</label>
+                <input type="number" id="concrete-volume" required>
+            </div>
+            <div class="input-group">
+                <label for="cement-ratio">Cement Ratio (parts):</label>
+                <input type="number" id="cement-ratio" value="1" required>
+            </div>
+            <div class="input-group">
+                <label for="sand-ratio">Sand Ratio (parts):</label>
+                <input type="number" id="sand-ratio" value="2" required>
+            </div>
+            <div class="input-group">
+                <label for="aggregate-ratio">Aggregate Ratio (parts):</label>
+                <input type="number" id="aggregate-ratio" value="4" required>
+            </div>
+            <button type="submit">Calculate Mix</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

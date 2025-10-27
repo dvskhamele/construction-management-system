@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Column Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Column Volume Calculator</h1>
+        <form id="column-form">
+            <div class="input-group">
+                <label for="column-type">Column Type:</label>
+                <select id="column-type">
+                    <option value="rectangular">Rectangular</option>
+                    <option value="cylindrical">Cylindrical</option>
+                </select>
+            </div>
+
+            <div id="rectangular-inputs">
+                <div class="input-group">
+                    <label for="rect-length">Length (feet)</label>
+                    <input type="number" id="rect-length" required>
+                </div>
+                <div class="input-group">
+                    <label for="rect-width">Width (feet)</label>
+                    <input type="number" id="rect-width" required>
+                </div>
+            </div>
+
+            <div id="cylindrical-inputs" style="display: none;">
+                <div class="input-group">
+                    <label for="cyl-diameter">Diameter (feet)</label>
+                    <input type="number" id="cyl-diameter">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="column-height">Height (feet)</label>
+                <input type="number" id="column-height" required>
+            </div>
+            <div class="input-group">
+                <label for="num-columns">Number of Columns</label>
+                <input type="number" id="num-columns" value="1" required>
+            </div>
+            <button type="submit">Calculate Volume</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

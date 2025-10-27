@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staircase Dimensions Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Staircase Dimensions Calculator</h1>
+        <form id="staircase-form">
+            <div class="input-group">
+                <label for="total-rise">Total Rise (vertical height from finished floor to finished floor, inches)</label>
+                <input type="number" id="total-rise" required>
+            </div>
+            <div class="input-group">
+                <label for="desired-riser-height">Desired Riser Height (inches, e.g., 7.5)</label>
+                <input type="number" id="desired-riser-height" step="0.1" value="7.5" required>
+            </div>
+            <div class="input-group">
+                <label for="desired-tread-depth">Desired Tread Depth (inches, e.g., 10)</label>
+                <input type="number" id="desired-tread-depth" step="0.1" value="10" required>
+            </div>
+            <button type="submit">Calculate Dimensions</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

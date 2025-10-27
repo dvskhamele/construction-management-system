@@ -1,0 +1,57 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function EmiCalculator() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    principal: '1000000',
+    interestRate: '9.5',
+    tenure: '5',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/tools/loan-emi-calculator/result?${query}`);
+  };
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Loan EMI Calculator
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Calculate the Equated Monthly Installment (EMI) for your business or equipment loans.
+          </p>
+        </div>
+
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+                <label htmlFor="principal" className="block text-sm font-medium text-slate-700">Loan Amount (Principal) in INR</label>
+                <input type="number" name="principal" value={formData.principal} onChange={(e) => setFormData({...formData, principal: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="interestRate" className="block text-sm font-medium text-slate-700">Annual Interest Rate (%)</label>
+                    <input type="number" step="0.01" name="interestRate" value={formData.interestRate} onChange={(e) => setFormData({...formData, interestRate: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+                <div>
+                    <label htmlFor="tenure" className="block text-sm font-medium text-slate-700">Loan Tenure (Years)</label>
+                    <input type="number" name="tenure" value={formData.tenure} onChange={(e) => setFormData({...formData, tenure: e.target.value})} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md" />
+                </div>
+            </div>
+            <div className="pt-6">
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700">
+                Calculate EMI
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

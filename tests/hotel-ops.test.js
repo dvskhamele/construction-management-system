@@ -1,244 +1,143 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-test.describe('Hotel Operations Management System', () => {
+test.describe('BuildMate Construction Management System', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000');
+    await page.goto('http://localhost:3001');
   });
 
-  test('should allow admin to login and see dashboard', async ({ page }) => {
-    // Test login functionality
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
-    
-    // Verify successful login
-    await expect(page).toHaveURL('http://localhost:3000/');
-    await expect(page.locator('text=Hotel Operations')).toBeVisible();
-    await expect(page.locator('text=Admin User')).toBeVisible();
-    
-    // Verify dashboard elements
-    await expect(page.locator('text=Pending Requests')).toBeVisible();
-    await expect(page.locator('text=Occupied Rooms')).toBeVisible();
-    await expect(page.locator('text=Available Rooms')).toBeVisible();
-    
-    // Verify stats cards
-    const pendingRequestsCard = page.locator('a[href="/requests"]');
-    await expect(pendingRequestsCard).toBeVisible();
-    
-    const occupiedRoomsCard = page.locator('a[href="/rooms"]');
-    await expect(occupiedRoomsCard).toBeVisible();
+  test('should display BuildMate homepage', async ({ page }) => {
+    // Verify homepage elements
+    await expect(page.locator('text=BuildMate: Delhi\'s Premier Construction Management Platform')).toBeVisible();
+    await expect(page.getByRole('banner').getByText('BuildMate')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Live Demo', exact: true })).toBeVisible();
   });
 
-  test('should allow navigation between main sections', async ({ page }) => {
+  test('should navigate to login page and show login form', async ({ page }) => {
+    // Click Sign In button
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    
+    // Verify login page elements
+    await expect(page.locator('text=Sign in to your account')).toBeVisible();
+    await expect(page.locator('text=Manage your construction projects')).toBeVisible();
+    await expect(page.locator('input#email')).toBeVisible();
+    await expect(page.locator('input#password')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible();
+    
+    // Verify quick login options are present
+    await expect(page.getByRole('button', { name: 'Admin', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'PM', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'SS', exact: true })).toBeVisible();
+  });
+
+  test('should allow login with demo credentials and redirect to dashboard', async ({ page }) => {
+    // Navigate to login page
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    
+    // Use demo credentials by clicking Admin quick login
+    await page.click('button:has-text("Admin")');
+    
+    // Click the Sign In button
+    await page.click('button:has-text("Sign In")');
+    
+    // Wait for redirect to dashboard and verify
+    await page.waitForURL('**/dashboard');
+    await expect(page.locator('text=Welcome, admin')).toBeVisible();
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Pending Tasks' })).toBeVisible();
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Active Sites' })).toBeVisible();
+  });
+
+  test('should show dashboard stats cards', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('button:has-text("Admin")');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Navigate to Requests page
-    await page.click('text=View Requests');
-    await expect(page).toHaveURL('http://localhost:3000/requests');
-    await expect(page.locator('text=Request Overview')).toBeVisible();
-    
-    // Navigate to Rooms page
-    await page.goto('http://localhost:3000/');
-    await page.click('text=Manage Rooms');
-    await expect(page).toHaveURL('http://localhost:3000/rooms');
-    await expect(page.locator('text=Room Status Overview')).toBeVisible();
-    
-    // Navigate to Analytics page
-    await page.goto('http://localhost:3000/');
-    await page.click('text=View Analytics');
-    await expect(page).toHaveURL('http://localhost:3000/analytics');
-    await expect(page.locator('text=Performance Metrics')).toBeVisible();
-    
-    // Navigate to Departments page
-    await page.goto('http://localhost:3000/');
-    await page.click('text=Department Coordination');
-    await expect(page).toHaveURL('http://localhost:3000/departments');
-    await expect(page.locator('text=Department Overview')).toBeVisible();
+    // Verify dashboard stats cards are visible
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Pending Tasks' })).toBeVisible();
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Active Sites' })).toBeVisible();
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Revenue Today' })).toBeVisible();
+    await expect(page.getByRole('paragraph').filter({ hasText: 'Crew Members' })).toBeVisible();
   });
 
-  test('should manage room statuses', async ({ page }) => {
+  test('should show recent activity on dashboard', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('text=Admin');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Go to Rooms page
-    await page.click('text=Manage Rooms');
-    await expect(page).toHaveURL('http://localhost:3000/rooms');
-    
-    // Find a room and change its status
-    const roomRow = page.locator('tr:has-text("101")');
-    await expect(roomRow).toBeVisible();
-    
-    // Get current status
-    const currentStatus = await roomRow.locator('span:has-text("CLEAN"), span:has-text("DIRTY"), span:has-text("INSPECTED"), span:has-text("OUT OF ORDER")').textContent();
-    console.log('Current status:', currentStatus);
-    
-    // Change status
-    await roomRow.locator('select').selectOption('DIRTY');
-    
-    // Verify status change
-    await page.waitForTimeout(1000); // Wait for the change to be processed
-    const updatedStatus = await roomRow.locator('span:has-text("DIRTY")').textContent();
-    await expect(updatedStatus).toContain('DIRTY');
+    // Verify recent activity section
+    await expect(page.locator('text=Recent Activity')).toBeVisible();
+    await expect(page.locator('text=Recent Tasks')).toBeVisible();
   });
 
-  test('should manage guest requests', async ({ page }) => {
+  test('should navigate to projects page', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('button:has-text("Admin")');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Go to Requests page
-    await page.click('text=View Requests');
-    await expect(page).toHaveURL('http://localhost:3000/requests');
+    // Click on the Active Sites card to navigate to projects
+    await page.getByRole('paragraph').filter({ hasText: 'Active Sites' }).click();
     
-    // Find a request and change its status
-    const requestRow = page.locator('tr:has-text("Extra Towels")');
-    await expect(requestRow).toBeVisible();
-    
-    // Get current status
-    const currentStatus = await requestRow.locator('span:has-text("PENDING"), span:has-text("IN PROGRESS"), span:has-text("COMPLETED")').textContent();
-    console.log('Current request status:', currentStatus);
-    
-    // Change status
-    await requestRow.locator('select').selectOption('IN_PROGRESS');
-    
-    // Verify status change
-    await page.waitForTimeout(1000); // Wait for the change to be processed
-    const updatedStatus = await requestRow.locator('span:has-text("IN PROGRESS")').textContent();
-    await expect(updatedStatus).toContain('IN PROGRESS');
+    // Wait for navigation to projects page
+    await page.waitForURL('**/projects');
+    await expect(page.getByRole('heading', { name: 'Projects Dashboard' })).toBeVisible();
   });
 
-  test('should show notifications', async ({ page }) => {
+  test('should navigate to tasks page', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('button:has-text("Admin")');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Click on the notification bell
-    await page.click('button:has(svg)');
+    // Click on the Pending Tasks card to navigate to tasks
+    await page.getByRole('paragraph').filter({ hasText: 'Pending Tasks' }).click();
     
-    // Verify notifications panel opens
-    await expect(page.locator('text=Notifications')).toBeVisible();
-    
-    // Check for notification items
-    const notifications = page.locator('.p-4.border-b');
-    if (await notifications.count() > 0) {
-      const firstNotification = notifications.first();
-      await expect(firstNotification).toBeVisible();
-    }
+    // Wait for navigation to tasks page
+    await page.waitForURL('**/tasks');
+    await expect(page.getByRole('heading', { name: 'Tasks Dashboard' })).toBeVisible();
   });
 
-  test('should filter rooms by status', async ({ page }) => {
+  test('should navigate to analytics page', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('button:has-text("Admin")');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Go to Rooms page
-    await page.click('text=Manage Rooms');
-    await expect(page).toHaveURL('http://localhost:3000/rooms');
+    // Click on the Revenue Today card to navigate to analytics
+    await page.getByRole('paragraph').filter({ hasText: 'Revenue Today' }).click();
     
-    // Filter by Clean status
-    await page.selectOption('select#statusFilter', 'CLEAN');
-    
-    // Verify only Clean rooms are shown
-    const cleanRooms = page.locator('tr:has(span:has-text("CLEAN"))');
-    const dirtyRooms = page.locator('tr:has(span:has-text("DIRTY"))');
-    
-    const cleanCount = await cleanRooms.count();
-    const dirtyCount = await dirtyRooms.count();
-    
-    expect(cleanCount).toBeGreaterThan(0);
-    expect(dirtyCount).toBe(0);
+    // Wait for navigation to analytics page
+    await page.waitForURL('**/analytics');
+    await expect(page.getByRole('heading', { name: 'Analytics Dashboard' })).toBeVisible();
   });
 
-  test('should filter requests by department', async ({ page }) => {
+  test('should show team leaderboard on dashboard', async ({ page }) => {
     // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/login');
+    await page.click('button:has-text("Admin")');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL('**/dashboard');
     
-    // Go to Requests page
-    await page.click('text=View Requests');
-    await expect(page).toHaveURL('http://localhost:3000/requests');
-    
-    // Filter by Housekeeping department
-    await page.selectOption('select#departmentFilter', 'HOUSEKEEPING');
-    
-    // Verify only Housekeeping requests are shown
-    const housekeepingRequests = page.locator('tr:has-text("HOUSEKEEPING")');
-    const maintenanceRequests = page.locator('tr:has-text("MAINTENANCE")');
-    
-    const hkCount = await housekeepingRequests.count();
-    const maintCount = await maintenanceRequests.count();
-    
-    expect(hkCount).toBeGreaterThan(0);
-    expect(maintCount).toBe(0);
-  });
-
-  test('should show analytics data', async ({ page }) => {
-    // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
-    
-    // Go to Analytics page
-    await page.click('text=View Analytics');
-    await expect(page).toHaveURL('http://localhost:3000/analytics');
-    
-    // Verify analytics charts are visible
-    await expect(page.locator('text=Average Response Time')).toBeVisible();
-    await expect(page.locator('text=Department Performance')).toBeVisible();
-    
-    // Verify stats cards
-    await expect(page.locator('text=Avg. Response Time')).toBeVisible();
-    await expect(page.locator('text=Requests Today')).toBeVisible();
-    await expect(page.locator('text=Completion Rate')).toBeVisible();
-    await expect(page.locator('text=Staff Active')).toBeVisible();
-  });
-
-  test('should show department overview', async ({ page }) => {
-    // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
-    
-    // Go to Departments page
-    await page.click('text=Department Coordination');
-    await expect(page).toHaveURL('http://localhost:3000/departments');
-    
-    // Verify department cards
-    await expect(page.locator('text=Housekeeping')).toBeVisible();
-    await expect(page.locator('text=Maintenance')).toBeVisible();
-    await expect(page.locator('text=Food & Beverage')).toBeVisible();
-    
-    // Verify department stats
-    const housekeepingCard = page.locator('div:has-text("Housekeeping")');
-    await expect(housekeepingCard.locator('text=Pending')).toBeVisible();
-    await expect(housekeepingCard.locator('text=In Progress')).toBeVisible();
-    await expect(housekeepingCard.locator('text=Completed')).toBeVisible();
-  });
-
-  test('should allow logout', async ({ page }) => {
-    // Login first
-    await page.fill('input#email', 'admin@example.com');
-    await page.fill('input#password', 'admin123');
-    await page.click('button[type="submit"]');
-    
-    // Verify login success
-    await expect(page.locator('text=Admin User')).toBeVisible();
-    
-    // Logout
-    await page.click('button:has-text("Logout")');
-    
-    // Verify logout success
-    await expect(page).toHaveURL('http://localhost:3000/');
-    await expect(page.locator('text=Hotel Operations Login')).toBeVisible();
+    // Verify team leaderboard section
+    await expect(page.getByRole('heading', { name: 'Team Performance Leaderboard' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Rank' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Team Member' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Performance' })).toBeVisible();
   });
 });

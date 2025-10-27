@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
               <span className="ml-2 text-xl font-bold text-white">BuildMate</span>
             </div>
             <p className="mt-4 text-sm">
-              Delhi's premier construction management platform for construction professionals.
+              India's premier construction management platform for construction professionals.
             </p>
           </div>
           <div>
@@ -28,6 +28,12 @@ const Footer: React.FC = () => {
               <li><Link href="#" className="hover:text-white transition">Pricing</Link></li>
               <li><Link href="#" className="hover:text-white transition">Templates</Link></li>
               <li><Link href="#" className="hover:text-white transition">Releases</Link></li>
+              <li><Link href="/tools/construction-safety-checklist" className="hover:text-white transition">Safety Checklist</Link></li>
+              <li><Link href="/tools/construction-schedule-variance-calculator" className="hover:text-white transition">Schedule Variance Calculator</Link></li>
+              <li><Link href="/tools/construction-profitability-calculator" className="hover:text-white transition">Profitability Calculator</Link></li>
+              <li><Link href="/tools/construction-equipment-utilization-tracker" className="hover:text-white transition">Equipment Utilization Tracker</Link></li>
+              <li><Link href="/tools/construction-defect-tracker" className="hover:text-white transition">Defect Tracker</Link></li>
+              <li><Link href="/tools/construction-project-milestone-tracker" className="hover:text-white transition">Milestone Tracker</Link></li>
             </ul>
           </div>
           <div>
@@ -46,6 +52,14 @@ const Footer: React.FC = () => {
               <li><Link href="#" className="hover:text-white transition">API Reference</Link></li>
               <li><Link href="#" className="hover:text-white transition">Status</Link></li>
               <li><Link href="#" className="hover:text-white transition">Help Center</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white font-semibold mb-4">Account</h3>
+            <ul className="space-y-2">
+              <li><Link href="/login" className="hover:text-white transition">Staff Login</Link></li>
+              <li><Link href="/client-login" className="hover:text-white transition">Client Login</Link></li>
+              <li><Link href="/signup" className="hover:text-white transition">Sign Up</Link></li>
             </ul>
           </div>
         </div>

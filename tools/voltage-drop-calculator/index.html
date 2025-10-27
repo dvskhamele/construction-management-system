@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltage Drop Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .calculator {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Voltage Drop Calculator</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="wireSize">Wire Size (AWG)</label>
+                <input type="number" id="wireSize" placeholder="Enter wire size">
+            </div>
+            <div class="input-group">
+                <label for="voltage">Voltage</label>
+                <input type="number" id="voltage" placeholder="Enter voltage">
+            </div>
+            <div class="input-group">
+                <label for="current">Current (Amps)</label>
+                <input type="number" id="current" placeholder="Enter current">
+            </div>
+            <div class="input-group">
+                <label for="distance">Distance (feet)</label>
+                <input type="number" id="distance" placeholder="Enter distance">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const wireSize = parseFloat(document.getElementById('wireSize').value);
+            const voltage = parseFloat(document.getElementById('voltage').value);
+            const current = parseFloat(document.getElementById('current').value);
+            const distance = parseFloat(document.getElementById('distance').value);
+
+            if (isNaN(wireSize) || isNaN(voltage) || isNaN(current) || isNaN(distance)) {
+                document.getElementById('result').innerHTML = 'Please enter valid numbers.';
+                return;
+            }
+
+            // Simplified calculation for copper wire
+            const resistance = 0.0172 * (distance / (Math.PI * Math.pow(0.00314 * Math.pow(0.912, wireSize), 2)));
+            const voltageDrop = current * resistance;
+            const voltageDropPercentage = (voltageDrop / voltage) * 100;
+
+            const resultHTML = `
+                <h3>Voltage Drop Calculation Results:</h3>
+                <p>Voltage Drop: ${voltageDrop.toFixed(2)} Volts</p>
+                <p>Voltage Drop Percentage: ${voltageDropPercentage.toFixed(2)}%</p>
+                <p style="font-size: 14px; color: #888;">Note: This is a simplified calculation for demonstration purposes only. Always consult a qualified electrician for actual circuit design.</p>
+            `;
+
+            document.getElementById('result').innerHTML = resultHTML;
+        });
+    </script>
+</body>
+</html>

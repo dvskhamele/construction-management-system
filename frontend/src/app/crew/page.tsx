@@ -1,9 +1,16 @@
 'use client'
 
 import React, { useState } from 'react'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 
-export default function BasicResponsiveCrewPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export default function MinimalResponsiveCrewPage() {
+  const [user, setUser] = useState<any>({ name: 'Crew Manager', role: 'ADMIN' }) 
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setUser(null)
+    window.location.href = '/login'
+  }
   
   // Simple mock data
   const crewMembers = [
@@ -40,364 +47,251 @@ export default function BasicResponsiveCrewPage() {
       performance: 88
     }
   ]
+  
+  // Function to add a new crew member (for demo purposes)
+  const handleAddCrew = () => {
+    alert('Add crew functionality would be implemented here');
+  }
 
   return (
-    <div className="basic-responsive-crew">
-      {/* Mobile Menu Button */}
-      <div className="mobile-header">
-        <button 
-          className="menu-button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          ☰
-        </button>
-        <h1>BuildMate</h1>
-        <div></div> {/* spacer */}
-      </div>
-
-      {/* Sidebar Menu */}
-      <div className={`sidebar ${isMenuOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <h2>Navigation</h2>
-          <button 
-            className="close-button"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            ×
-          </button>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/tasks">Tasks</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/crew" className="active">Crew</a></li>
-            <li><a href="/equipment">Equipment</a></li>
-            <li><a href="/analytics">Analytics</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      {/* Overlay for mobile */}
-      {isMenuOpen && (
-        <div 
-          className="overlay"
-          onClick={() => setIsMenuOpen(false)}
-        ></div>
-      )}
-
-      {/* Main Content */}
-      <div className="main-content">
-        <div className="page-header">
-          <h1>Crew Management</h1>
-          <p>Manage your construction crew and track performance</p>
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="crew">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">Crew Management</h1>
+              <p className="text-slate-600 mt-2">Manage your construction crew and track performance</p>
+            </div>
+            <div className="flex space-x-3">
+              <button 
+                className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
+                onClick={handleAddCrew}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Add Crew
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Stats */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>{crewMembers.length}</h3>
-            <p>Total Crew</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-amber-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Total Crew</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{crewMembers.length}</p>
+              </div>
+              <div className="bg-amber-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+            </div>
           </div>
-          <div className="stat-card">
-            <h3>{crewMembers.filter(m => m.status === 'Active').length}</h3>
-            <p>Active</p>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-blue-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Active</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{crewMembers.filter(m => m.status === 'Active').length}</p>
+              </div>
+              <div className="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+            </div>
           </div>
-          <div className="stat-card">
-            <h3>{crewMembers.filter(m => m.status === 'Break').length}</h3>
-            <p>On Break</p>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-emerald-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Avg. Performance</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{Math.round(crewMembers.reduce((sum, m) => sum + m.performance, 0) / crewMembers.length)}%</p>
+              </div>
+              <div className="bg-emerald-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+            </div>
           </div>
-          <div className="stat-card">
-            <h3>{crewMembers.filter(m => m.status === 'Offline').length}</h3>
-            <p>Offline</p>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 sm:p-6 border-l-4 border-indigo-500 card cursor-pointer transform hover:-translate-y-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Departments</p>
+                <p className="text-3xl font-bold text-slate-800 mt-1">{Array.from(new Set(crewMembers.map(m => m.department))).length}</p>
+              </div>
+              <div className="bg-indigo-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Crew List */}
-        <div className="crew-grid">
-          {crewMembers.map(member => (
-            <div key={member.id} className="crew-card">
-              <div className="crew-header">
-                <div className="avatar">{member.name.charAt(0)}</div>
-                <div className="crew-info">
-                  <h3>{member.name}</h3>
-                  <p>{member.position}</p>
-                </div>
-                <span className={`status ${member.status.toLowerCase()}`}>
-                  {member.status}
-                </span>
-              </div>
-              <div className="crew-details">
-                <p><strong>Department:</strong> {member.department}</p>
-                <p><strong>Performance:</strong> {member.performance}%</p>
+        <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div>
+              <h2 className="text-xl font-semibold text-slate-800">Crew Directory</h2>
+              <div className="text-sm text-slate-500 sm:hidden mt-1">
+                Showing {crewMembers.length} crew members
               </div>
             </div>
-          ))}
+            <div className="text-sm text-slate-500 hidden sm:block">
+              Showing {crewMembers.length} crew members
+            </div>
+          </div>
+          
+          {/* Mobile View - Card layout for smaller screens */}
+          <div className="sm:hidden divide-y divide-slate-200">
+            {crewMembers.map(member => (
+              <div key={member.id} className="p-4 hover:bg-slate-50 transition cursor-pointer">
+                <div className="flex items-center mb-3">
+                  <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold">
+                      {member.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-sm font-medium text-slate-900">{member.name}</div>
+                    <div className="text-xs text-slate-500">ID: {member.id}</div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <span className="text-slate-500">Position:</span>
+                    <div className="text-slate-800">{member.position}</div>
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Department:</span>
+                    <div className="text-slate-800">{member.department}</div>
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Status:</span>
+                    <div>
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        member.status === 'Active' ? 'bg-emerald-100 text-emerald-800' :
+                        member.status === 'Break' ? 'bg-amber-100 text-amber-800' :
+                        'bg-slate-100 text-slate-800'
+                      }`}>
+                        {member.status}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Performance:</span>
+                    <div className="flex items-center">
+                      <span className="mr-2">{member.performance}%</span>
+                      <div className="w-12 bg-slate-200 rounded-full h-1.5 flex-1">
+                        <div 
+                          className={`h-1.5 rounded-full ${
+                            member.performance >= 90 ? 'bg-emerald-500' :
+                            member.performance >= 70 ? 'bg-teal-500' :
+                            member.performance >= 50 ? 'bg-amber-500' : 'bg-rose-500'
+                          }`}
+                          style={{ width: `${member.performance}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end space-x-3 mt-3">
+                  <button className="text-xs text-teal-600 hover:text-teal-900">Edit</button>
+                  <button className="text-xs text-rose-600 hover:text-rose-900">Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Desktop View - Table layout */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Crew Member</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Position</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Performance</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {crewMembers.map(member => (
+                  <tr key={member.id} className="hover:bg-slate-50 transition cursor-pointer">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
+                          <span className="text-white font-bold">
+                            {member.name.charAt(0)}
+                          </span>
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-slate-900">{member.name}</div>
+                          <div className="text-sm text-slate-500">ID: {member.id}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {member.position}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {member.department}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        member.status === 'Active' ? 'bg-emerald-100 text-emerald-800' :
+                        member.status === 'Break' ? 'bg-amber-100 text-amber-800' :
+                        'bg-slate-100 text-slate-800'
+                      }`}>
+                        {member.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      <div className="flex items-center">
+                        <span>{member.performance}%</span>
+                        <div className="ml-2 w-16 bg-slate-200 rounded-full h-2">
+                          <div 
+                            className={`h-2 rounded-full ${
+                              member.performance >= 90 ? 'bg-emerald-500' :
+                              member.performance >= 70 ? 'bg-teal-500' :
+                              member.performance >= 50 ? 'bg-amber-500' : 'bg-rose-500'
+                            }`}
+                            style={{ width: `${member.performance}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button className="text-teal-600 hover:text-teal-900 mr-3">Edit</button>
+                      <button className="text-rose-600 hover:text-rose-900">Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Mobile-friendly Add Crew Button */}
+        <div className="mt-6 md:hidden">
+          <button 
+            className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-3 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md"
+            onClick={handleAddCrew}
+          >
+            Add New Crew Member
+          </button>
         </div>
       </div>
-
-      {/* Simple CSS Styles */}
-      <style jsx>{`
-        .basic-responsive-crew {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        /* Mobile Header */
-        .mobile-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem;
-          background: #0d9488;
-          color: white;
-          position: sticky;
-          top: 0;
-          z-index: 100;
-        }
-
-        .menu-button {
-          background: none;
-          border: none;
-          color: white;
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: 0;
-          width: 24px;
-          height: 24px;
-        }
-
-        /* Sidebar */
-        .sidebar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 280px;
-          height: 100vh;
-          background: white;
-          box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-          transform: translateX(-100%);
-          transition: transform 0.3s ease;
-          z-index: 90;
-          overflow-y: auto;
-        }
-
-        .sidebar.open {
-          transform: translateX(0);
-        }
-
-        .sidebar-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem;
-          border-bottom: 1px solid #eee;
-        }
-
-        .close-button {
-          background: none;
-          border: none;
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: 0;
-          width: 24px;
-          height: 24px;
-        }
-
-        .sidebar nav ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-
-        .sidebar nav li {
-          border-bottom: 1px solid #eee;
-        }
-
-        .sidebar nav a {
-          display: block;
-          padding: 1rem;
-          text-decoration: none;
-          color: #333;
-        }
-
-        .sidebar nav a.active {
-          background: #0d9488;
-          color: white;
-        }
-
-        /* Overlay */
-        .overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0,0,0,0.5);
-          z-index: 80;
-        }
-
-        /* Main Content */
-        .main-content {
-          flex: 1;
-          padding: 1rem;
-          margin-left: 0;
-          transition: margin-left 0.3s ease;
-        }
-
-        .page-header h1 {
-          font-size: 1.5rem;
-          margin: 0 0 0.5rem 0;
-          color: #333;
-        }
-
-        .page-header p {
-          margin: 0;
-          color: #666;
-          font-size: 0.9rem;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1rem;
-          margin: 1rem 0;
-        }
-
-        .stat-card {
-          background: white;
-          padding: 1rem;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          text-align: center;
-        }
-
-        .stat-card h3 {
-          margin: 0 0 0.5rem 0;
-          color: #0d9488;
-          font-size: 1.5rem;
-        }
-
-        .stat-card p {
-          margin: 0;
-          color: #666;
-          font-size: 0.9rem;
-        }
-
-        /* Crew Grid */
-        .crew-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-
-        .crew-card {
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          padding: 1rem;
-        }
-
-        .crew-header {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          margin-bottom: 1rem;
-        }
-
-        .avatar {
-          width: 48px;
-          height: 48px;
-          border-radius: 8px;
-          background: #0d9488;
-          color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: bold;
-          font-size: 1.2rem;
-        }
-
-        .crew-info {
-          flex: 1;
-        }
-
-        .crew-info h3 {
-          margin: 0 0 0.25rem 0;
-          font-size: 1.1rem;
-          color: #333;
-        }
-
-        .crew-info p {
-          margin: 0;
-          color: #666;
-          font-size: 0.9rem;
-        }
-
-        .status {
-          padding: 0.25rem 0.5rem;
-          border-radius: 12px;
-          font-size: 0.8rem;
-          font-weight: 500;
-        }
-
-        .status.active {
-          background: #dcfce7;
-          color: #166534;
-        }
-
-        .status.break {
-          background: #fef3c7;
-          color: #92400e;
-        }
-
-        .status.offline {
-          background: #f1f5f9;
-          color: #0f172a;
-        }
-
-        .crew-details p {
-          margin: 0.25rem 0;
-          font-size: 0.9rem;
-          color: #666;
-        }
-
-        /* Desktop Styles */
-        @media (min-width: 768px) {
-          .mobile-header {
-            display: none;
-          }
-
-          .sidebar {
-            transform: translateX(0);
-            position: relative;
-            width: 250px;
-            height: auto;
-          }
-
-          .main-content {
-            margin-left: 250px;
-          }
-
-          .stats-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
-
-          .crew-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        /* Larger Desktop */
-        @media (min-width: 1024px) {
-          .crew-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-      `}</style>
-    </div>
+    </HeaderResponsiveLayout>
   )
 }

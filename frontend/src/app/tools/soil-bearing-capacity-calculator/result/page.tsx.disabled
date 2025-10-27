@@ -1,0 +1,75 @@
+'use client';
+import React from 'react';
+import { useSearchParams } from 'next/navigation';
+
+export default function SoilResultPage() {
+  const searchParams = useSearchParams();
+  const getNumericParam = (name) => parseFloat(searchParams.get(name)) || 0;
+
+  const soilType = searchParams.get('soilType') || 'Dense Sand';
+  const D = getNumericParam('foundationDepth');
+  const B = getNumericParam('foundationWidth');
+  const gamma = getNumericParam('unitWeightOfSoil');
+  const c = getNumericParam('cohesion');
+  const phi = getNumericParam('angleInternalFriction');
+
+  // Terzaghi's Bearing Capacity Factors (approximations)
+  const N_factors = {
+      0: {Nc: 5.7, Nq: 1.0, Ny: 0.0},
+      5: {Nc: 7.3, Nq: 1.6, Ny: 0.5},
+      10: {Nc: 9.6, Nq: 2.7, Ny: 1.2},
+      15: {Nc: 12.9, Nq: 4.4, Ny: 2.5},
+      20: {Nc: 17.7, Nq: 7.4, Ny: 5.0},
+      25: {Nc: 25.1, Nq: 12.7, Ny: 9.7},
+      30: {Nc: 37.2, Nq: 22.5, Ny: 19.7},
+      35: {Nc: 57.8, Nq: 41.4, Ny: 42.4},
+      40: {Nc: 95.7, Nq: 81.3, Ny: 100.4}
+  };
+
+  let Nc, Nq, Ny;
+  if (soilType.includes('Clay')) {
+      Nc = 5.7; Nq = 1.0; Ny = 0.0;
+  } else {
+      const roundedPhi = Math.round(phi / 5) * 5;
+      const factors = N_factors[roundedPhi] || {Nc: 0, Nq: 0, Ny: 0};
+      Nc = factors.Nc; Nq = factors.Nq; Ny = factors.Ny;
+  }
+
+  const qu = (c * Nc) + (gamma * D * Nq) + (0.5 * gamma * B * Ny);
+  const safeBearingCapacity = qu / 3; // Using a Factor of Safety of 3
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            Soil Bearing Capacity Results
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+            <h2 className="text-2xl font-bold text-slate-800 border-b pb-2">Bearing Capacity</h2>
+            <div className="text-center">
+              <p className="text-lg text-slate-600">Safe Bearing Capacity (q_safe)</p>
+              <p className="text-6xl font-extrabold text-teal-600">{safeBearingCapacity.toFixed(2)}</p>
+              <p className="text-xl text-slate-600">kN/m²</p>
+            </div>
+            <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+                <p className="text-sm text-amber-700">Disclaimer: This is an estimate based on Terzaghi's equation. A comprehensive geotechnical investigation is essential for actual foundation design.</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Download Bearing Capacity Factors</h2>
+            <p className="text-slate-600 mb-4">Get a printable chart of Terzaghi's Bearing Capacity Factors (Nc, Nq, Nγ) for your reference.</p>
+            <form className="flex gap-2">
+                <input type="email" placeholder="Enter your email" required className="flex-grow block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm" />
+                <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+                    Download Chart
+                </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

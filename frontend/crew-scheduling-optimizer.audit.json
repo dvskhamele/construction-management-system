@@ -1,0 +1,50 @@
+{
+  "tool_slug": "crew-scheduling-optimizer",
+  "tool_name": "Crew Scheduling Optimizer",
+  "audit_date": "2025-10-21",
+  "seo_audit": {
+    "title_tag": "Crew Scheduling Optimizer - BuildMate",
+    "meta_description": "Optimizes crew assignments based on individual availability, skill sets, project phase, and task dependencies to maximize efficiency and minimize downtime.",
+    "keywords": "crew, scheduling, optimizer, crew scheduling optimizer, construction tool",
+    "h1_tag": "Crew Scheduling Optimizer",
+    "url_structure": "/tools/crew-scheduling-optimizer",
+    "canonical_url": "https://yourdomain.com/tools/crew-scheduling-optimizer",
+    "schema_markup": {
+      "type": "WebPage",
+      "name": "Crew Scheduling Optimizer",
+      "description": "Optimizes crew assignments based on individual availability, skill sets, project phase, and task dependencies to maximize efficiency and minimize downtime.",
+      "url": "https://yourdomain.com/tools/crew-scheduling-optimizer"
+    }
+  },
+  "cro_audit": {
+    "primary_cta": "Calculate",
+    "secondary_cta": "Send Report (Lead Capture)",
+    "form_fields": [
+      "Input 1"
+    ],
+    "validation_rules": "Basic validation for numbers.",
+    "error_handling": "Clear error messages for invalid input.",
+    "result_clarity": "Calculated result clearly displayed.",
+    "lead_capture_placement": "After results, with clear value proposition.",
+    "social_share_options": [
+      "Twitter",
+      "LinkedIn",
+      "Facebook"
+    ]
+  },
+  "ux_audit": {
+    "mobile_responsiveness": "Yes (Tailwind CSS)",
+    "load_time_considerations": "Client-side calculation, API for storage/logging.",
+    "ease_of_use": "Simple form, clear labels.",
+    "visual_design": "Clean, consistent with BuildMate branding (via Tailwind).",
+    "accessibility_notes": "Standard HTML elements, focus states."
+  },
+  "marketing_notes": {
+    "target_audience": "Construction professionals.",
+    "value_proposition": "Inefficient labor allocation, scheduling conflicts, project delays due to resource mismanagement.",
+    "content_ideas": [
+      "Blog post: 'How to use Crew Scheduling Optimizer'",
+      "Social media campaign: 'Optimize with Crew Scheduling Optimizer'"
+    ]
+  }
+}

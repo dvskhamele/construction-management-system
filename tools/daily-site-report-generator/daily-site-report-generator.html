@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Site Report Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Site Report Generator</h1>
+        <form id="report-form">
+            <div class="input-group">
+                <label for="report-date">Date:</label>
+                <input type="date" id="report-date" required>
+            </div>
+            <div class="input-group">
+                <label for="project-name">Project Name:</label>
+                <input type="text" id="project-name" required>
+            </div>
+            <div class="input-group">
+                <label for="weather">Weather Conditions:</label>
+                <input type="text" id="weather">
+            </div>
+            <div class="input-group">
+                <label for="work-performed">Work Performed Today:</label>
+                <textarea id="work-performed" rows="4"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="issues-delays">Issues/Delays:</label>
+                <textarea id="issues-delays" rows="4"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="materials-received">Materials Received:</label>
+                <textarea id="materials-received" rows="2"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="equipment-on-site">Equipment On Site:</label>
+                <textarea id="equipment-on-site" rows="2"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="personnel-on-site">Personnel On Site:</label>
+                <input type="number" id="personnel-on-site" value="0">
+            </div>
+            <button type="submit">Generate Report</button>
+        </form>
+        <div id="report-output"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+export default function CountdownResultPage() {
+  const searchParams = useSearchParams();
+  const projectName = searchParams.get('projectName') || 'Project Deadline';
+  const deadlineDate = searchParams.get('deadlineDate');
+  const deadlineTime = searchParams.get('deadlineTime');
+
+  const calculateTimeLeft = () => {
+    const difference = +new Date(`${deadlineDate}T${deadlineTime}`) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+  const TimerComponent = ({ time }) => (
+    <div className="text-center">
+      <p className="text-6xl font-extrabold text-slate-900">{time.days || '0'}</p>
+      <p className="text-xl text-slate-600">Days</p>
+    </div>
+  );
+
+  return (
+    <main className="bg-slate-50 py-12 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl">
+            {projectName}
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Countdown to Deadline: {new Date(`${deadlineDate}T${deadlineTime}`).toLocaleString()}
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <div className="grid grid-cols-4 gap-4">
+                <TimerComponent time={{...timeLeft}}/>
+                 <div className="text-center">
+                    <p className="text-6xl font-extrabold text-slate-900">{timeLeft.hours || '0'}</p>
+                    <p className="text-xl text-slate-600">Hours</p>
+                </div>
+                 <div className="text-center">
+                    <p className="text-6xl font-extrabold text-slate-900">{timeLeft.minutes || '0'}</p>
+                    <p className="text-xl text-slate-600">Minutes</p>
+                </div>
+                 <div className="text-center">
+                    <p className="text-6xl font-extrabold text-slate-900">{timeLeft.seconds || '0'}</p>
+                    <p className="text-xl text-slate-600">Seconds</p>
+                </div>
+            </div>
+        </div>
+        
+        <div className="mt-8 max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Set Deadline Reminders</h2>
+            <p className="text-slate-600 mb-4">Integrate this countdown with your BuildMate project calendar and set automated reminders for your team.</p>
+            <form className="flex gap-2">
+                <input type="email" placeholder="Enter your email to sign up" required className="flex-grow block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm" />
+                <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+                    Integrate with BuildMate
+                </button>
+            </form>
+        </div>
+
+      </div>
+    </main>
+  );
+}

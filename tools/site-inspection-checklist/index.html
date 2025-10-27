@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Site Inspection Checklist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Site Inspection Checklist</h1>
+        <p>Generate a custom inspection checklist for your construction site.</p>
+        <div class="checklist-generator">
+            <div class="options">
+                <h2>Select Inspection Categories</h2>
+                <label><input type="checkbox" value="site_access_and_security"> Site Access and Security</label>
+                <label><input type="checkbox" value="housekeeping_and_waste_management"> Housekeeping and Waste Management</label>
+                <label><input type="checkbox" value="structural_elements"> Structural Elements</label>
+                <label><input type="checkbox" value="electrical_installations"> Electrical Installations</label>
+                <label><input type="checkbox" value="plumbing_and_drainage"> Plumbing and Drainage</label>
+                <label><input type="checkbox" value="fire_safety_and_emergency_preparedness"> Fire Safety and Emergency Preparedness</label>
+                <label><input type="checkbox" value="environmental_protection"> Environmental Protection</label>
+            </div>
+            <button id="generate-checklist">Generate Checklist</button>
+            <div id="checklist-output" class="checklist-output"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fence Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fence Calculator</h1>
+        <form id="fence-form">
+            <div class="input-group">
+                <label for="fence-length">Total Fence Length (feet)</label>
+                <input type="number" id="fence-length" required>
+            </div>
+            <div class="input-group">
+                <label for="post-spacing">Post Spacing (feet)</label>
+                <input type="number" id="post-spacing" value="8" required>
+            </div>
+            <div class="input-group">
+                <label for="gate-width">Gate Width (feet, if any)</label>
+                <input type="number" id="gate-width" value="0">
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

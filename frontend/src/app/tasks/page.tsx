@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
+import HeaderResponsiveLayout from '../../components/HeaderResponsiveLayout'
 import apiService from '../../utils/constructionApiService'
 
 export default function TasksDashboard() {
@@ -183,7 +183,18 @@ export default function TasksDashboard() {
     router.push('/login')
   }
 
-  const filteredTasks = tasks.filter(task => {
+  // Filter tasks based on user role (for CLIENT role, only show their project tasks)
+  const filteredByRoleTasks = user?.role === 'CLIENT' ? 
+    tasks.filter(task => {
+      // For clients, only show tasks from projects that belong to them
+      // In a real app, this would be determined by task.projectId matching client's projects
+      // For this prototype, we'll use a mock client project name
+      return task.project.includes('Downtown Office Complex') || 
+             task.project.includes('Client Exclusive Project');
+    }) : 
+    tasks;
+
+  const filteredTasks = filteredByRoleTasks.filter(task => {
     if (filter === 'all') return true
     if (filter === 'pending') return task.status === 'PENDING'
     if (filter === 'inprogress') return task.status === 'IN_PROGRESS'
@@ -354,7 +365,7 @@ export default function TasksDashboard() {
   }
 
   return (
-    <ResponsiveSidebarLayout user={user} onLogout={handleLogout}>
+    <HeaderResponsiveLayout user={user} onLogout={handleLogout} currentPage="tasks">
       <div className="px-4 py-6">
         {/* Page Header */}
         <div className="mb-8">
@@ -854,6 +865,6 @@ export default function TasksDashboard() {
           </div>
         )}
       </div>
-    </ResponsiveSidebarLayout>
+    </HeaderResponsiveLayout>
   )
 }

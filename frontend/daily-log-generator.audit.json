@@ -1,0 +1,35 @@
+{
+  "tool_slug": "daily-log-generator",
+  "audit_date": "2025-10-21T22:55:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Digital Construction Daily Log Generator",
+      "status": "pass",
+      "recommendation": "Title is highly specific and targets a key industry document (DPR/Daily Log)."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Generate Daily Log",
+      "status": "pass",
+      "recommendation": "CTA is clear and directly relates to the tool's function."
+    },
+    "lead_capture": {
+      "offer": "Sign up for free to store and manage all your daily logs online.",
+      "status": "pass",
+      "recommendation": "Lead magnet offers a direct upgrade path from a one-off tool to a recurring platform feature."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 7,
+      "status": "pass",
+      "recommendation": "Form uses large textarea fields which are appropriate for descriptive log entries. Labels are clear."
+    },
+    "results_clarity": {
+      "visualizations": ["Formatted Report"],
+      "status": "pass",
+      "recommendation": "The result is a clean, well-structured report that mimics a real-world document, making it instantly useful."
+    }
+  }
+}

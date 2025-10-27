@@ -1,0 +1,264 @@
+'use client';
+
+import React, { useState } from 'react';
+import Head from 'next/head';
+
+export default function MaterialWasteEstimator() {
+  const [materialType, setMaterialType] = useState('concrete');
+  const [length, setLength] = useState('');
+  const [width, setWidth] = useState('');
+  const [thickness, setThickness] = useState(''); // For concrete/slabs
+  const [wastePercentage, setWastePercentage] = useState('10');
+  const [estimatedWasteVolume, setEstimatedWasteVolume] = useState(null);
+  const [estimatedWasteCost, setEstimatedWasteCost] = useState(null);
+  const [error, setError] = useState('');
+
+  const materialPrices = {
+    concrete: 120, // $/cubic yard
+    lumber: 500,   // $/1000 board feet (approx)
+    drywall: 15,   // $/sheet
+    tiles: 2,      // $/sq ft
+  };
+
+  const calculateWaste = async () => {
+    setError('');
+    setEstimatedWasteVolume(null);
+    setEstimatedWasteCost(null);
+
+    const len = parseFloat(length);
+    const wid = parseFloat(width);
+    const thick = parseFloat(thickness);
+    const wasteP = parseFloat(wastePercentage);
+
+    if (isNaN(len) || isNaN(wid) || isNaN(wasteP) || len <= 0 || wid <= 0 || wasteP < 0) {
+      setError('Please enter valid positive numbers for length, width, and waste percentage.');
+      return;
+    }
+
+    let baseVolume = 0;
+    let unit = '';
+    let pricePerUnit = materialPrices[materialType];
+
+    switch (materialType) {
+      case 'concrete':
+        if (isNaN(thick) || thick <= 0) {
+          setError('Please enter a valid positive number for thickness for concrete.');
+          return;
+        }
+        baseVolume = (len * wid * thick) / 27; // Convert cubic feet to cubic yards
+        unit = 'cubic yards';
+        break;
+      case 'lumber':
+        // Simplified: assume area for now, more complex for actual board feet
+        baseVolume = (len * wid) / 144; // Convert sq inches to sq ft, then approx board feet
+        unit = 'board feet (approx)';
+        break;
+      case 'drywall':
+        baseVolume = (len * wid) / 32; // Assume standard 4x8 sheet = 32 sq ft
+        unit = 'sheets (approx)';
+        break;
+      case 'tiles':
+        baseVolume = len * wid; // Square footage
+        unit = 'sq ft';
+        break;
+      default:
+        setError('Invalid material type selected.');
+        return;
+    }
+
+    const wasteVolume = baseVolume * (wasteP / 100);
+    const wasteCost = wasteVolume * pricePerUnit;
+
+    // Simulate API call to backend for calculation and logging
+    try {
+      const response = await fetch('/api/tools/material-waste-estimator', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          materialType,
+          length: len,
+          width: wid,
+          thickness: thick,
+          wastePercentage: wasteP,
+          baseVolume,
+          wasteVolume,
+          wasteCost,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Calculation failed.');
+      }
+
+      const data = await response.json();
+      setEstimatedWasteVolume(data.estimatedWasteVolume);
+      setEstimatedWasteCost(data.estimatedWasteCost);
+
+      // Store inputs and results locally for demonstration (C)
+      const preloginResults = JSON.parse(localStorage.getItem('prelogin_results_waste_estimator') || '[]');
+      preloginResults.push({
+        id: data.resultId,
+        inputs: { materialType, len, wid, thick, wasteP },
+        results: { wasteVolume: data.estimatedWasteVolume, wasteCost: data.estimatedWasteCost },
+        timestamp: new Date().toISOString(),
+      });
+      localStorage.setItem('prelogin_results_waste_estimator', JSON.stringify(preloginResults));
+
+    } catch (err) {
+      setError(err.message || 'An unexpected error occurred during calculation.');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <Head>
+        <title>Material Waste Estimator - BuildMate</title>
+        <meta name="description" content="Estimate material waste for concrete, lumber, drywall, and tiles. Optimize material usage and reduce costs on your construction projects." />
+        {/* Open Graph Tags for sharing */}
+        <meta property="og:title" content="Material Waste Estimator - BuildMate" />
+        <meta property="og:description" content="Estimate material waste for concrete, lumber, drywall, and tiles. Optimize material usage and reduce costs on your construction projects." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com/tools/material-waste-estimator" />
+        {/* <meta property="og:image" content="https://yourdomain.com/images/waste-estimator-share.jpg" /> */}
+      </Head>
+
+      <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
+          Material Waste Estimator
+        </h1>
+        <p className="text-center text-gray-600 mb-8">
+          Estimate material waste for various construction materials to optimize usage and reduce costs.
+        </p>
+
+        <div className="space-y-6">
+          <div>
+            <label htmlFor="materialType" className="block text-sm font-medium text-gray-700">
+              Material Type
+            </label>
+            <select
+              id="materialType"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              value={materialType}
+              onChange={(e) => {
+                setMaterialType(e.target.value);
+                setThickness(''); // Reset thickness if material changes
+              }}
+            >
+              <option value="concrete">Concrete</option>
+              <option value="lumber">Lumber</option>
+              <option value="drywall">Drywall</option>
+              <option value="tiles">Tiles</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="length" className="block text-sm font-medium text-gray-700">
+              Length (ft)
+            </label>
+            <input
+              type="number"
+              id="length"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              value={length}
+              onChange={(e) => setLength(e.target.value)}
+              placeholder="e.g., 100"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="width" className="block text-sm font-medium text-gray-700">
+              Width (ft)
+            </label>
+            <input
+              type="number"
+              id="width"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              value={width}
+              onChange={(e) => setWidth(e.target.value)}
+              placeholder="e.g., 50"
+            />
+          </div>
+
+          {materialType === 'concrete' && (
+            <div>
+              <label htmlFor="thickness" className="block text-sm font-medium text-gray-700">
+                Thickness (inches)
+              </label>
+              <input
+                type="number"
+                id="thickness"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                value={thickness}
+                onChange={(e) => setThickness(e.target.value)}
+                placeholder="e.g., 6"
+              />
+            </div>
+          )}
+
+          <div>
+            <label htmlFor="wastePercentage" className="block text-sm font-medium text-gray-700">
+              Waste Percentage (%)
+            </label>
+            <input
+              type="number"
+              id="wastePercentage"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              value={wastePercentage}
+              onChange={(e) => setWastePercentage(e.target.value)}
+              placeholder="e.g., 10"
+            />
+          </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          <button
+            onClick={calculateWaste}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+          >
+            Estimate Waste
+          </button>
+        </div>
+
+        {estimatedWasteVolume !== null && (
+          <div className="mt-8 pt-8 border-t border-gray-200 space-y-4">
+            <h2 className="text-2xl font-bold text-gray-900 text-center">Results</h2>
+            <p className="text-lg text-gray-800">
+              <span className="font-semibold">Estimated Waste Volume:</span> {estimatedWasteVolume.toFixed(2)} {unit}
+            </p>
+            <p className="text-lg text-gray-800">
+              <span className="font-semibold">Estimated Waste Cost:</span> ${estimatedWasteCost.toFixed(2)}
+            </p>
+
+            {/* Lead Capture (E) */}
+            <div className="mt-6 p-4 bg-teal-50 border-l-4 border-teal-500 text-teal-800">
+              <p className="font-bold">Get a detailed report!</p>
+              <p className="text-sm">Enter your email to receive a comprehensive waste analysis and optimization tips.</p>
+              <div className="mt-4 flex">
+                <input
+                  type="email"
+                  placeholder="your.email@example.com"
+                  className="flex-grow border border-teal-300 rounded-l-md py-2 px-3 text-gray-900 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                />
+                <button className="bg-teal-600 text-white py-2 px-4 rounded-r-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                  Send Report
+                </button>
+              </div>
+            </div>
+
+            {/* Share CTA (Reputation-first virality) */}
+            <div className="mt-6 text-center">
+              <p className="text-gray-700">Share your results:</p>
+              <div className="flex justify-center space-x-4 mt-2">
+                <a href="#" className="text-blue-600 hover:text-blue-800">Twitter</a>
+                <a href="#" className="text-blue-800 hover:text-blue-900">LinkedIn</a>
+                <a href="#" className="text-red-600 hover:text-red-800">Facebook</a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

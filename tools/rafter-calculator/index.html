@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafter Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Rafter Calculator</h1>
+        <div class="input-group">
+            <label for="run">Run (in inches):</label>
+            <input type="number" id="run" placeholder="Enter the run of the rafter">
+        </div>
+        <div class="input-group">
+            <label for="pitch">Pitch (e.g., 4 for 4/12):</label>
+            <input type="number" id="pitch" placeholder="Enter the pitch of the roof">
+        </div>
+        <button onclick="calculateRafter()">Calculate Rafter Length</button>
+        <div class="result" id="result">
+            The calculated rafter length will appear here.
+        </div>
+    </div>
+
+    <script>
+        function calculateRafter() {
+            const run = parseFloat(document.getElementById('run').value);
+            const pitch = parseFloat(document.getElementById('pitch').value);
+
+            if (isNaN(run) || isNaN(pitch) || run <= 0 || pitch <= 0) {
+                document.getElementById('result').innerText = 'Please enter valid positive numbers for run and pitch.';
+                return;
+            }
+
+            const rise = (run / 12) * pitch;
+            const rafterLength = Math.sqrt(Math.pow(run, 2) + Math.pow(rise, 2));
+
+            document.getElementById('result').innerText = `Rafter Length: ${rafterLength.toFixed(2)} inches`;
+        }
+    </script>
+
+</body>
+</html>

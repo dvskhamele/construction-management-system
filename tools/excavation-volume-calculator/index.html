@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excavation Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Excavation Volume Calculator</h1>
+        <div class="input-group">
+            <label for="length">Length (in feet):</label>
+            <input type="number" id="length" placeholder="Enter the length of the excavation">
+        </div>
+        <div class="input-group">
+            <label for="width">Width (in feet):</label>
+            <input type="number" id="width" placeholder="Enter the width of the excavation">
+        </div>
+        <div class="input-group">
+            <label for="depth">Depth (in feet):</label>
+            <input type="number" id="depth" placeholder="Enter the depth of the excavation">
+        </div>
+        <button onclick="calculateVolume()">Calculate Volume</button>
+        <div class="result" id="result">
+            The calculated volume will appear here.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

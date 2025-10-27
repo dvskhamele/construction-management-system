@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import SimpleResponsiveLayout from '@/components/SimpleResponsiveLayout'
+import ResponsiveSidebarLayout from '../../components/ResponsiveSidebarLayout'
 
 // Simple mock data for demonstration
 const mockCrewMembers = [
@@ -94,7 +94,10 @@ export default function SimpleCrewPage() {
   const departments = Array.from(new Set(crewMembers.map(m => m.department)))
 
   return (
-    <SimpleResponsiveLayout user={user} onLogout={handleLogout}>
+    <ResponsiveSidebarLayout 
+      user={user} 
+      onLogout={handleLogout}
+    >
       <div className="simple-crew-page">
         {/* Header */}
         <div className="simple-header">
@@ -558,6 +561,6 @@ export default function SimpleCrewPage() {
           }
         `}</style>
       </div>
-    </SimpleResponsiveLayout>
+    </ResponsiveSidebarLayout>
   )
 }

@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Waste Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Material Waste Estimator</h1>
+        <form id="waste-estimator-form">
+            <div class="input-group">
+                <label for="base-quantity">Base Material Quantity Needed</label>
+                <input type="number" id="base-quantity" required>
+            </div>
+            <div class="input-group">
+                <label for="unit">Unit of Measurement (e.g., sq ft, linear ft, pieces)</label>
+                <input type="text" id="unit" value="sq ft">
+            </div>
+            <div class="input-group">
+                <label for="waste-percentage">Waste Percentage (%)</label>
+                <input type="number" id="waste-percentage" value="10" required>
+            </div>
+            <button type="submit">Estimate Total Quantity</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

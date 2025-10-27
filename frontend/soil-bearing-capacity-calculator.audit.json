@@ -1,0 +1,35 @@
+{
+  "tool_slug": "soil-bearing-capacity-calculator",
+  "audit_date": "2025-10-22T00:55:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Soil Bearing Capacity Calculator",
+      "status": "pass",
+      "recommendation": "Excellent long-tail keyword for geotechnical and structural engineers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Bearing Capacity",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Download a chart of bearing capacity factors (Nc, Nq, Nγ).",
+      "status": "pass",
+      "recommendation": "Highly valuable and specific lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": "Varies (4-5)",
+      "status": "pass",
+      "recommendation": "Form correctly uses conditional fields for clay vs. sand, simplifying the user experience."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "The result is a single, clear value, which is what an engineer needs. The disclaimer is crucial for managing expectations."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beam Deflection Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Beam Deflection Calculator</h1>
+        <p>Calculate the deflection of a simply supported beam under various loads.</p>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="beam-length">Beam Length (L in meters)</label>
+                <input type="number" id="beam-length" placeholder="e.g., 5">
+            </div>
+            <div class="input-group">
+                <label for="modulus-elasticity">Modulus of Elasticity (E in GPa)</label>
+                <input type="number" id="modulus-elasticity" placeholder="e.g., 200">
+            </div>
+            <div class="input-group">
+                <label for="moment-inertia">Moment of Inertia (I in m^4)</label>
+                <input type="number" id="moment-inertia" placeholder="e.g., 0.0001">
+            </div>
+            <h2>Load Conditions</h2>
+            <div class="input-group">
+                <label for="point-load">Point Load (P in kN)</label>
+                <input type="number" id="point-load" placeholder="e.g., 10">
+            </div>
+            <div class="input-group">
+                <label for="point-load-distance">Distance of Point Load from Left Support (a in meters)</label>
+                <input type="number" id="point-load-distance" placeholder="e.g., 2">
+            </div>
+            <div class="input-group">
+                <label for="distributed-load">Uniformly Distributed Load (w in kN/m)</label>
+                <input type="number" id="distributed-load" placeholder="e.g., 5">
+            </div>
+            <button id="calculate-deflection">Calculate Deflection</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

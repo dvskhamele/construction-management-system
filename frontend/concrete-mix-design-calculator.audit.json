@@ -1,0 +1,28 @@
+{
+  "tool_slug": "concrete-mix-design-calculator",
+  "audit_date": "2025-10-22",
+  "seo_audit": {
+    "title_tag": "Concrete Mix Design Calculator - Calculator",
+    "meta_description": "Calculates optimal concrete mix ratios based on desired strength, slump, and available materials (cement, aggregates, water).",
+    "keywords": "concrete, mix, design, calculator, calculator, estimator",
+    "h1_present": true,
+    "url_structure": "/tools/concrete-mix-design-calculator",
+    "canonical_tag": "https://yourdomain.com/tools/concrete-mix-design-calculator"
+  },
+  "cro_audit": {
+    "cta_clarity": "To be assessed",
+    "form_ease_of_use": "To be assessed",
+    "mobile_responsiveness": "Assumed High - Using Tailwind CSS for responsive design.",
+    "page_load_speed_estimate": "Good - Minimal assets, client-side calculation."
+  },
+  "ux_audit": {
+    "intuitive_navigation": "To be assessed",
+    "feedback_mechanisms": "To be assessed",
+    "visual_appeal": "Basic - Tailwind CSS default styling.",
+    "accessibility_considerations": "Basic - Standard HTML elements, no specific ARIA attributes yet."
+  },
+  "marketing_suggestions": [
+    "Promote Concrete Mix Design Calculator on relevant industry platforms.",
+    "Create blog content around \"Inconsistent concrete quality, material wastage, trial-and-error mix designs.\" linking to the tool."
+  ]
+}

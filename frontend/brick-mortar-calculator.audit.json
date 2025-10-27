@@ -1,0 +1,35 @@
+{
+  "tool_slug": "brick-mortar-calculator",
+  "audit_date": "2025-10-21T23:25:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Brick & Mortar Calculator",
+      "status": "pass",
+      "recommendation": "Title is highly relevant for a common construction calculation."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate",
+      "status": "pass",
+      "recommendation": "Simple and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Download a guide on standard brick sizes and mortar ratios.",
+      "status": "pass",
+      "recommendation": "Excellent, high-value lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 7,
+      "status": "pass",
+      "recommendation": "Form is well-structured with clear labels and appropriate select menus for sizes and ratios."
+    },
+    "results_clarity": {
+      "visualizations": ["Table"],
+      "status": "pass",
+      "recommendation": "Results are clear and provide the exact numbers a user is looking for."
+    }
+  }
+}

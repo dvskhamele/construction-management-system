@@ -1,0 +1,152 @@
+
+"use client";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+
+const TilingEstimator = () => {
+  const [area, setArea] = useState("");
+  const [tileLength, setTileLength] = useState("");
+  const [tileWidth, setTileWidth] = useState("");
+  const [wastage, setWastage] = useState("10"); // Default 10% wastage
+  const [materials, setMaterials] = useState(null);
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const calculateMaterials = () => {
+    const tiledArea = parseFloat(area);
+    const tLength = parseFloat(tileLength) / 1000; // Convert mm to meters
+    const tWidth = parseFloat(tileWidth) / 1000; // Convert mm to meters
+    const wastagePercent = parseFloat(wastage);
+
+    if (tiledArea > 0 && tLength > 0 && tWidth > 0) {
+      const tileArea = tLength * tWidth;
+      let numberOfTiles = tiledArea / tileArea;
+      numberOfTiles += numberOfTiles * (wastagePercent / 100);
+
+      const adhesiveKg = tiledArea * 5; // Assuming 5 kg of adhesive per sq.m
+      const groutKg = tiledArea * 0.5; // Assuming 0.5 kg of grout per sq.m
+
+      const estimatedMaterials = {
+        tiles: Math.ceil(numberOfTiles),
+        adhesive: adhesiveKg.toFixed(2),
+        grout: groutKg.toFixed(2),
+      };
+
+      setMaterials(estimatedMaterials);
+      localStorage.setItem("tilingEstimator", JSON.stringify({ area, tileLength, tileWidth, wastage, materials: estimatedMaterials }));
+      logAnalyticsEvent("Tiling_Material_Estimation", { tiledArea, tLength, tWidth, wastagePercent });
+    }
+  };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      console.log("Lead captured:", email);
+      saveLead(email);
+      setIsSubmitted(true);
+      setEmail("");
+    }
+  };
+
+  const saveLead = (leadEmail) => {
+    const existingLeads = JSON.parse(localStorage.getItem("tiling_leads")) || [];
+    const newLeads = [...existingLeads, { email: leadEmail, timestamp: new Date().toISOString() }];
+    localStorage.setItem("tiling_leads", JSON.stringify(newLeads));
+  };
+
+  const logAnalyticsEvent = (eventName: string, eventData: any) => {
+    const existingEvents = JSON.parse(localStorage.getItem("analytics_events")) || [];
+    const newEvent = { name: eventName, data: eventData, timestamp: new Date().toISOString() };
+    const newEvents = [...existingEvents, newEvent];
+    localStorage.setItem("analytics_events", JSON.stringify(newEvents));
+  };
+
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("tilingEstimator"));
+    if (savedData) {
+      setArea(savedData.area);
+      setTileLength(savedData.tileLength);
+      setTileWidth(savedData.tileWidth);
+      setWastage(savedData.wastage);
+      setMaterials(savedData.materials);
+    }
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>Tiling Material Estimator | BuildMate</title>
+        <meta name="description" content="Estimate the number of tiles, adhesive, and grout required for your tiling project with our free online calculator. Perfect for Indian contractors."/>
+        <meta property="og:title" content="Tiling Material Estimator | BuildMate" />
+        <meta property="og:description" content="A free tool for Indian contractors to accurately estimate tiling materials (tiles, adhesive, grout)." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://constructioncrm.vercel.app/tools/tiling-estimator" />
+        <meta property="og:image" content="https://constructioncrm.vercel.app/og-image-tiling-estimator.png" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <div className="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Tiling Material Estimator</h1>
+          <p className="text-center text-gray-600 mb-8">Estimate the tiles, adhesive, and grout required for your tiling work.</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="form-group">
+              <label htmlFor="area" className="block text-sm font-medium text-gray-700 mb-1">Area to be Tiled (sq. m)</label>
+              <input type="number" id="area" value={area} onChange={(e) => setArea(e.target.value)} placeholder="e.g., 50" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="tileLength" className="block text-sm font-medium text-gray-700 mb-1">Tile Length (mm)</label>
+              <input type="number" id="tileLength" value={tileLength} onChange={(e) => setTileLength(e.target.value)} placeholder="e.g., 300" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="tileWidth" className="block text-sm font-medium text-gray-700 mb-1">Tile Width (mm)</label>
+              <input type="number" id="tileWidth" value={tileWidth} onChange={(e) => setTileWidth(e.target.value)} placeholder="e.g., 300" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="wastage" className="block text-sm font-medium text-gray-700 mb-1">Wastage (%)</label>
+              <input type="number" id="wastage" value={wastage} onChange={(e) => setWastage(e.target.value)} placeholder="e.g., 10" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <button onClick={calculateMaterials} className="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors">Calculate</button>
+          </div>
+
+          {materials && (
+            <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+              <h2 className="text-2xl font-semibold text-gray-800 text-center">Estimated Materials</h2>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                  <div className="p-4 bg-white rounded-md shadow-sm">
+                      <p className="text-sm text-gray-500">Tiles (Nos.)</p>
+                      <p className="text-2xl font-bold text-blue-600">{materials.tiles}</p>
+                  </div>
+                  <div className="p-4 bg-white rounded-md shadow-sm">
+                      <p className="text-sm text-gray-500">Adhesive (kg)</p>
+                      <p className="text-2xl font-bold text-blue-600">{materials.adhesive}</p>
+                  </div>
+                  <div className="p-4 bg-white rounded-md shadow-sm">
+                      <p className="text-sm text-gray-500">Grout (kg)</p>
+                      <p className="text-2xl font-bold text-blue-600">{materials.grout}</p>
+                  </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-10 text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Get More Tools & Insights</h3>
+            <p className="text-gray-600 mb-6">Join our newsletter for more free tools, industry news, and tips for construction professionals in India.</p>
+            {isSubmitted ? (
+              <p className="text-green-600 font-semibold">Thank you for subscribing!</p>
+            ) : (
+              <form onSubmit={handleEmailSubmit} className="flex flex-col md:flex-row justify-center items-center gap-4">
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required className="w-full md:w-80 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
+                <button type="submit" className="w-full md:w-auto bg-green-600 text-white font-bold py-2 px-6 rounded-md hover:bg-green-700 transition-colors">Subscribe</button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default TilingEstimator;

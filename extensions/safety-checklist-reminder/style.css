@@ -1,0 +1,41 @@
+
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.checklist-item {
+    margin-bottom: 10px;
+}
+
+.checklist-item label {
+    display: block;
+    cursor: pointer;
+}
+
+.checklist-item input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+#clear-checklist {
+    width: 100%;
+    padding: 8px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+#clear-checklist:hover {
+    background-color: #c82333;
+}

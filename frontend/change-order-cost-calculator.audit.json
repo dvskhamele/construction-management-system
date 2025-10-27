@@ -1,0 +1,35 @@
+{
+  "tool_slug": "change-order-cost-calculator",
+  "audit_date": "2025-10-22T01:15:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Change Order Cost Calculator",
+      "status": "pass",
+      "recommendation": "Targets a specific, high-intent keyword for contractors and project managers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Change Order Cost",
+      "status": "pass",
+      "recommendation": "Clear and action-oriented CTA."
+    },
+    "lead_capture": {
+      "offer": "Download a professional Change Order Request form template.",
+      "status": "pass",
+      "recommendation": "Excellent lead magnet that provides a direct, tangible asset for the user's next step."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 6,
+      "status": "pass",
+      "recommendation": "Form is logically structured into direct costs and markups."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear, with a final price for the client and a cost breakdown for the contractor."
+    }
+  }
+}

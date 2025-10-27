@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Equipment Utilization Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Equipment Utilization Tracker</h1>
+        <p>Track and optimize the utilization of your construction equipment.</p>
+        <div class="tracker">
+            <div class="input-group">
+                <label for="equipment-name">Equipment Name</label>
+                <input type="text" id="equipment-name" placeholder="e.g., Excavator">
+            </div>
+            <div class="input-group">
+                <label for="start-time">Start Time</label>
+                <input type="datetime-local" id="start-time">
+            </div>
+            <div class="input-group">
+                <label for="end-time">End Time</label>
+                <input type="datetime-local" id="end-time">
+            </div>
+            <button id="add-usage">Add Usage</button>
+        </div>
+        <div class="utilization-data">
+            <h2>Equipment Utilization</h2>
+            <table id="utilization-table">
+                <thead>
+                    <tr>
+                        <th>Equipment</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration (hours)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

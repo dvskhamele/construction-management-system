@@ -1,0 +1,35 @@
+{
+  "tool_slug": "hvac-cooling-load-calculator",
+  "audit_date": "2025-10-22T01:55:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "HVAC Cooling Load Calculator",
+      "status": "pass",
+      "recommendation": "Excellent keyword targeting for mechanical engineers and HVAC contractors."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Cooling Load",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get a guide to choosing the right HVAC system for your project.",
+      "status": "pass",
+      "recommendation": "Valuable lead magnet for users making a significant purchasing decision."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 4,
+      "status": "pass",
+      "recommendation": "Simple form with all the key variables for a quick estimation."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear and provided in both BTUs and Tons, the two standard industry units."
+    }
+  }
+}

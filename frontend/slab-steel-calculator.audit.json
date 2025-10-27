@@ -1,0 +1,35 @@
+{
+  "tool_slug": "slab-steel-calculator",
+  "audit_date": "2025-10-22T02:15:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Slab Steel Reinforcement Calculator",
+      "status": "pass",
+      "recommendation": "Excellent, specific keyword for structural and site engineers."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Steel Weight",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get a guide on rebar sizes and their typical use cases in residential and commercial construction.",
+      "status": "pass",
+      "recommendation": "A highly practical lead magnet for the target audience."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 2,
+      "status": "pass",
+      "recommendation": "Extremely simple form. The helper text for the steel percentage is a good UX touch."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear and provided in both Kg and Tons."
+    }
+  }
+}

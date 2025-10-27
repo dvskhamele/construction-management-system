@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asphalt Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Asphalt Estimator</h1>
+        <p>Estimate the volume and tonnage of asphalt needed for your paving project.</p>
+
+        <div class="input-section">
+            <h2>Paving Area Dimensions</h2>
+            <div class="input-group">
+                <label for="area-length">Length (meters):</label>
+                <input type="number" id="area-length" placeholder="e.g., 20" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="area-width">Width (meters):</label>
+                <input type="number" id="area-width" placeholder="e.g., 5" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="area-thickness">Thickness (cm):</label>
+                <input type="number" id="area-thickness" placeholder="e.g., 5" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="asphalt-density">Asphalt Density (kg/m³):</label>
+                <input type="number" id="asphalt-density" value="2400" min="1000" step="10">
+            </div>
+            <div class="input-group">
+                <label for="waste-factor">Waste Factor (%):</label>
+                <input type="number" id="waste-factor" value="5" min="0" max="100" step="1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Asphalt Needed</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

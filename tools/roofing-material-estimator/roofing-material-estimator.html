@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roofing Material Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Roofing Material Estimator</h1>
+        <form id="roofing-form">
+            <div class="input-group">
+                <label for="roof-length">Roof Length (feet)</label>
+                <input type="number" id="roof-length" required>
+            </div>
+            <div class="input-group">
+                <label for="roof-width">Roof Width (feet)</label>
+                <input type="number" id="roof-width" required>
+            </div>
+            <div class="input-group">
+                <label for="roof-pitch-rise">Roof Pitch Rise (inches per 12" run)</label>
+                <input type="number" id="roof-pitch-rise" value="6" required>
+            </div>
+            <div class="input-group">
+                <label for="shingle-coverage">Shingle Coverage per Bundle (sq ft)</label>
+                <input type="number" id="shingle-coverage" value="33.3" required>
+            </div>
+            <div class="input-group">
+                <label for="waste-percentage">Waste Percentage (%)</label>
+                <input type="number" id="waste-percentage" value="10" required>
+            </div>
+            <button type="submit">Estimate Materials</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

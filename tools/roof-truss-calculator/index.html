@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roof Truss Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .calculator {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roof Truss Calculator</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="roofSpan">Roof Span (feet)</label>
+                <input type="number" id="roofSpan" placeholder="Enter roof span">
+            </div>
+            <div class="input-group">
+                <label for="roofPitch">Roof Pitch (e.g., 4 for 4/12)</label>
+                <input type="number" id="roofPitch" placeholder="Enter roof pitch">
+            </div>
+            <div class="input-group">
+                <label for="trussSpacing">Truss Spacing (inches)</label>
+                <input type="number" id="trussSpacing" placeholder="Enter truss spacing">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const roofSpan = parseFloat(document.getElementById('roofSpan').value);
+            const roofPitch = parseFloat(document.getElementById('roofPitch').value);
+            const trussSpacing = parseFloat(document.getElementById('trussSpacing').value);
+
+            if (isNaN(roofSpan) || isNaN(roofPitch) || isNaN(trussSpacing)) {
+                document.getElementById('result').innerHTML = 'Please enter valid numbers.';
+                return;
+            }
+
+            const run = roofSpan / 2;
+            const rise = (roofPitch / 12) * run;
+            const rafterLength = Math.sqrt(Math.pow(run, 2) + Math.pow(rise, 2));
+            const totalRafters = Math.ceil(roofSpan / (trussSpacing / 12)) + 1;
+
+            const resultHTML = `
+                <h3>Truss Details:</h3>
+                <p>Run: ${run.toFixed(2)} feet</p>
+                <p>Rise: ${rise.toFixed(2)} feet</p>
+                <p>Rafter Length: ${rafterLength.toFixed(2)} feet</p>
+                <p>Total Rafters Needed: ${totalRafters}</p>
+            `;
+
+            document.getElementById('result').innerHTML = resultHTML;
+        });
+    </script>
+</body>
+</html>

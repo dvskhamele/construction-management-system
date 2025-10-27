@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Slab Volume Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Slab Volume Calculator</h1>
+        <p>Estimate the concrete needed for rectangular slabs.</p>
+
+        <div class="input-section">
+            <h2>Slab Dimensions</h2>
+            <div class="input-group">
+                <label for="slab-length">Length (meters):</label>
+                <input type="number" id="slab-length" placeholder="e.g., 10" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="slab-width">Width (meters):</label>
+                <input type="number" id="slab-width" placeholder="e.g., 8" min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="slab-thickness">Thickness (meters):</label>
+                <input type="number" id="slab-thickness" placeholder="e.g., 0.15" min="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="waste-factor">Waste Factor (%):</label>
+                <input type="number" id="waste-factor" value="5" min="0" max="100" step="1">
+            </div>
+        </div>
+
+        <button id="calculateBtn">Calculate Concrete Volume</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flooring Material Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Flooring Material Calculator</h1>
+        <form id="flooring-form">
+            <div class="input-group">
+                <label for="room-length">Room Length (feet):</label>
+                <input type="number" id="room-length" required>
+            </div>
+            <div class="input-group">
+                <label for="room-width">Room Width (feet):</label>
+                <input type="number" id="room-width" required>
+            </div>
+            <div class="input-group">
+                <label for="material-width">Material Width (inches, for planks/rolls):</label>
+                <input type="number" id="material-width" value="6" required>
+            </div>
+            <div class="input-group">
+                <label for="waste-percentage">Waste Percentage (%):</label>
+                <input type="number" id="waste-percentage" value="10" required>
+            </div>
+            <button type="submit">Calculate Materials</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

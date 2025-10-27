@@ -1,0 +1,35 @@
+{
+  "tool_slug": "construction-roi-calculator",
+  "audit_date": "2025-10-22T00:25:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Project ROI Calculator",
+      "status": "pass",
+      "recommendation": "Excellent keyword targeting for users in the consideration and decision phase."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate ROI",
+      "status": "pass",
+      "recommendation": "Clear and benefit-focused CTA."
+    },
+    "lead_capture": {
+      "offer": "Download our guide to financing construction projects in India.",
+      "status": "pass",
+      "recommendation": "High-value lead magnet that directly addresses a common next step for users interested in ROI."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 3,
+      "status": "pass",
+      "recommendation": "Very simple form with clear financial inputs."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clear, key metrics (ROI, Payback Period) are highlighted, making the outcome easy to understand."
+    }
+  }
+}

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Formwork Pressure Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Formwork Pressure Calculator</h1>
+        <form id="formwork-pressure-form">
+            <div class="input-group">
+                <label for="placement-rate">Rate of Concrete Placement (feet/hour):</label>
+                <input type="number" id="placement-rate" step="0.1" required>
+            </div>
+            <div class="input-group">
+                <label for="concrete-temperature">Concrete Temperature (°F):</label>
+                <input type="number" id="concrete-temperature" required>
+            </div>
+            <div class="input-group">
+                <label for="concrete-density">Concrete Density (lbs/cubic foot):</label>
+                <input type="number" id="concrete-density" value="150" required>
+            </div>
+            <div class="input-group">
+                <label for="slump">Slump (inches):</label>
+                <input type="number" id="slump" value="4" required>
+            </div>
+            <div class="input-group">
+                <label for="concrete-height">Height of Concrete (feet):</label>
+                <input type="number" id="concrete-height" required>
+            </div>
+            <button type="submit">Calculate Pressure</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

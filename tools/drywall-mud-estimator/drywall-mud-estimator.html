@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drywall Mud Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Drywall Mud Estimator</h1>
+        <form id="mud-estimator-form">
+            <div class="input-group">
+                <label for="drywall-area">Total Drywall Area (sq ft):</label>
+                <input type="number" id="drywall-area" required>
+            </div>
+            <div class="input-group">
+                <label for="num-coats">Number of Coats (for finishing):</label>
+                <input type="number" id="num-coats" value="3" required>
+            </div>
+            <div class="input-group">
+                <label for="mud-type">Mud Type:</label>
+                <select id="mud-type">
+                    <option value="0.05">All-Purpose (approx. 0.05 lbs/sq ft/coat)</option>
+                    <option value="0.03">Lightweight (approx. 0.03 lbs/sq ft/coat)</option>
+                </select>
+            </div>
+            <button type="submit">Estimate Mud</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

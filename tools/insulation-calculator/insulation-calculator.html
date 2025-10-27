@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insulation Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Insulation Calculator</h1>
+        <form id="insulation-form">
+            <div class="input-group">
+                <label for="area-width">Area Width (feet)</label>
+                <input type="number" id="area-width" required>
+            </div>
+            <div class="input-group">
+                <label for="area-length">Area Length (feet)</label>
+                <input type="number" id="area-length" required>
+            </div>
+            <div class="input-group">
+                <label for="r-value">Desired R-Value</label>
+                <input type="number" id="r-value" required>
+            </div>
+            <div class="input-group">
+                <label for="insulation-type">Insulation Type</label>
+                <select id="insulation-type">
+                    <option value="3.7">Fiberglass Batt (R-3.7 per inch)</option>
+                    <option value="3.0">Mineral Wool Batt (R-3.0 per inch)</option>
+                    <option value="6.5">Spray Foam (Closed-Cell, R-6.5 per inch)</option>
+                    <option value="3.7">Spray Foam (Open-Cell, R-3.7 per inch)</option>
+                </select>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

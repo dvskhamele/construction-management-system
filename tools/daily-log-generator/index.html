@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Log Generator | BuildMate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Daily Log Generator</h1>
+            <p class="text-gray-600 mb-6">Generate comprehensive daily construction logs. Document site activities, weather, personnel, and progress with ease.</p>
+
+            <!-- Log Input Form -->
+            <form id="logForm" class="space-y-4 mb-8">
+                <div>
+                    <label for="logDate" class="block text-sm font-medium text-gray-700">Date</label>
+                    <input type="date" id="logDate" name="logDate" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="project" class="block text-sm font-medium text-gray-700">Project Name</label>
+                    <input type="text" id="project" name="project" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., High-Rise Residential" required>
+                </div>
+                <div>
+                    <label for="weather" class="block text-sm font-medium text-gray-700">Weather Conditions</label>
+                    <input type="text" id="weather" name="weather" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Sunny, 25°C" required>
+                </div>
+                <div>
+                    <label for="personnel" class="block text-sm font-medium text-gray-700">Personnel On-Site</label>
+                    <textarea id="personnel" name="personnel" rows="3" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="List names or roles and numbers, e.g., 1 PM, 5 Laborers"></textarea>
+                </div>
+                <div>
+                    <label for="activities" class="block text-sm font-medium text-gray-700">Activities Performed</label>
+                    <textarea id="activities" name="activities" rows="5" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Describe work done, progress, issues, etc." required></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Generate Log
+                    </button>
+                </div>
+            </form>
+
+            <!-- Generated Log Display -->
+            <div id="logDisplay" class="mt-8 hidden">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Generated Daily Log</h2>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 whitespace-pre-wrap" id="generatedLogContent"></div>
+                <a id="shareableLink" href="#" class="text-indigo-600 hover:text-indigo-800 mt-4 inline-block text-center w-full">Share this log</a>
+            </div>
+
+            <!-- Lead Capture Form -->
+            <div id="leadCapture" class="mt-8 border-t pt-6">
+                 <h2 class="text-2xl font-semibold text-gray-800">Get More Tools & Insights</h2>
+                 <p class="text-gray-600 mb-4">Enter your email to get daily construction reports and subscribe to our newsletter for more free construction tools.</p>
+                 <form id="leadForm" class="flex items-center">
+                     <input type="email" id="email" name="email" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="you@example.com" required>
+                     <button type="submit" class="ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                         Subscribe
+                     </button>
+                 </form>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

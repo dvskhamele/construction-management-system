@@ -1,0 +1,35 @@
+{
+  "tool_slug": "construction-timeline-estimator",
+  "audit_date": "2025-10-21T22:45:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Construction Project Timeline Estimator",
+      "status": "pass",
+      "recommendation": "Title is keyword-rich and clearly states the tool's purpose."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Estimate Timeline",
+      "status": "pass",
+      "recommendation": "CTA is clear and action-oriented."
+    },
+    "lead_capture": {
+      "offer": "Email this project timeline to yourself and your team.",
+      "status": "pass",
+      "recommendation": "Lead magnet is practical and encourages sharing and collaboration."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 4,
+      "status": "pass",
+      "recommendation": "Simple form with clear options for project type, size, and complexity."
+    },
+    "results_clarity": {
+      "visualizations": ["BarChart"],
+      "status": "pass",
+      "recommendation": "The Gantt-like chart provides an excellent visual representation of the project schedule, which is easy to understand at a glance."
+    }
+  }
+}

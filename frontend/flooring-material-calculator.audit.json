@@ -1,0 +1,28 @@
+{
+  "tool_slug": "flooring-material-calculator",
+  "audit_date": "2025-10-22",
+  "seo_audit": {
+    "title_tag": "Flooring Material Calculator - Calculator",
+    "meta_description": "Calculates the quantity of flooring materials (tiles, wood, carpet) needed for a room, accounting for waste and patterns.",
+    "keywords": "flooring, material, calculator, calculator, estimator",
+    "h1_present": true,
+    "url_structure": "/tools/flooring-material-calculator",
+    "canonical_tag": "https://yourdomain.com/tools/flooring-material-calculator"
+  },
+  "cro_audit": {
+    "cta_clarity": "To be assessed",
+    "form_ease_of_use": "To be assessed",
+    "mobile_responsiveness": "Assumed High - Using Tailwind CSS for responsive design.",
+    "page_load_speed_estimate": "Good - Minimal assets, client-side calculation."
+  },
+  "ux_audit": {
+    "intuitive_navigation": "To be assessed",
+    "feedback_mechanisms": "To be assessed",
+    "visual_appeal": "Basic - Tailwind CSS default styling.",
+    "accessibility_considerations": "Basic - Standard HTML elements, no specific ARIA attributes yet."
+  },
+  "marketing_suggestions": [
+    "Promote Flooring Material Calculator on relevant industry platforms.",
+    "Create blog content around \"Inaccurate material orders, material shortages or excess, project delays.\" linking to the tool."
+  ]
+}

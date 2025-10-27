@@ -1,0 +1,35 @@
+{
+  "tool_slug": "surface-area-calculator",
+  "audit_date": "2025-10-22T00:45:00Z",
+  "seo_audit": {
+    "page_title": {
+      "value": "Wall & Room Surface Area Calculator",
+      "status": "pass",
+      "recommendation": "Title is specific and targets users looking to calculate paintable area."
+    }
+  },
+  "cro_audit": {
+    "call_to_action": {
+      "text": "Calculate Surface Area",
+      "status": "pass",
+      "recommendation": "Clear and direct CTA."
+    },
+    "lead_capture": {
+      "offer": "Get our guide to estimating paint and plaster quantities based on surface area.",
+      "status": "pass",
+      "recommendation": "Highly relevant lead magnet that provides a logical next step for the user."
+    }
+  },
+  "ux_audit": {
+    "form_usability": {
+      "field_count": 10,
+      "status": "pass",
+      "recommendation": "Form is logically grouped into sections for room, doors, and windows, making it easy to understand."
+    },
+    "results_clarity": {
+      "visualizations": ["None"],
+      "status": "pass",
+      "recommendation": "Results are clearly broken down, showing the user the gross area, deductions, and net area, which builds trust and understanding."
+    }
+  }
+}

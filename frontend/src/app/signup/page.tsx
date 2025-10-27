@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+// import LanguageSelector from '../../components/LanguageSelector'
+import HeaderResponsiveLayout from '@/components/HeaderResponsiveLayout'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -17,7 +19,11 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [currentStep, setCurrentStep] = useState(1); // Add step tracking
+  const [showPassword, setShowPassword] = useState(false); // Add password visibility toggle
   const router = useRouter()
+
+  const totalSteps = 2; // Define total steps
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -27,13 +33,36 @@ export default function SignupPage() {
     }))
   }
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  const handleNext = () => {
+    // Validate current step before proceeding
+    if (currentStep === 1) {
+      if (!formData.firstName || !formData.lastName || !formData.email) {
+        setError('Please fill in all required fields');
+        return;
+      }
+      if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+      setError(''); // Clear error
+      setCurrentStep(2);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      setError('');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
 
     // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword || !formData.companyName || !formData.phoneNumber) {
       setError('All fields are required')
       setIsLoading(false)
       return
@@ -50,28 +79,55 @@ export default function SignupPage() {
       // In a real app, you would register with your backend here
       // For this prototype, we'll just simulate a successful registration
       localStorage.setItem('token', 'fake-jwt-token')
+      localStorage.setItem('user', JSON.stringify({
+        id: Date.now(),
+        email: formData.email,
+        name: `${formData.firstName} ${formData.lastName}`,
+        role: 'USER'
+      }));
       setIsLoading(false)
-      router.push('/dashboard')
+      setSuccess(true);
+      // Redirect after a short delay
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1500);
     }, 1000)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <Link href="/" className="inline-flex items-center text-3xl font-bold text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            BuildMate
-          </Link>
-          <p className="mt-2 text-slate-400">BuildMate - Construction Process Automation</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-lg">
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <Link href="/" className="inline-flex items-center text-2xl font-bold text-slate-800">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-teal-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              BuildMate
+            </Link>
+            <p className="mt-1 text-slate-600 text-sm">BuildMate - Construction Process Automation</p>
+          </div>
+          {/* <LanguageSelector /> */}
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="px-6 py-8 sm:px-10">
             <h2 className="text-2xl font-bold text-slate-800 text-center">Start Your Free Trial</h2>
             <p className="mt-2 text-center text-slate-600">No credit card required. 14-day free trial.</p>
+
+            {/* Progress indicator for multi-step form */}
+            <div className="mt-6 mb-8">
+              <div className="flex justify-between text-sm text-slate-500 mb-2">
+                <span>Step {currentStep} of {totalSteps}</span>
+                <span>{Math.round((currentStep / totalSteps) * 100)}% Complete</span>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-teal-500 to-teal-600 h-2 rounded-full transition-all duration-500 ease-in-out" 
+                  style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+                ></div>
+              </div>
+            </div>
 
             {success ? (
               <div className="rounded-md bg-emerald-50 p-4 mt-6">
@@ -89,138 +145,201 @@ export default function SignupPage() {
                 </div>
               </div>
             ) : (
-              <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-slate-700">
-                      First Name
-                    </label>
-                    <div className="mt-1">
+              <form className="mt-4 space-y-6" onSubmit={currentStep === totalSteps ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
+                {currentStep === 1 ? (
+                  // Step 1: Basic Information
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-1">
+                          First Name *
+                        </label>
+                        <input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          required
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                          placeholder="First name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-1">
+                          Last Name *
+                        </label>
+                        <input
+                          id="lastName"
+                          name="lastName"
+                          type="text"
+                          required
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                          placeholder="Last name"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                        Email Address *
+                      </label>
                       <input
-                        id="firstName"
-                        name="firstName"
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                        placeholder="Enter your email"
+                      />
+                    </div>
+
+                    <div className="pt-4 flex justify-between">
+                      <div></div> {/* Empty div to align button to the right */}
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        className="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:from-teal-600 hover:to-teal-700 transition duration-300 shadow-md flex items-center"
+                      >
+                        Continue
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  // Step 2: Company and Security Information
+                  <div className="space-y-6">
+                    <div>
+                      <label htmlFor="companyName" className="block text-sm font-medium text-slate-700 mb-1">
+                        Company Name *
+                      </label>
+                      <input
+                        id="companyName"
+                        name="companyName"
                         type="text"
                         required
-                        value={formData.firstName}
+                        value={formData.companyName}
                         onChange={handleChange}
                         className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                        placeholder="First name"
+                        placeholder="Enter your construction company name"
                       />
                     </div>
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-slate-700">
-                      Last Name
-                    </label>
-                    <div className="mt-1">
+
+                    <div>
+                      <label htmlFor="phoneNumber" className="block text-sm font-medium text-slate-700 mb-1">
+                        Phone Number *
+                      </label>
                       <input
-                        id="lastName"
-                        name="lastName"
-                        type="text"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        type="tel"
                         required
-                        value={formData.lastName}
+                        value={formData.phoneNumber}
                         onChange={handleChange}
                         className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                        placeholder="Last name"
+                        placeholder="Enter your phone number"
                       />
                     </div>
-                  </div>
-                </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-                    Email address
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
+                          Password *
+                        </label>
+                        <div className="relative">
+                          <input
+                            id="password"
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            required
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="appearance-none block w-full px-4 py-3 pr-12 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                            placeholder="Enter your password"
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
+                          Confirm Password *
+                        </label>
+                        <input
+                          id="confirmPassword"
+                          name="confirmPassword"
+                          type={showPassword ? "text" : "password"}
+                          required
+                          value={formData.confirmPassword}
+                          onChange={handleChange}
+                          className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                          placeholder="Confirm your password"
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <label htmlFor="companyName" className="block text-sm font-medium text-slate-700">
-                    Company Name
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="companyName"
-                      name="companyName"
-                      type="text"
-                      required
-                      value={formData.companyName}
-                      onChange={handleChange}
-                      className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                      placeholder="Enter your construction company name"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-slate-700">
-                    Phone Number
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      type="tel"
-                      required
-                      value={formData.phoneNumber}
-                      onChange={handleChange}
-                      className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-                      Password
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                        placeholder="Enter your password"
-                      />
+                    <div className="pt-4 flex justify-between">
+                      <button
+                        type="button"
+                        onClick={handleBack}
+                        className="flex items-center text-slate-600 hover:text-slate-800 font-medium"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                        </svg>
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className={`flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 ${
+                          isLoading ? 'opacity-75 cursor-not-allowed' : ''
+                        }`}
+                      >
+                        {isLoading ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Creating account...
+                          </>
+                        ) : (
+                          <>
+                            Create Account
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">
-                      Confirm Password
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        type="password"
-                        required
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                        placeholder="Confirm your password"
-                      />
-                    </div>
-                  </div>
-                </div>
+                )}
 
                 {error && (
-                  <div className="rounded-md bg-red-50 p-4">
+                  <div className="rounded-md bg-red-50 p-4 mt-4">
                     <div className="flex">
                       <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -234,61 +353,39 @@ export default function SignupPage() {
                   </div>
                 )}
 
-                <div className="mt-4 text-sm text-slate-600">
+                <div className="mt-6 text-sm text-slate-600">
                   <p>BuildMate features included:</p>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
                     <div className="flex items-center">
                       <svg className="h-4 w-4 text-teal-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>QR Tracking</span>
+                      <span className="text-xs">QR Tracking</span>
                     </div>
                     <div className="flex items-center">
                       <svg className="h-4 w-4 text-teal-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Auto Scheduling</span>
+                      <span className="text-xs">Auto Scheduling</span>
                     </div>
                     <div className="flex items-center">
                       <svg className="h-4 w-4 text-teal-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Photo Gallery</span>
+                      <span className="text-xs">Photo Gallery</span>
                     </div>
                     <div className="flex items-center">
                       <svg className="h-4 w-4 text-teal-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>WhatsApp/Email</span>
+                      <span className="text-xs">WhatsApp/Email</span>
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 ${
-                      isLoading ? 'opacity-75 cursor-not-allowed' : ''
-                    }`}
-                  >
-                    {isLoading ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Creating account...
-                      </>
-                    ) : (
-                      'Start Free Trial'
-                    )}
-                  </button>
                 </div>
               </form>
             )}
 
-            <div className="mt-6">
+            <div className="mt-8">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-slate-300"></div>
@@ -335,6 +432,12 @@ export default function SignupPage() {
               Already have an account?{' '}
               <Link href="/login" className="font-medium text-teal-600 hover:text-teal-500">
                 Sign in
+              </Link>
+            </p>
+            <p className="text-slate-600 text-center text-sm mt-2">
+              Are you a client?{' '}
+              <Link href="/client-login" className="font-medium text-teal-600 hover:text-teal-500">
+                Client Login
               </Link>
             </p>
           </div>
