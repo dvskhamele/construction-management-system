@@ -1,0 +1,25 @@
+# Netlify configuration for BUILDmate Construction Project
+[build]
+  publish = "dist/"
+  command = "npm run build"
+
+[context.production]
+  environment = { NODE_ENV = "production" }
+
+# Redirect incorrect URLs to correct deployment
+[[redirects]]
+  from = "https://advisorx.signimus.com/*"
+  to = "https://buildmate-construction.netlify.app/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-api.com/:splat"
+  status = 200
+
+# Common SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
